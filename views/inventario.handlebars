@@ -1,0 +1,45 @@
+<section class="full-width pageContent">
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+										<label class="mdl-button mdl-js-button mdl-button--icon" for="searchPayment">
+											<i class="zmdi zmdi-search"></i>
+										</label>
+										<div class="mdl-textfield__expandable-holder">
+											<input class="mdl-textfield__input" type="text" id="searchPayment" validation="buscarTabla" event="keyup" TablaID="tablaProduct" datos="0,1" placeholder=" Buscar">
+											<label class="mdl-textfield__label"></label>
+										</div>
+									</div>
+		<div class="full-width divider-menu-h"></div>
+		<div class="mdl-grid" align="center">
+			<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">				
+					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblPersonas">
+						<thead>
+							<tr>
+								<th>Código del Producto</th>
+								<th>Descripción</th>
+								<th>Existencia</th>
+								<th>Precio de Compra</th>
+								<th>Precio de Venta</th>
+								<th><center>Opcion</center></th>
+							</tr>
+						</thead>
+						<tbody id="contenidoTabla">
+							{{#if producto}}{{#each producto}}
+							<tr>
+							<td>{{this.Cod_Prod}}</td>
+							<td>{{this.Descripcion}}</td>
+							<td>{{this.Existencia}}</td>
+							<td>{{this.PrecComp_Pro}}</td>
+							<td>{{this.PrecVen_Pro}}</td>
+							<td>
+								<div>
+									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editProducto" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;<button validation="deleteProduct" event="click" id="borrarClient" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+								</div>
+							</td>
+							</tr>
+                            {{/each}}{{/if}}
+						</tbody>
+					</table>
+				</div>
+		</div>
+	</section>
+    <script src="../modular/scripts/validation.js" ></script>

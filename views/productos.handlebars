@@ -1,0 +1,72 @@
+<section class="full-width pageContent">
+		
+		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+						<div class="full-width panel mdl-shadow--2dp">
+							<div class="full-width panel-tittle bg-primary text-center tittles">
+								Nuevo Producto
+							</div>
+							{{#if success_msg}}<div class="alert alert-success">{{success_msg}}</div>{{/if}} 
+							{{#if error_msg}}<div class="alert alert-danger">{{error_msg}}</div>{{/if}} 
+							{{#if error}}<div class="alert alert-danger">{{error}}</div>{{/if}}
+							<div class="full-width panel-content">
+								<form action='/admin/productos' method="post">
+									<div class="mdl-grid">
+										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+											<br>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<label class="text-condensedLight" style="font-size:20px;">Código Producto</label>
+												<input class="mdl-textfield__input" type="number" solonum="true"  id="Cod_Prod" name="Cod_Prod">
+												<label class="mdl-textfield__label" for="Cod_Prod"></label>
+												<span class="mdl-textfield__error">Ingrese solo números</span>
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<label class="text-condensedLight" style="font-size:20px;">Descripción</label>
+												<input class="mdl-textfield__input" type="text" id="Des_Prod" name="Des_Prod">
+												<label class="mdl-textfield__label" for="Des_Prod"></label>
+												<span class="mdl-textfield__error">Campo vacío</span>
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<label class="text-condensedLight" style="font-size:20px;">Existencia</label>
+												<input class="mdl-textfield__input" solonum="true" type="number"  id="Exis_Prod" name="Exis_Prod">
+												<label class="mdl-textfield__label" for="Exis_Prod"></label>
+												<span class="mdl-textfield__error">Ingrese solo numero</span>
+											</div>
+										</div>
+										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+											<br>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<label class="text-condensedLight" style="font-size:20px;">Precio de Compra</label>
+												<input class="mdl-textfield__input" solodecimal="true" type="text"  id="PrecComp_Pro" name="PrecComp_Pro">
+												<label class="mdl-textfield__label" for="PrecComp_Pro"></label>
+												<span class="mdl-textfield__error">Ingrese solo valores numericos</span>
+											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+												<label class="text-condensedLight" style="font-size:20px;">Precio de Venta</label>
+												<input class="mdl-textfield__input" solodecimal="true" type="text" id="PrecVen_Pro" name="PrecVen_Pro">
+												<label class="mdl-textfield__label" for="PrecVen_Pro"></label>
+												<span class="mdl-textfield__error" id="mensajePV">Ingrese solo valores numericos</span>
+											</div>
+											
+											<div>
+                                               	<input type="button" id="btn-addClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" validation="saveEmpleado" event="click" value="Guardar">
+                                                <a href="/admin/inventario" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;">Ver Productos Registrados</a>
+                                           </div>
+											
+										</div>
+									</div>
+									<!-- Botones del Formulario-->
+										
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+<script src="../modular/scripts/empleados.js" ></script>
+<script src="../modular/scripts/validacion_form.js" ></script>
+<script src="../modular/scripts/validacionPrecios.js" ></script>
+<script src="../modular/scripts/validation.js" ></script>
