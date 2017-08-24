@@ -48,9 +48,6 @@
                             <small>Justo ahora</small>
                         </p>
                     </div>
-                    <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-1">
-                        Notificación como no leída
-                    </div>
                 </a>
                 <a href="#" class="Notification" id="notifation-read-1">
                     <div class="Notification-icon">
@@ -63,9 +60,6 @@
                             <br>
                             <small>30 Mins Ago</small>
                         </p>
-                    </div>
-                    <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-1">
-                        Notificación como leída
                     </div>
                 </a>
                 <a href="#" class="Notification" id="notifation-unread-2">
@@ -80,9 +74,6 @@
                             <small>31 Mins Ago</small>
                         </p>
                     </div>
-                    <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-2">
-                        Notificación como no leída
-                    </div>
                 </a>
                 <a href="#" class="Notification" id="notifation-read-2">
                     <div class="Notification-icon">
@@ -95,9 +86,6 @@
                             <br>
                             <small>37 Mins Ago</small>
                         </p>
-                    </div>
-                    <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-2">
-                        Notificación como leída
                     </div>
                 </a>
                 <a href="#" class="Notification" id="notifation-read-3">
@@ -112,9 +100,6 @@
                             <small>1 hours Ago</small>
                         </p>
                     </div>
-                    <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-3">
-                        Notificación como leída
-                    </div>
                 </a>
             </section>
         </section>
@@ -123,18 +108,19 @@
         {{#if user}}
         <div class="full-width navBar">
             <div class="full-width navBar-options">
-                <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>
-                <div class="mdl-tooltip" for="btn-menu">Menu</div>
+                <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu" title="Menú"></i>
                 <nav class="navBar-options-list">
                     <ul class="list-unstyle">
-                        
-                        <li class="btn-Notification" id="notifications">
-                            <i class="zmdi zmdi-notifications"></i>
-                            <div class="mdl-tooltip" for="notifications">Notificaciones</div>
+                        <!--Lo dejamos o no-->
+                        <li class="btn-recargar" id="recar" title="Actualizar">
+                            <i class="zmdi zmdi-refresh-sync"></i>
                         </li>
-                        <li class="btn-exit" id="btn-exit">
+                        <!--fin-->
+                        <li class="btn-Notification" id="notifications" title="Notificaciones">
+                            <i class="zmdi zmdi-notifications"></i>
+                        </li>
+                        <li class="btn-exit" id="btn-exit" title="Cerrar sesión">
                             <i class="zmdi zmdi-power"></i>
-                            <div class="mdl-tooltip" for="btn-exit">Cerrar Sesion</div>
                         </li>
                         <li class="text-condensedLight noLink"><small>{{user.username}}</small></li>
                         <li class="noLink">

@@ -10,7 +10,10 @@ $(document).ready(function(){
             NotificationArea.addClass('NotificationArea-show');
             ContainerNoty.addClass('container-notifications-show');
         }
-    });
+	});
+	$('.btn-recargar').on('click', function(){
+		location.reload();
+	})
     /*Mostrar ocultar menu principal*/
     $('.btn-menu').on('click', function(){
     	var navLateral=$('.navLateral');
