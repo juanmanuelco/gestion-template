@@ -496,9 +496,16 @@ html, body{
 	width: 100%;
 }
 /*=====================================================
-					Estilos home
+		Estilos home
 ======================================================*/
 /*=============Azulejos o accesos directos(Tiles)*/
+
+
+
+.fuente{
+	color: #2b2b2c;
+}
+
 .tile{
 	border: 1px solid #E1E1E1;
 	height: 140px;
@@ -511,7 +518,7 @@ html, body{
 	margin-bottom: 20px;
 	display: inline-block;
 }
-.tile:hover .tile-text span{ color: #3F51B5; }
+.tile:hover .tile-text span .fuente{ color: #3F51B5; }
 .tile:hover .tile-icon{
 	color: rgba(0,191,238,.3);
 	transform: scale(1.5) translate(-10px, -10px);
