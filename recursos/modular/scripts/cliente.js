@@ -1,5 +1,34 @@
+//funcion para agregar clientes
+FuncionesCliente["saveCliente"] = function (e){
+	e.preventDefault();
+	var form = this.form
+	if (!form) {return false}
+	var bool = ValidarDatosFormulario(form);
+	if (bool){ 
+	swal({
+		  	title: 'Formulario Válido',
+		  	type: 'success',
+		  	text:"Se guardarán los datos correctamente",
+		  	showCancelButton: true,
+		  	confirmButtonText: 'Ok',
+		  	closeOnConfirm: true
+		},
+		function(isConfirm) {
+		  	if (isConfirm) {
+		  		form.submit();
+		  	}
+		  	else{
+		  		return false;
+		  	}
+		});
+	}
+}
+
+
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
 //para editar los datos de un cliente
+
+
 FuncionesCliente["editClient"] = function () {
 	var divpadre = this.parentNode
 	var divButton = divpadre.parentNode

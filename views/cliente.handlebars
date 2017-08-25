@@ -14,25 +14,25 @@
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Ruc/Cédula</label>
-												<input class="mdl-textfield__input" type="number" id="BarCode" maxlength="10" solonum="true" validation="cedruc" event="keyup">
+												<input class="mdl-textfield__input" type="number" id="BarCode" solonum="true" validation="cedruc" event="keyup" maxlength="10">
 												<label class="mdl-textfield__label" for="BarCode"></label>
 												<span class="mdl-textfield__error">Ingrese Solo Números en Ruc/Cédula de Cliente</span>
 								    		</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre</label>
-												<input class="mdl-textfield__input" type="text" soloLetras="true" maxlength="100" id="NameClient">
+												<input class="mdl-textfield__input" type="text" soloLetras="true"  id="NameClient" maxlength="100">
 												<label class="mdl-textfield__label" for="NameClient"></label>
 												<span class="mdl-textfield__error">Ingrese solo letras </span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<label class="text-condensedLight" style="font-size:20px;">Direccion</label>
+												<label class="text-condensedLight" style="font-size:20px;">Dirección</label>
 												<input class="mdl-textfield__input" type="text" id="addressClient1">
 												<label class="mdl-textfield__label" for="addressClient1"></label>
-												<span class="mdl-textfield__error">Direccion no válida</span>
+												<span class="mdl-textfield__error">Dirección no válida</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Celular/Convencional</label>
-												<input class="mdl-textfield__input" type="number" solonum="true" maxlength="10" id="NumeroConvencional">
+												<input class="mdl-textfield__input" type="number" solonum="true" id="NumeroConvencional" maxlength="10">
 												<label class="mdl-textfield__label" for="NumeroConvencional"></label>
 												<span class="mdl-textfield__error">Ingrese solo números</span>
 											</div>
@@ -52,8 +52,8 @@
 												</select>
 											</div>
 											<div align="center">
-		                                       <button id="btn-addClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;">Guardar</button>
-		                                       <button id="btn-addClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" id="Consultar" validation="ocultarmostrar" mostrarID="divTabla" ocultarID="tabNewAdmin" event="click" title="Mostrar Cliente Registrados">Ver Clientes Registrados</button>
+		                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" validation="saveCliente" >Guardar</button>
+		                                       <button id="btn-verClientes" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" id="Consultar" validation="ocultarmostrar" mostrarID="divTabla" ocultarID="tabNewAdmin" event="click" title="Mostrar Cliente Registrados">Ver Clientes Registrados</button>
 		                                   	</div>
 										</div>
 									</div>
