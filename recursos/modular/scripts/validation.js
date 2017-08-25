@@ -478,6 +478,8 @@ Funciones["NumeroEntero"] = function(e){
     }
 }
 
+
+
 //funcion para abrir un modal en la asignacion de empleados
 Funciones["AsignacionTarea"] = function (e) {
 	var formhtml = '<label>Contador de Servicio</label> <input class="mdl-textfield__input" type="number" readonly><br>'+
@@ -544,6 +546,8 @@ Funciones["EnterNext"] = function (e) {
 		e.preventDefault();
 	}
 }
+
+
 
 Funciones["soloLetras"] = function (e) {
 	patron =/[A-Za-zñáéíóúÁÉÍÓÚ\s]/;
