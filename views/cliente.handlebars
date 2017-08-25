@@ -14,13 +14,13 @@
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Ruc/Cédula</label>
-												<input class="mdl-textfield__input" type="number" pattern="-?[0-9- ]*(\.[0-9]+)?" id="BarCode" validation="cedruc" event="keyup">
+												<input class="mdl-textfield__input" type="number" id="BarCode" maxlength="10" solonum="true" validation="cedruc" event="keyup">
 												<label class="mdl-textfield__label" for="BarCode"></label>
 												<span class="mdl-textfield__error">Ingrese Solo Números en Ruc/Cédula de Cliente</span>
 								    		</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre</label>
-												<input class="mdl-textfield__input" type="text" pattern="-?[A-Za-záéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NameClient">
+												<input class="mdl-textfield__input" type="text" soloLetras="true" maxlength="100" id="NameClient">
 												<label class="mdl-textfield__label" for="NameClient"></label>
 												<span class="mdl-textfield__error">Ingrese solo letras </span>
 											</div>
@@ -32,7 +32,7 @@
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Celular/Convencional</label>
-												<input class="mdl-textfield__input" type="number" pattern="-?[0-9+()-]*(\.[0-9]+)?" id="NumeroConvencional">
+												<input class="mdl-textfield__input" type="number" solonum="true" maxlength="10" id="NumeroConvencional">
 												<label class="mdl-textfield__label" for="NumeroConvencional"></label>
 												<span class="mdl-textfield__error">Ingrese solo números</span>
 											</div>
@@ -47,9 +47,8 @@
 												<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>
 											<div class="mdl-textfield mdl-js-textfield">
 												<select class="mdl-textfield__input">
-													<option value="" disabled="" selected="">Seleccione tipo </option>
-													<option value="">Ocasional</option>
-													<option value="">Premium</option>
+													<option value="Ocasional">Ocasional</option>
+													<option value="Premiun">Premium</option>
 												</select>
 											</div>
 											<div align="center">
@@ -138,3 +137,4 @@
 
 	<script src="../modular/scripts/indentificaciones.js" ></script>
 	<script src="../modular/scripts/validation.js" ></script>
+	<script src="../modular/scripts/cliente.js" ></script>

@@ -197,82 +197,7 @@ Funciones["ocultarmostrar"] = function (e) {
 	};
 }
 
-//funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
-//para editar los datos de un cliente
-Funciones["editClient"] = function () {
-	var divpadre = this.parentNode
-	var divButton = divpadre.parentNode
-	var datos = divButton.parentNode.getElementsByTagName("td")
-	var formhtml = '<form style="text-align: left;">'+
-	'<label style="text-align: left;">Ruc/Cédula: </label>'+
-	'<input class="mdl-textfield__input" type="number" value="'+datos[0].innerHTML+'" disabled="true"><br>'+
-	'<label>Nombres</label>'+
-	'<input class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'"><br>'+
-	'<label>Direccion</label>'+
-	'<input class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'"><br>'+
-	'<label>Numero Convencional</label>'+
-	'<input class="mdl-textfield__input" type="text" value="'+datos[3].innerHTML+'"><br>'+
-	'<label>Correo Electronico</label>'+
-	'<input class="mdl-textfield__input" type="text" value="'+datos[4].innerHTML+'"><br>'+
-	'<label>Tipo Cliente</label>'+
-	'<select class="mdl-textfield__input" value="'+datos[5].innerHTML+'">'+
-		'<option>Ocasional</option>'+
-		'<option>Premium</option>'+
-	'</select><br>'+
-	'<label>Porcentaje Descuento</label>'+
-	'<select class="mdl-textfield__input" value="'+datos[6].innerHTML+'">'+
-	'<option value="0">0</option>'+
-	'<option value="5">5</option>'+
-	'</select>'+
-	'</form>'
-	swal({
-		  	title: 'Datos Cliente',
-		 	html: formhtml,
-		  	showCancelButton: true,
-		  	confirmButtonText: 'Guardar',
-		  	closeOnConfirm: false
-		},
-		function(isConfirm) {
-		  	if (isConfirm) {
-		    	swal({
-			  	title: '¿Seguro que desea modificar los datos del cliente?',
-			  	type: 'warning',
-			  	showCancelButton: true,
-			  	confirmButtonText: 'Si',
-			  	cancelButtonText:'No'
 
-			},
-			function(isConfirm) {
-			  	if (isConfirm) {
-			    	location.reload(); 
-			  	}
-			}); 
-		  	}
-		});
-}
-
-//funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
-//para borrar los datos de un cliente
-Funciones["deleteClient"] = function () {
-
-	var divpadre = this.parentNode
-	var divButton = divpadre.parentNode
-	var datos = divButton.parentNode.getElementsByTagName("td")
-	var infoHTML = '<label>Cedula: '+datos[0].innerHTML+'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
-	swal({
-	  	title: '¿Seguro que desea eliminar los datos del cliente?',
-	  	html: infoHTML,
-	  	type: 'warning',
-	  	showCancelButton: true,
-	  	confirmButtonText: 'Si'
-
-	},
-	function(isConfirm) {
-	  	if (isConfirm) {
-	    	location.reload(); 
-	  	}
-	}); 
-}
 
 
 /*funcion pensada para ser usada con un input y unicamente con la funcion keyup para poder hacer
@@ -323,6 +248,7 @@ Funciones["buscarTabla"] = function (e) {
         }
     }
 }
+
 //funcion que forma parte de la funcion anterior para buscar los datos segun su id de columna
 function dataTable(j,array){
 	for (var i = 0; i < array.length; i++) {
@@ -414,6 +340,68 @@ Funciones["deleteProduct"] = function () {
 }
 
 
+// //modal editar producto
+Funciones["editProducto"] = function () {
+	var divpadre = this.parentNode
+	var divButton = divpadre.parentNode
+	var datos = divButton.parentNode.getElementsByTagName("td")
+	var formhtml = '<form id="editForm" style="text-align: left;" action="/admin/productos" method="post">'+
+	'<label style="text-align: left;">Código del Producto: </label>'+
+	'<input class="mdl-textfield__input"  name="Cod_Prod" id="Ced_Emp" type="number" value="'+datos[0].innerHTML+'" readonly="readonly"><br>'+
+	'<label>Descripción</label>'+
+	'<input class="mdl-textfield__input"  name="Des_Prod" id="Des_Prod" type="text" value="'+datos[1].innerHTML+'"><br>'+
+	'<label>Existencia</label>'+
+	'<input class="mdl-textfield__input" name="Exis_Prod" id="Exis_Prod" type="number" value="'+datos[2].innerHTML+'"><br>'+
+	'<label>Precio de la compra</label>'+
+	'<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" type="number" value="'+datos[2].innerHTML+'"><br>'+
+	'<label>Precio de la Venta</label>'+
+	'<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" type="number" value="'+datos[2].innerHTML+'"><br>'+
+	'<label id="labelFormModal" style="display:none">Por favor asegurese que todos los datos del formulario son correctos </label>'+
+	'<input type="hidden" value="Actualizar" name="accion" id="accion">'+
+	'</form>'
+	swal({
+		title: 'Datos Producto',
+	   html: formhtml,
+		showCancelButton: true,
+		confirmButtonText: 'Guardar',
+		closeOnConfirm: false
+  },
+  function(isConfirm) {
+		if (isConfirm) {
+			var divs = document.getElementsByTagName("div")
+			var form;
+			for (var i = 0; i < divs.length; i++) {
+				if (divs[i].className=="sweet-content") {
+					if (divs[i].firstChild.id=="editForm") {
+						form=divs[i].firstChild;
+						break;
+					};
+				};
+			};
+			var bool;
+			if (form) {bool = ValidarDatosFormulario(form,true)}
+			if (form && !bool) {
+				document.getElementById("labelFormModal").style.display="block";
+				return false;
+			};
+		  swal({
+			title: '¿Seguro que desea modificar los datos del Producto?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Si',
+			cancelButtonText:'No'
+
+		  },
+		  function(isConfirm) {
+				if (isConfirm) {
+					document.body.appendChild(form);
+					form.submit();
+				}
+		  }); 
+		}
+  });
+}
+
 
 //funcion echa por paz para permitir decimales en inputs unicamente con coma (,) y 2 decimales maximo 
 //esta se usa unicamente con el evento keypress aunqueda algo que validar no recuerdo bien que era
@@ -478,6 +466,24 @@ Funciones["NumeroEntero"] = function(e){
     }
 }
 
+//funcion para validar solo numeros con decimales
+function validarnum(numero,span){
+    numero = numero.replace(",", ".")
+    if (!isNaN(numero)){
+        var array = numero.split(".")
+            if(array[1] && array[1].length > 2){
+                if(span){
+                    span.innerHTML="Solo se acepta 2 decimales";
+                }
+                return false;
+            }
+        return true;
+    }
+    if (span) {
+        span.innerHTML="Ingrese solo valores numericos";
+    };
+    return false
+}
 
 
 //funcion para abrir un modal en la asignacion de empleados
@@ -533,6 +539,7 @@ Funciones["LibrarTarea"] = function(){
 		}
   	});
 }
+
 //Funcion para pasar al siguiente elemento dando enter
 Funciones["EnterNext"] = function (e) {
 	(e.keyCode)?k=e.keyCode:k=e.which;
@@ -577,67 +584,8 @@ Funciones["soloLetras"] = function (e) {
 		},1,this);
 	}
 }
-// //modal editar producto
-Funciones["editProducto"] = function () {
-	var divpadre = this.parentNode
-	var divButton = divpadre.parentNode
-	var datos = divButton.parentNode.getElementsByTagName("td")
-	var formhtml = '<form id="editForm" style="text-align: left;" action="/admin/productos" method="post">'+
-	'<label style="text-align: left;">Código del Producto: </label>'+
-	'<input class="mdl-textfield__input"  name="Cod_Prod" id="Ced_Emp" type="number" value="'+datos[0].innerHTML+'" readonly="readonly"><br>'+
-	'<label>Descripción</label>'+
-	'<input class="mdl-textfield__input"  name="Des_Prod" id="Des_Prod" type="text" value="'+datos[1].innerHTML+'"><br>'+
-	'<label>Existencia</label>'+
-	'<input class="mdl-textfield__input" name="Exis_Prod" id="Exis_Prod" type="number" value="'+datos[2].innerHTML+'"><br>'+
-	'<label>Precio de la compra</label>'+
-	'<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" type="number" value="'+datos[2].innerHTML+'"><br>'+
-	'<label>Precio de la Venta</label>'+
-	'<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" type="number" value="'+datos[2].innerHTML+'"><br>'+
-	'<label id="labelFormModal" style="display:none">Por favor asegurese que todos los datos del formulario son correctos </label>'+
-	'<input type="hidden" value="Actualizar" name="accion" id="accion">'+
-	'</form>'
-	swal({
-		title: 'Datos Producto',
-	   html: formhtml,
-		showCancelButton: true,
-		confirmButtonText: 'Guardar',
-		closeOnConfirm: false
-  },
-  function(isConfirm) {
-		if (isConfirm) {
-			var divs = document.getElementsByTagName("div")
-			var form;
-			for (var i = 0; i < divs.length; i++) {
-				if (divs[i].className=="sweet-content") {
-					if (divs[i].firstChild.id=="editForm") {
-						form=divs[i].firstChild;
-						break;
-					};
-				};
-			};
-			var bool;
-			if (form) {bool = ValidarDatosFormulario(form,true)}
-			if (form && !bool) {
-				document.getElementById("labelFormModal").style.display="block";
-				return false;
-			};
-		  swal({
-			title: '¿Seguro que desea modificar los datos del Producto?',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Si',
-			cancelButtonText:'No'
 
-		  },
-		  function(isConfirm) {
-				if (isConfirm) {
-					document.body.appendChild(form);
-					form.submit();
-				}
-		  }); 
-		}
-  });
-}
+
 
 //inicializa la funcion que recorre el html en busca de los elementos con los atributos explicados
 Funciones.init();
