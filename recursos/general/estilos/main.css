@@ -500,7 +500,18 @@ html, body{
 ======================================================*/
 /*=============Azulejos o accesos directos(Tiles)*/
 
+.img-empleado{
+	padding-top:4px;
+	padding-bottom: 4px
+}
+.titulo-empleado{
+	margin-bottom: 12px;
+}
 
+.contenido-empleados{
+	height: 400px; 
+	overflow-y: scroll;
+}
 
 .fuente{
 	color: #2b2b2c;

@@ -8,38 +8,37 @@
                         <div class="full-width panel-tittle bg-primary text-center tittles">
                             ASIGNACION DE EMPLEADOS
                         </div>
-
                         <div class="full-width panel-content"><br>
-
-                        <div class="  text-center tittles">
-
-                        Haga Click sobre el empleado para asignar tarea
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                    <h5 class="text-condensedLight">DISPONIBLES</h5>
-                                    {{#if disponibles}}{{#each disponibles}}                 
-                                        <div validation="AsignacionTarea" id="{{thsis.Ced_Emp}}" event="click" validation="Ayuda">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h3 class="text-condensedLight">DISPONIBLES</h3>
+                                    <div class=" tittles titulo-empleado">
+                                        Haga Click sobre el empleado para asignar tarea
+                                    </div>
+                                    <div class="contenido-empleados">
+                                        {{#if disponibles}}{{#each disponibles}}
+                                        <div id="{{thsis.Ced_Emp}}" onclick="asignacion(this)" class="img-empleado">
                                             <img src="{{this.Img_Emp}}" alt="avatar" class="img-circle img-thumbnail" style="height: 65px; width=65px;">
                                             <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>
-                                        </div>                                                                         
-                                    {{/each}}{{/if}}
+                                        </div>
+                                        {{/each}}{{/if}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h3 class="text-condensedLight">NO DISPONIBLES</h3>
+                                    <div class="tittles titulo-empleado">
+                                        Haga Click sobre el empleado para liberar de una tarea
+                                    </div>
+                                    <div class="contenido-empleados">
+                                        {{#if noDisponibles}}{{#each noDisponibles}}
+                                        <div id="{{thsis.Ced_Emp}}"  class="img-empleado">
+                                            <img src="{{this.Img_Emp}}" class="img-circle img-thumbnail" alt="avatar" style="height: 65px; width:65px;">
+                                            <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>
+                                        </div>
+                                        {{/each}}{{/if}}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                    <h5 class="text-condensedLight">NO DISPONIBLES</h5>
-                                    {{#if noDisponibles}}{{#each noDisponibles}}
-                                        <div validation="LibrarTarea" id="{{thsis.Ced_Emp}}" event="click">
-                                            <img src="{{this.Img_Emp}}" class="img-circle img-thumbnail" alt="avatar" style="height: 45px; width=45px; ">
-                                            <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>  
-                                        </div>  
-                                    {{/each}}{{/if}}
-                                 </div>
-                            </div>
-                        </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -47,4 +46,65 @@
         </div>
 </section>
 
-<script src="../modular/scripts/validation.js" ></script>
+<script src="../modular/scripts/validation.js"></script>
+<!--
+<div id="modalAsignacion" class="modal fade sweet-container" role="dialog" style="margin-top:-60px">
+    <div class="sweet-alert  visible" style="display: block; padding: 1px; margin-left: -250px; background: rgb(255, 255, 255) none repeat scroll 0% 0%;">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Asignación de actividades</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sweet-container">
+    <div class="sweet-alert show-sweet-alert visible" style="display: block; width: 500px; padding: 20px; margin-left: -250px; background: rgb(255, 255, 255) none repeat scroll 0% 0%;"
+        tabindex="-1">    
+        <h2>Tarea Empleado</h2>
+        <div class="sweet-content"><label>Contador de Servicio</label> <input class="mdl-textfield__input" readonly="" type="number"><br><label>Cédula del Empleado</label>            <input class="mdl-textfield__input" type="number"><br><label>Fecha de asignación del servicio</label>
+            <input class="mdl-textfield__input" step="1" min="2017-08-01" max="2030-12-31" type="date">
+            <br><label>Hora de asignación del servicio</label> 
+            <input class="mdl-textfield__input" type="time">
+            <br><label>Hora de Finalización del servicio</label> 
+            <input class="mdl-textfield__input" type="time"><br>
+            <label>RUC/Cédula Cliente</label> 
+            <input class="mdl-textfield__input" type="number"><br>
+            <label>Descripción del servicio </label><br>
+            <textarea cols="60" rows="10"></textarea></div>
+            <button class="sweet-confirm styled" style="background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214);">Asignar</button>
+            <button class="sweet-cancel styled" style="display: inline-block; background-color: rgb(170, 170, 170);">Atrás</button>
+    </div>
+</div>
+
+
+<div class="sweet-alert show-sweet-alert visible" style="display: block; width: 500px; padding: 20px; margin-left: -250px; background: rgb(255, 255, 255) none repeat scroll 0% 0%;"
+    tabindex="-1">
+    <div class="icon error" style="display: none;"><span class="x-mark"><span class="line left"></span><span class="line right"></span></span>
+    </div>
+    <div class="icon warning pulse-warning" style="display: block;"> <span class="body pulse-warning-ins"></span> <span class="dot pulse-warning-ins"></span> </div>
+    <div class="icon info"
+        style="display: none;"></div>
+    <div class="icon success" style="display: none;"> <span class="line tip"></span> <span class="line long"></span>
+        <div class="placeholder"></div>
+        <div class="fix"></div>
+    </div> <img class="sweet-image" style="display: none;">
+    <h2>Desocupar Empleado</h2>
+    <div class="sweet-content">
+        <p>¿Estás Seguro de hacer esto?</p>
+    </div>
+    <hr class="sweet-spacer" style="display: block;"><button class="sweet-confirm styled" style="background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214);">Estoy de acuerdo</button>
+    <button
+        class="sweet-cancel styled" style="display: inline-block; background-color: rgb(221, 51, 51);">Cancel</button>
+</div>
+-->
+
+<script src="../modular/scripts/asignacion_actividades.js"></script>
