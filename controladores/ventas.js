@@ -39,7 +39,7 @@ function registrarVenta(req, res) {
 
 function busquedaCliente(req, res) {
 	var cedula = req.params.cedula;
-	cliente.findOne({ Ced_Clien: cedula }, (err, clienteObtenido) => {
+	cliente.findOne({ Ced_Cli: cedula }, (err, clienteObtenido) => {
 		if (err) {
 			//res.render('500', { error: err })
 			res.status(500).send({ error: "Error al buscar" });
