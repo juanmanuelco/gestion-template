@@ -18,10 +18,10 @@
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblPersonas" >
 					<thead>
 						<tr>
-							<th>Cedula</th>
-							<th>Nombre</th>
-							<th>Telefono</th>
-							<th>Turno</th>
+							<th style="text-align: left;">Cedula</th>
+							<th style="text-align: left;">Nombre</th>
+							<th style="text-align: left;">Telefono</th>
+							<th style="text-align: center;">Turno</th>
 							<th>
 								<center>Opcion</center>
 							</th>
@@ -31,10 +31,10 @@
 					<tbody id="contenidoTabla">
 						{{#if usuarios}}{{#each usuarios}}
 						<tr>
-							<td id="{{this.Img_Emp}}">{{this.Ced_Emp}}</td>
-							<td>{{this.Nomb_Emp}}</td>
-							<td>{{this.Telf_Emp}}</td>
-							<td id="{{this.Estd_Emp}}">{{this.Tur_Emp}}</td>
+							<td id="{{this.Img_Emp}}" style="text-align: left;">{{this.Ced_Emp}}</td>
+							<td style="text-align: left;">{{this.Nomb_Emp}}</td>
+							<td style="text-align: left;">{{this.Telf_Emp}}</td>
+							<td id="{{this.Estd_Emp}}" style="text-align: center;">{{this.Tur_Emp}}</td>
 							<td>
 								<div>
 									<center>
