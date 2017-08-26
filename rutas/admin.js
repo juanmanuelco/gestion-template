@@ -2,9 +2,9 @@ var express = require('express'),
 	venta_model = require("../modelos/ventas"),
 	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
 	E_DBF_EMPLEADO_OBJ = require('../modelos/empleados'),
-	E_DBF_CLIENTE_OBJ=require('../modelos/cliente')
-	venta_controller = require("../controladores/ventas")//todas las funciones de venta	
-	router = express.Router(),
+	E_DBF_CLIENTE_OBJ = require('../modelos/cliente')
+venta_controller = require("../controladores/ventas")//todas las funciones de venta	
+router = express.Router(),
 	multer = require('multer');
 
 function ensureAuthenticated(req, res, next) {
@@ -15,13 +15,10 @@ function ensureAuthenticated(req, res, next) {
 }
 
 //====================Ventas====================================================//
-router.get('/ventas', function (req, res) {
-	res.render('ventas',{fecha:fecha})
-});
-router.get('/buscar/:cedula', venta_controller.busquedaCliente);
-router.get('/buscar/:codigo', venta_controller.busquedaProducto);
-router.post('/ventas', venta_controller.registrarVenta);
-
+router.get('/ventas', ensureAuthenticated, venta_controller.obtenerVistaVenta);
+router.get('/buscar/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
+router.get('/buscar/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
+router.post('/ventas', ensureAuthenticated, venta_controller.registrarVenta);
 //===================Productos===============================================//
 
 //renderiza en la ruta /productos la vista productos 
@@ -139,16 +136,16 @@ router.get('/tabla_empleados', ensureAuthenticated, function (req, res) {
 	});
 });
 
-router.post('/getEmployeeByCed',function (req,res) {
-	var query = { 'Ced_Emp': req.body.cedula};
+router.post('/getEmployeeByCed', function (req, res) {
+	var query = { 'Ced_Emp': req.body.cedula };
 	E_DBF_EMPLEADO_OBJ.find(query, function (err, users) {
 		res.send(users);
 	});
 })
 
-router.post('/editEmployee',ensureAuthenticated, E_DBF_EMPLEADO_OBJ.editEmployeed)
+router.post('/editEmployee', ensureAuthenticated, E_DBF_EMPLEADO_OBJ.editEmployeed)
 
-router.post('/deleteEmployee',ensureAuthenticated, E_DBF_EMPLEADO_OBJ.deleteEmployeed)
+router.post('/deleteEmployee', ensureAuthenticated, E_DBF_EMPLEADO_OBJ.deleteEmployeed)
 
 //Este codigo funciona para la subida, generen dos rutas mas una para actualizar y otra para eliminar NO TODO AHI MISMO
 //Sino preguntenle a Jairo lo que pasa si pones todo en el mismo lugar :v createEmpleado
@@ -157,26 +154,26 @@ router.post('/saveEmployee', ensureAuthenticated, E_DBF_EMPLEADO_OBJ.createEmple
 router.get('/asignar_empleados', ensureAuthenticated, function (req, res) {
 	var empleadosDisponibles = new Array(),
 		empleadoNoDisponibles = new Array(),
-		Tclientes=new Array();
+		Tclientes = new Array();
 	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec(function (error, disponibles) {
 		empleadosDisponibles = disponibles;
 		E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'No Disponible' }).exec(function (error, Nodisponibles) {
-			E_DBF_CLIENTE_OBJ.find().exec(function(error,clientes){
+			E_DBF_CLIENTE_OBJ.find().exec(function (error, clientes) {
 				empleadoNoDisponibles = Nodisponibles;
-				Tclientes=clientes;
+				Tclientes = clientes;
 				res.render('Control_Actividades', {
-					disponibles: empleadosDisponibles, 
+					disponibles: empleadosDisponibles,
 					noDisponibles: empleadoNoDisponibles,
 					clientes: Tclientes
 				});
-			});			
+			});
 		});
 	});
 });
 
-router.post('/datos-empleados',function(req,res){
-	var cedula=req.body.cedula;
-	E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:cedula}).exec(function(err,resp){
+router.post('/datos-empleados', function (req, res) {
+	var cedula = req.body.cedula;
+	E_DBF_EMPLEADO_OBJ.findOne().where({ Ced_Emp: cedula }).exec(function (err, resp) {
 		res.send(resp)
 	});
 });
