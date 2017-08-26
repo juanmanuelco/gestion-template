@@ -109,6 +109,8 @@ router.get('/inventario', ensureAuthenticated,(req, res)=> {
 router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');});
 router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
+//===================Empleados===============================================//
+
 router.get('/registro_empleado', ensureAuthenticated, (req, res)=> { res.render('registro_empleado');});
 
 router.get('/tabla_empleados', ensureAuthenticated, empleados_controller.searchAllEmployeed);
@@ -122,6 +124,9 @@ router.post('/deleteEmployee',ensureAuthenticated, empleados_controller.deleteEm
 //Este codigo funciona para la subida, generen dos rutas mas una para actualizar y otra para eliminar NO TODO AHI MISMO
 //Sino preguntenle a Jairo lo que pasa si pones todo en el mismo lugar :v createEmpleado
 router.post('/saveEmployee', ensureAuthenticated, empleados_controller.createEmpleado)
+
+//===================Empleados fin===============================================//
+
 
 router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
 	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec((error, disponibles)=> {
