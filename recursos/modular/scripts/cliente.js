@@ -1,3 +1,5 @@
+FuncionesCliente={}
+
 //funcion para agregar clientes
 FuncionesCliente["saveCliente"] = function (e){
 	e.preventDefault();
