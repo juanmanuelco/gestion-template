@@ -1,8 +1,16 @@
-<!--Establezca que debe mostrarse cuando ocurre un error de alta gravedad-->
-<h1>Error 500</h1>
-<p>No se encuentra el elemento</p>
+<br><br><br><br>
+<center>
+    <div style="padding:100px; padding-left: 240px">
+        <h1 style="font-size:90px; color:#757575
+">Error 500</h1><br>
+        <p style="font-size:35px; color:#B71C1C">{{error}}</p><br>
+        <p style="font-size:15px; color:#B71C1C">{{descripcion}}</p>
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;" onclick="window.history.back();">Volver a realizar la accíon</button>
+    </div>
+</center>
 
-<!--Aquí deben ir los estilos y los scripts que serán usados únicamente para esta vista-->
-<!--500.css y 500.js son solo un ejemplo-->
-<link rel="stylesheet" href="../modular/css/500.css">
-<script type="text/javascript" src="../modular/js/500.js"></script>
+<!--
+    en el servidor 
+    error:"Error del sistema :(
+    descripcion:"¡Vaya!, algo salió mal. Tu petición no ha sido completada. Por favor inténtelo nuevamente
+-->

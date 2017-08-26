@@ -20,7 +20,7 @@
 								<!-- ------------------------------------------------------------------------------------ --->
 								<div style="width:20%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<label class="text-condensedLight" style="font-size:17px;">Cédula del Cliente</label>
-									<input value="" name="cedula" class="mdl-textfield__input" type="text" id="cedula">
+									<input value="" name="cedula" class="mdl-textfield__input" type="text" id="cedula" solonum="true" maxlength="13" validation="cedruc" event="keyup" >
 									<label class="mdl-textfield__label" for="phoneAdmin"></label>
 									<span class="mdl-textfield__error">Cédula inválida</span>
 								</div>
@@ -29,35 +29,35 @@
 								</div>
 								<div style="width:67%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<label class="text-condensedLight" style="font-size:17px;">Nombre del Cliente</label>
-									<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="email" id="emailAdmin">
+									<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="emailAdmin">
 									<label class="mdl-textfield__label" for="emailAdmin"></label>
 									<span class="mdl-textfield__error">Correo Invalido</span>
 								</div>
 								<!-- ------------------------------------------------------------------------------------ --->
 								<div style="width:20%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<label class="text-condensedLight" style="font-size:17px;">Código del Producto</label>
-									<input value="" name="cedula" class="mdl-textfield__input" type="text" id="codigo">
+									<input value="" name="cedula"  class="mdl-textfield__input" type="text" id="codigo" solonum="true" maxlength="6">
 									<label class="mdl-textfield__label" for="phoneAdmin"></label>
 									<span class="mdl-textfield__error">Cédula inválida</span>
 								</div>
 								<div style="width:13%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<button id="btn-delClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Buscar</button>
+									<button id="btnBuscarProducto" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Buscar</button>
 								</div>
 								<div style="width:33%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<label class="text-condensedLight" style="font-size:17px;">Descripcion</label>
-									<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="email" id="descripcion">
+									<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="descripcion">
 									<label class="mdl-textfield__label" for="emailAdmin"></label>
 									<span class="mdl-textfield__error">Correo Invalido</span>
 								</div>
 								<div style="width:17%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<label class="text-condensedLight" style="font-size:17px;">Precio</label>
-									<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="email" id="precio">
+									<input value="{{cliente.nombre}}" readonly="true"  class="mdl-textfield__input" type="email" id="precio">
 									<label class="mdl-textfield__label" for="emailAdmin"></label>
 									<span class="mdl-textfield__error">Correo Invalido</span>
 								</div>
 								<div style="width:17%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 									<label class="text-condensedLight" style="font-size:17px;">Cantidad</label>
-									<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="number" id="cantidad" max="9999">
+									<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="text" id="cantidad" solonum="true" maxlength="3">
 									<label class="mdl-textfield__label" for="emailAdmin"></label>
 									<span class="mdl-textfield__error">No válido</span>
 								</div>
@@ -135,3 +135,6 @@
 	<br><br>
 </section>
 <script src="../modular/scripts/ventas.js"></script>
+<script src="../modular/scripts/validacion_form.js"></script>
+<script src="../modular/scripts/indentificaciones.js"></script>
+<script src="../modular/scripts/validation.js"></script>
