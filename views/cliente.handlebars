@@ -9,30 +9,30 @@
 								Nuevo Cliente
 							</div>
 							<div class="full-width panel-content">
-								<form>
+								<form action="/admin/saveClient" method="post">
 									<div class="mdl-grid">
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Ruc/Cédula</label>
-												<input class="mdl-textfield__input" type="number" id="BarCode" solonum="true" validation="cedruc" event="keyup" maxlength="10">
+												<input class="mdl-textfield__input" name="Ced_Cli" type="number" id="BarCode" solonum="true" validation="cedruc" event="keyup" maxlength="10">
 												<label class="mdl-textfield__label" for="BarCode"></label>
 												<span class="mdl-textfield__error">Ingrese Solo Números en Ruc/Cédula de Cliente</span>
 								    		</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre</label>
-												<input class="mdl-textfield__input" type="text" soloLetras="true"  id="NameClient" maxlength="100">
+												<input class="mdl-textfield__input" name="Nomb_Cli" type="text" soloLetras="true"  id="NameClient" maxlength="100">
 												<label class="mdl-textfield__label" for="NameClient"></label>
 												<span class="mdl-textfield__error">Ingrese solo letras </span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Dirección</label>
-												<input class="mdl-textfield__input" type="text" id="addressClient1">
+												<input class="mdl-textfield__input" name="Dir_Cli" type="text" id="addressClient1">
 												<label class="mdl-textfield__label" for="addressClient1"></label>
 												<span class="mdl-textfield__error">Dirección no válida</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Celular/Convencional</label>
-												<input class="mdl-textfield__input" type="number" solonum="true" id="NumeroConvencional" maxlength="10">
+												<input class="mdl-textfield__input" name="Telf_Cli" type="number" solonum="true" id="NumeroConvencional" maxlength="10">
 												<label class="mdl-textfield__label" for="NumeroConvencional"></label>
 												<span class="mdl-textfield__error">Ingrese solo números</span>
 											</div>
@@ -40,17 +40,18 @@
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Correo electronico</label>
-												<input class="mdl-textfield__input" type="text" id="Correo" validation="email" event="keyup">
+												<input class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" event="keyup">
 												<label class="mdl-textfield__label" for="Correo"></label>
 												<span class="mdl-textfield__error">Correo No válido</span>
 											</div>
 												<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>
 											<div class="mdl-textfield mdl-js-textfield">
-												<select class="mdl-textfield__input">
+												<select class="mdl-textfield__input" name="Tip_Cli">
 													<option value="Ocasional">Ocasional</option>
 													<option value="Premiun">Premium</option>
 												</select>
 											</div>
+											
 											<div align="center">
 		                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" validation="saveCliente" >Guardar</button>
 		                                       <button id="btn-verClientes" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" id="Consultar" validation="ocultarmostrar" mostrarID="divTabla" ocultarID="tabNewAdmin" event="click" title="Mostrar Cliente Registrados">Ver Clientes Registrados</button>

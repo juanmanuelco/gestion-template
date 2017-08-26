@@ -7,7 +7,7 @@ var bcrypt = require('bcryptjs');
 var E_DBF_CLIENTE_OBJ  = mongoose.Schema({
     Ced_Cli: { type: String, required: true, unique: true },
     Nomb_Cli: String,
-    Telf_Cli:Number,
+    Telf_Cli:String,
     Dir_Cli: String,
     Cor_Cli: String,
     Tip_Cli:String,

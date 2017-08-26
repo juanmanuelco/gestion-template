@@ -2,6 +2,7 @@ var express = require('express'),
 	venta_model = require("../modelos/ventas");
 E_DBF_PRODUCTO_OBJ = require('../modelos/productos')
 E_DBF_EMPLEADO_OBJ = require('../modelos/empleados')
+E_DBF_CLIENTE_OBJ = require('../modelos/cliente')
 router = express.Router(),
 	multer = require('multer');
 
@@ -11,6 +12,36 @@ function ensureAuthenticated(req, res, next) {
 	else
 		res.redirect('/users/login');
 }
+
+
+//=============================rutas para clientes==============================
+
+router.post('/saveClient', ensureAuthenticated, function (req, res) {
+	var params = req.body;
+	var porcentajeDescuento=0;
+	if(req.body.Tip_Cli=="Premiun"){
+		porcentajeDescuento=5;
+	}
+	var nuevoCliente = new E_DBF_CLIENTE_OBJ({
+		Ced_Cli: req.body.Ced_Cli,
+		Nomb_Cli: req.body.Nomb_Cli,
+		Dir_Cli: req.body.Dir_Cli,
+		Telf_Cli: req.body.Telf_Cli,
+		Cor_Cli: req.body.Cor_Cli,
+		Tip_Cli: req.body.Tip_Cli,
+		Por_Cli: porcentajeDescuento
+	})
+	nuevoCliente.save(function (error, resp) {
+		if (error) {
+			res.render('500', { error: error })
+			console.log(error);
+		} else {
+			res.render('cliente', { success_msg: 'Guardado' })
+			console.log("Guardado");
+		}
+	})
+})
+
 
 router.get('/ventas', ensureAuthenticated, function (req, res) {
 	//res.render('ventas');
