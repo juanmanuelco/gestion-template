@@ -17,8 +17,8 @@ function ensureAuthenticated(req, res, next) {
 
 //====================Ventas====================================================//
 router.get('/ventas', ensureAuthenticated, venta_controller.obtenerVistaVenta);
-router.get('/buscar/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
-router.get('/buscar/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
+router.get('/buscarcliente/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
+router.get('/buscarproducto/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
 router.post('/ventas', ensureAuthenticated, venta_controller.registrarVenta);
 //===================Productos===============================================//
 
