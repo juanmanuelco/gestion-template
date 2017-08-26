@@ -3,6 +3,7 @@ var express = require('express'),
 	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
 	E_DBF_EMPLEADO_OBJ = require('../modelos/empleados'),
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente')
+	venta_controller = require("../controladores/ventas")//todas las funciones de venta	
 	router = express.Router(),
 	multer = require('multer');
 
@@ -13,30 +14,13 @@ function ensureAuthenticated(req, res, next) {
 		res.redirect('/users/login');
 }
 
-router.get('/ventas', ensureAuthenticated, function (req, res) {
-	//res.render('ventas');
-	res.render('ventas', { incrementar: "00001" })
+//====================Ventas====================================================//
+router.get('/ventas', function (req, res) {
+	res.render('ventas',{fecha:fecha})
 });
-
-router.post('/ventas', ensureAuthenticated, function (req, res) {
-	var params = req.body;
-	var nuevaVenta = new venta_model({
-		CodVen_Vent: params.codigo_venta,
-		Ced_Vent: params.cedula,
-		Fech_Vent: params.fecha,
-		CodPro_Vent: params.codigo_producto,
-		Desc_Vent: params.descuento
-	})
-	nuevaVenta.save(function (error, resp) {
-		if (error) {
-			res.render('500', { error: error })
-			console.log("Error");
-		} else {
-			res.render('ventas', { success_msg: 'Guardado' })
-			console.log("Guardado");
-		}
-	})
-})
+router.get('/buscar/:cedula', venta_controller.busquedaCliente);
+router.get('/buscar/:codigo', venta_controller.busquedaProducto);
+router.post('/ventas', venta_controller.registrarVenta);
 
 //===================Productos===============================================//
 
