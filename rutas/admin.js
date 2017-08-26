@@ -16,13 +16,10 @@ function ensureAuthenticated(req, res, next) {
 }
 
 //====================Ventas====================================================//
-router.get('/ventas', function (req, res) {
-	res.render('ventas',{fecha:fecha})
-});
-router.get('/buscar/:cedula', venta_controller.busquedaCliente);
-router.get('/buscar/:codigo', venta_controller.busquedaProducto);
-router.post('/ventas', venta_controller.registrarVenta);
-
+router.get('/ventas', ensureAuthenticated, venta_controller.obtenerVistaVenta);
+router.get('/buscar/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
+router.get('/buscar/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
+router.post('/ventas', ensureAuthenticated, venta_controller.registrarVenta);
 //===================Productos===============================================//
 
 //renderiza en la ruta /productos la vista productos 
@@ -155,14 +152,14 @@ router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
 					noDisponibles: Nodisponibles,
 					clientes: clientes
 				});
-			});			
+			});
 		});
 	});
 });
 
-router.post('/datos-empleados',function(req,res){
-	var cedula=req.body.cedula;
-	E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:cedula}).exec(function(err,resp){
+router.post('/datos-empleados', function (req, res) {
+	var cedula = req.body.cedula;
+	E_DBF_EMPLEADO_OBJ.findOne().where({ Ced_Emp: cedula }).exec(function (err, resp) {
 		res.send(resp)
 	});
 });
