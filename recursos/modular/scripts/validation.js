@@ -138,6 +138,7 @@ Funciones["init"] = function (argument) {
 		if (soloLetras) {
 			elements[i].addEventListener("keypress",Funciones["soloLetras"])
 			elements[i].addEventListener("keyup",Funciones["soloLetras"])
+			elements[i].addEventListener("blur",Funciones["soloLetras"])
 		};
 		var EnterNext = elements[i].getAttribute("EnterNext") || false;
 		if (EnterNext) {elements[i].addEventListener("keyup",Funciones["EnterNext"])};
@@ -196,9 +197,6 @@ Funciones["ocultarmostrar"] = function (e) {
 		}
 	};
 }
-
-
-
 
 /*funcion pensada para ser usada con un input y unicamente con la funcion keyup para poder hacer
 busqueda dinamica en una tabla estatica sin conexion a base de datos, que se busca en el atributo 
@@ -485,9 +483,6 @@ function validarnum(numero,span){
     return false
 }
 
-
-
-
 //función para liberar tarea
 Funciones["LibrarTarea"] = function(){
 	swal({
@@ -520,11 +515,10 @@ Funciones["EnterNext"] = function (e) {
 	}
 }
 
-
-
 Funciones["soloLetras"] = function (e) {
 	patron =/[A-Za-zñáéíóúÁÉÍÓÚ\s]/;
 	var validacion=true;
+	this.parentNode.classList.remove("is-invalid")
 	if (e.type == "keypress") {
 		tecla = (document.all) ? e.keyCode : e.which;
 		text = String.fromCharCode(tecla);
@@ -532,7 +526,7 @@ Funciones["soloLetras"] = function (e) {
 		//if (!validacion) {e.preventDefault()};
 	}
 	else{
-		if (e.type=="keyup") {
+		if (e.type=="keyup" || e.type=="blur") {
 			if (this.value.length>=1) {
 				for (var i = 0; i < this.value.length; i++) {
 					validacion = patron.test(this.value[i]);
@@ -549,9 +543,11 @@ Funciones["soloLetras"] = function (e) {
 			a.parentNode.classList.add("is-invalid");
 		},1,this);
 	}
+
+	this.addEventListener("focus", function (argument) {
+		this.parentNode.classList.remove("is-invalid")
+	});
 }
-
-
 
 //inicializa la funcion que recorre el html en busca de los elementos con los atributos explicados
 Funciones.init();
