@@ -16,13 +16,10 @@ function ensureAuthenticated(req, res, next) {
 }
 
 //====================Ventas====================================================//
-router.get('/ventas', function (req, res) {
-	res.render('ventas',{fecha:fecha})
-});
-router.get('/buscar/:cedula', venta_controller.busquedaCliente);
-router.get('/buscar/:codigo', venta_controller.busquedaProducto);
-router.post('/ventas', venta_controller.registrarVenta);
-
+router.get('/ventas', ensureAuthenticated, venta_controller.obtenerVistaVenta);
+router.get('/buscar/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
+router.get('/buscar/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
+router.post('/ventas', ensureAuthenticated, venta_controller.registrarVenta);
 //===================Productos===============================================//
 
 //renderiza en la ruta /productos la vista productos 

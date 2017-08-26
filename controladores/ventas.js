@@ -11,7 +11,9 @@ function obtenerFecha(){
 	return fecha;
 }
 
-
+function obtenerVistaVenta(req, res) {
+	res.render('ventas')
+}
 function registrarVenta(req, res) {
 	var params = req.body;
 	var nuevaVenta = new venta_model({
@@ -66,4 +68,4 @@ function busquedaProducto(req, res) {
 		}
 	});
 }
-module.exports = { registrarVenta, busquedaCliente, busquedaProducto }
+module.exports = { obtenerVistaVenta, registrarVenta, busquedaCliente, busquedaProducto }
