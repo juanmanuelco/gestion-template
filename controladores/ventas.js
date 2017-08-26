@@ -14,6 +14,9 @@ function obtenerFecha(){
 function obtenerVistaVenta(req, res) {
 	res.render('ventas')
 }
+/*function error500(req, res){
+	res.render('500', {error:"Error del sistema :(", descripcion:"¡Vaya!, algo salió mal. Tu petición no ha sido completada. Por favor inténtelo nuevamente"})
+}*/
 function registrarVenta(req, res) {
 	var params = req.body;
 	var nuevaVenta = new venta_model({
@@ -68,4 +71,4 @@ function busquedaProducto(req, res) {
 		}
 	});
 }
-module.exports = { obtenerVistaVenta, registrarVenta, busquedaCliente, busquedaProducto }
+module.exports = { obtenerVistaVenta, registrarVenta, busquedaCliente, busquedaProducto}
