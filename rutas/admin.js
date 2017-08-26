@@ -2,8 +2,9 @@ var express = require('express'),
 	venta_model = require("../modelos/ventas"),
 	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
 	empleados_controller = require('../controladores/empleados'),
-	E_DBF_CLIENTE_OBJ=require('../modelos/cliente')
-	venta_controller = require("../controladores/ventas")//todas las funciones de venta	
+	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
+	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
+	venta_controller = require("../controladores/ventas"),//todas las funciones de venta	
 	router = express.Router(),
 	multer = require('multer');
 
@@ -145,20 +146,14 @@ router.post('/deleteEmployee',ensureAuthenticated, empleados_controller.deleteEm
 //Sino preguntenle a Jairo lo que pasa si pones todo en el mismo lugar :v createEmpleado
 router.post('/saveEmployee', ensureAuthenticated, empleados_controller.createEmpleado)
 
-router.get('/asignar_empleados', ensureAuthenticated, function (req, res) {
-	var empleadosDisponibles = new Array(),
-		empleadoNoDisponibles = new Array(),
-		Tclientes=new Array();
-	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec(function (error, disponibles) {
-		empleadosDisponibles = disponibles;
-		E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'No Disponible' }).exec(function (error, Nodisponibles) {
-			E_DBF_CLIENTE_OBJ.find().exec(function(error,clientes){
-				empleadoNoDisponibles = Nodisponibles;
-				Tclientes=clientes;
+router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
+	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec((error, disponibles)=> {
+		E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'No Disponible' }).exec((error, Nodisponibles)=> {
+			E_DBF_CLIENTE_OBJ.find().exec((error,clientes)=>{
 				res.render('Control_Actividades', {
-					disponibles: empleadosDisponibles, 
-					noDisponibles: empleadoNoDisponibles,
-					clientes: Tclientes
+					disponibles: disponibles, 
+					noDisponibles: Nodisponibles,
+					clientes: clientes
 				});
 			});			
 		});
