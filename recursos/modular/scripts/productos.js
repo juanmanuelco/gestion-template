@@ -181,10 +181,10 @@ FuncionesProducto["deleteProduct"] = function () {
         '<label>Existencia</label>'+
         '<input class="mdl-textfield__input" name="Exis_Prod" id="Exis_Prod" type="number" value="'+datos[2].innerHTML+'"><br>'+
         '<label>Precio de la compra</label>'+
-        '<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" type="number" value="'+datos[2].innerHTML+'"><br>'+
+        '<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" type="number" value="'+datos[3].innerHTML+'"><br>'+
         '<label>Precio de la Venta</label>'+
-        '<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" type="number" value="'+datos[2].innerHTML+'"><br>'+
-        '<label id="labelFormModal" style="display:none">Por favor asegurese que todos los datos del formulario son correctos </label>'+
+        '<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" type="number" value="'+datos[4].innerHTML+'"><br>'+
+        '<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
         '<input type="hidden" value="Actualizar" name="accion" id="accion">'+
         '</form>'
         swal({
