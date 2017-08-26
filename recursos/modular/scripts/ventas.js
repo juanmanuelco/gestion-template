@@ -76,7 +76,16 @@ window.onload = () => {
 	var BuscarCliente = document.getElementById('btnBuscarCliente');
 	BuscarCliente.addEventListener('click', () => {
 		var cedula = document.getElementById('cedula').value;
-		$.ajax({ type: "GET", url: "/admin/buscar/" + cedula, dataType: "json", contentType: "text/plain" }).done((datos) => {
+		$.ajax({ type: "GET", url: "/admin/buscarcliente/" + cedula, dataType: "json", contentType: "text/plain" }).done((datos) => {
+			console.log(datos);
+		});
+	});
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	var BuscarProducto = document.getElementById('btnBuscarProducto');
+	BuscarProducto.addEventListener('click', () => {
+		var codigo = document.getElementById('codigo').value;
+		$.ajax({ type: "GET", url: "/admin/buscarproducto/" + codigo, dataType: "json", contentType: "text/plain" }).done((datos) => {
 			console.log(datos);
 		});
 	});
