@@ -78,7 +78,6 @@ router.post('/productos', function (req, res) {
 		E_DBF_PRODUCTO_OBJ.findOne().where({ Cod_Prod: req.body.Cod_Prod }).exec(function (err, respu) {
 			if (respu == null) {
 				var nuevoP = new E_DBF_PRODUCTO_OBJ({
-
 					Cod_Prod: req.body.Cod_Prod,
 					Descripcion: req.body.Des_Prod,
 					Existencia: req.body.Exis_Prod,
@@ -87,7 +86,6 @@ router.post('/productos', function (req, res) {
 				})
 				nuevoP.save(function (erro, resp) {
 					if (erro) {
-						console.log(erro)
 						res.render('productos', { error: erro })
 					} else {
 						res.render('productos', { success_msg: 'Producto guardado correctamente.' })
@@ -99,37 +97,19 @@ router.post('/productos', function (req, res) {
 		})
 	}
 })
-router.get('/inventario', ensureAuthenticated, function (req, res) {
-	E_DBF_PRODUCTO_OBJ.find({}, function (err, users) {
+router.get('/inventario', ensureAuthenticated,(req, res)=> {
+	E_DBF_PRODUCTO_OBJ.find({}, (err, users) =>{
 		res.render('inventario', { producto: users });
 	});
 });
 
 
-// router.get('/inventario', ensureAuthenticated,function (req, res) {
-// 	var empleadosDisponibles=new Array(), 
-// 	empleadoNoDisponibles=new Array();
-// 	E_DBF_EMPLEADO_OBJ.find().where({Estd_Emp:'Disponible'}).exec(function(error,disponibles){
-// 		empleadosDisponibles=disponibles;
-// 		E_DBF_EMPLEADO_OBJ.find().where({Estd_Emp:'No Disponible'}).exec(function(error,Nodisponibles){
-// 			empleadoNoDisponibles=Nodisponibles;
-// 			res.render('inventario',{disponibles:empleadosDisponibles,noDisponibles:empleadoNoDisponibles});
-// 		});
-// });
-// });
-
 //===================Productos fin===============================================//
 
-router.get('/cliente', ensureAuthenticated, function (req, res) {
-	res.render('cliente')
-});
-router.get('/administracion', ensureAuthenticated, function (req, res) {
-	res.render('administracion')
-})
+router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');});
+router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
-router.get('/registro_empleado', ensureAuthenticated, function (req, res) {
-	res.render('registro_empleado')
-})
+router.get('/registro_empleado', ensureAuthenticated, (req, res)=> { res.render('registro_empleado');});
 
 router.get('/tabla_empleados', ensureAuthenticated, empleados_controller.searchAllEmployeed);
 
@@ -150,18 +130,12 @@ router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
 				res.render('Control_Actividades', {
 					disponibles: disponibles, 
 					noDisponibles: Nodisponibles,
-					clientes: clientes
-				});
-			});
-		});
-	});
+					clientes: clientes	
+	});});});});
 });
 
-router.post('/datos-empleados', function (req, res) {
-	var cedula = req.body.cedula;
-	E_DBF_EMPLEADO_OBJ.findOne().where({ Ced_Emp: cedula }).exec(function (err, resp) {
-		res.send(resp)
-	});
+router.post('/datos-empleados',(req,res)=>{
+	E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:req.body.cedula}).exec((err,resp)=>{res.send(resp)});
 });
 
 module.exports = router;
