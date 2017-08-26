@@ -100,6 +100,8 @@ function asignacion(identificador){
                     function (isConfirm) {
                         if (isConfirm) {
                             location.reload();
+                        }else{
+                            alert('ha cancelado')
                         }
                     });
             }

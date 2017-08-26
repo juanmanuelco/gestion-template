@@ -5,7 +5,7 @@
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
                         <div class="full-width panel-tittle bg-primary text-center tittles">
-                            ASIGNACION DE EMPLEADOS
+                            ASIGNACION DE ACTIVIDADES A EMPLEADOS
                         </div>
                         <div class="full-width panel-content"><br>
                             <div class="row">
@@ -17,9 +17,9 @@
                                     <div class="contenido-empleados">
                                         {{#if disponibles}}{{#each disponibles}}
                                        <div  id="{{this.Ced_Emp}}" onclick="asignacion(this)" onmouseover="inforElement(this.id+ ' Está disponible')">
-                                            <img src="{{this.Img_Emp}}" alt="avatar" class="img-circle img-thumbnail" style="height: 75px; width:75px;">
+                                            <img src="{{this.Img_Emp}}" alt="avatar" class="img-circle img-disp" style="height: 75px; width:75px;">
                                             <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>
-                                        </div>
+                                        </div><br>
                                         {{/each}}{{/if}}
                                     </div>
                                 </div>
@@ -31,7 +31,7 @@
                                     <div class="contenido-empleados">
                                         {{#if noDisponibles}}{{#each noDisponibles}}
                                        <div  id="{{this.Ced_Emp}}" onmouseover="inforElement(this.id+ ' No esta disponible')">
-                                            <img src="{{this.Img_Emp}}" class="img-circle img-thumbnail" alt="avatar" style="height: 75px; width:75px;">
+                                            <img src="{{this.Img_Emp}}" class="img-circle img-ndisp" alt="avatar" style="height: 75px; width:75px;">
                                             <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>
                                         </div>
                                         {{/each}}{{/if}}
