@@ -10,7 +10,7 @@ function asignacion(identificador){
         hora=fecha.getHours();
 
     if(fecha.getMinutes()<10)
-        minuto='0'+fecha.getHours();
+        minuto='0'+fecha.getMinutes();
     else
         minuto=fecha.getMinutes();
 
