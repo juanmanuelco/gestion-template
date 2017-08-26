@@ -1,3 +1,4 @@
+
 <section class="full-width pageContent" >
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
@@ -6,6 +7,7 @@
                     <div class="full-width panel mdl-shadow--2dp">
                         <div class="full-width panel-tittle bg-primary text-center tittles">
                             ASIGNACION DE ACTIVIDADES A EMPLEADOS
+                            
                         </div>
                         <div class="full-width panel-content"><br>
                             <div class="row">
@@ -13,6 +15,7 @@
                                     <h3 class="text-condensedLight">DISPONIBLES</h3>
                                     <div class=" tittles titulo-empleado">
                                         Haga Click sobre el empleado para asignar tarea
+                                        
                                     </div>
                                     <div class="contenido-empleados">
                                         {{#if disponibles}}{{#each disponibles}}
@@ -44,12 +47,13 @@
             </div>
         </div>
 </section>
+<div id='todosClientes' style="display:none">
+    {{#if clientes}}{{#each clientes}}
+        <option value="{{this.Ced_Cli}}">{{this.Ced_Cli}} {{this.Nomb_Cli}}</option>
+    {{/each}}{{/if}}
+</div>
 
 <script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/asignacion_actividades.js"></script>
 
-<div id='todosClientes' style="display:none">
-    {{#if clientes}}{{#each clientes}}
-        <option value="{{clientes.Ced_Cli}}">{{clientes.Nomb_Cli}}</option>
-    {{/each}}{{/if}}
-</div>
+
