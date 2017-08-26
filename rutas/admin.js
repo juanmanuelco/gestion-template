@@ -73,6 +73,7 @@ router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
 	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec((error, disponibles)=> {
 		E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'No Disponible' }).exec((error, Nodisponibles)=> {
 			E_DBF_CLIENTE_OBJ.find().exec((error,clientes)=>{
+				console.log(clientes)
 				res.render('Control_Actividades', {
 					disponibles: disponibles, 
 					noDisponibles: Nodisponibles,

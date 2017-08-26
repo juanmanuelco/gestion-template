@@ -106,12 +106,12 @@ let mainWindow,
   icono = nativeImage.createFromPath(path.join(__dirname, 'recursos/general/imagenes/icono.png'));
 
 //Se define el menu principal independiente del HTML________________________________________________________________________________________
-var menu = Menu.buildFromTemplate(
+/*var menu = Menu.buildFromTemplate(
   [
     
   ]
 )
-
+*/
 //Crea la ventana principal________________________________________________________________________________________________
 //Crea la ventana principal asignándole los valores necesarios
 //Cargamos la información procedente de nuestro html, js y css
@@ -119,8 +119,19 @@ var menu = Menu.buildFromTemplate(
 //Asignamos el menú personalizado
 var aCerrar = true;
 function ventanaPrincipal() {
-  mainWindow = new BrowserWindow({ width: 1000, height: 860, icon: icono, minWidth: 1000, title: "Car de lujo" });
+  mainWindow = new BrowserWindow({
+    width: 1000, 
+    height: 860, 
+    icon: icono, 
+    minWidth: 1000, 
+    title: "Car de lujo",
+    webPreferences:{
+      experimentalFeatures:true,
+      experimentalCanvasFeatures:true
+    }
+  });
   mainWindow.maximize();
+  mainWindow.webContents.executeJavaScript();
   let cargando = new BrowserWindow({parent: mainWindow, modal: true, show: false, frame:false})
   cargando.once('show', () => {
     mainWindow.hide();
@@ -131,7 +142,7 @@ function ventanaPrincipal() {
     })
     mainWindow.loadURL('http://127.0.0.1:'+puerto+'/');
     mainWindow.on('closed', () => { mainWindow = null });
-    Menu.setApplicationMenu(menu);
+    //Menu.setApplicationMenu(menu);
     mainWindow.on('close', (event) => {
       if (aCerrar) {
         event.preventDefault();
