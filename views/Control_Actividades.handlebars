@@ -1,45 +1,43 @@
-<section class="full-width pageContent">
-
+<section class="full-width pageContent" >
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
                         <div class="full-width panel-tittle bg-primary text-center tittles">
-                            ASIGNACION DE EMPLEADOS
+                            ASIGNACION DE ACTIVIDADES A EMPLEADOS
                         </div>
-
                         <div class="full-width panel-content"><br>
-
-                        <div class="  text-center tittles">
-
-                        Haga Click sobre el empleado para asignar tarea
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                    <h5 class="text-condensedLight">DISPONIBLES</h5>
-                                    {{#if disponibles}}{{#each disponibles}}                 
-                                        <div validation="AsignacionTarea" id="{{thsis.Ced_Emp}}" event="click" validation="Ayuda">
-                                            <img src="{{this.Img_Emp}}" alt="avatar" class="img-circle img-thumbnail" style="height: 65px; width=65px;">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h3 class="text-condensedLight">DISPONIBLES</h3>
+                                    <div class=" tittles titulo-empleado">
+                                        Haga Click sobre el empleado para asignar tarea
+                                    </div>
+                                    <div class="contenido-empleados">
+                                        {{#if disponibles}}{{#each disponibles}}
+                                       <div  id="{{this.Ced_Emp}}" onclick="asignacion(this)" onmouseover="inforElement(this.id+ ' Está disponible')">
+                                            <img src="{{this.Img_Emp}}" alt="avatar" class="img-circle img-disp" style="height: 75px; width:75px;">
                                             <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>
-                                        </div>                                                                         
-                                    {{/each}}{{/if}}
+                                        </div><br>
+                                        {{/each}}{{/if}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h3 class="text-condensedLight">NO DISPONIBLES</h3>
+                                    <div class="tittles titulo-empleado">
+                                        Haga Click sobre el empleado para liberar de una tarea
+                                    </div>
+                                    <div class="contenido-empleados">
+                                        {{#if noDisponibles}}{{#each noDisponibles}}
+                                       <div  id="{{this.Ced_Emp}}" onmouseover="inforElement(this.id+ ' No esta disponible')">
+                                            <img src="{{this.Img_Emp}}" class="img-circle img-ndisp" alt="avatar" style="height: 75px; width:75px;">
+                                            <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>
+                                        </div>
+                                        {{/each}}{{/if}}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                    <h5 class="text-condensedLight">NO DISPONIBLES</h5>
-                                    {{#if noDisponibles}}{{#each noDisponibles}}
-                                        <div validation="LibrarTarea" id="{{thsis.Ced_Emp}}" event="click">
-                                            <img src="{{this.Img_Emp}}" class="img-circle img-thumbnail" alt="avatar" style="height: 45px; width=45px; ">
-                                            <span class="mdl-radio__label">{{this.Nomb_Emp}}</span>  
-                                        </div>  
-                                    {{/each}}{{/if}}
-                                 </div>
-                            </div>
-                        </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -47,4 +45,11 @@
         </div>
 </section>
 
-<script src="../modular/scripts/validation.js" ></script>
+<script src="../modular/scripts/validation.js"></script>
+<script src="../modular/scripts/asignacion_actividades.js"></script>
+
+<div id='todosClientes' style="display:none">
+    {{#if clientes}}{{#each clientes}}
+        <option value="{{clientes.Ced_Cli}}">{{clientes.Nomb_Cli}}</option>
+    {{/each}}{{/if}}
+</div>

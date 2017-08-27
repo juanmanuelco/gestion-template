@@ -500,11 +500,48 @@ html, body{
 ======================================================*/
 /*=============Azulejos o accesos directos(Tiles)*/
 
+.img-empleado{
+	padding-top:4px;
+	padding-bottom: 4px
+}
+.titulo-empleado{
+	margin-bottom: 12px;
+}
 
+.contenido-empleados{
+	height: 400px; 
+	overflow-y: scroll;
+}
 
 .fuente{
 	color: #2b2b2c;
 }
+.img-disp{
+	display: inline-block;
+	max-width: 100%;
+	height: auto;
+	padding: 1px;
+	line-height: 1.42857143;
+	background-color: #3FB559;
+	border: 1px solid #3FB559;
+	border-radius: 4px;
+	-webkit-transition: all .2s ease-in-out;
+		 -o-transition: all .2s ease-in-out;
+			transition: all .2s ease-in-out;
+  }
+  .img-ndisp{
+	display: inline-block;
+	max-width: 100%;
+	height: auto;
+	padding: 1px;
+	line-height: 1.42857143;
+	background-color: #CE5254;
+	border: 1px solid #CE5254;
+	border-radius: 4px;
+	-webkit-transition: all .2s ease-in-out;
+		 -o-transition: all .2s ease-in-out;
+			transition: all .2s ease-in-out;
+  }
 
 .tile{
 	border: 1px solid #E1E1E1;

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../general/estilos/bootstrap.css">
     <link rel="stylesheet" href="../general/estilos/bootstrap-theme.css">
     <link rel="stylesheet" href="../general/estilos/footer.css">
-
+    <link rel="stylesheet" href="../general/estilos/cargando.css">
     <link rel="stylesheet" href="../general/estilos/sweetalert2.css">
     <link rel="stylesheet" href="../general/estilos/material.min.css" />
     <link rel="stylesheet" href="../general/estilos/design.css" />
@@ -317,22 +317,10 @@
                 </nav>
             </div>
         </section>
-        {{/if}}
-        <!-- empieza contenido de resumen-->
-<!--
-          {{#if success_msg}}
-            <div class="alert alert-success">{{success_msg}}</div>
-          {{/if}}
-
-          {{#if error_msg}}
-            <div class="alert alert-danger">{{error_msg}}</div>
-          {{/if}}
-
-          {{#if error}}
-            <div class="alert alert-danger">{{error}}</div>
-          {{/if}}-->
-          
-          {{{body}}}        
+        {{/if}}     
+        <div id="contenidoTotal">
+            {{{body}}}  
+        </div>         
     </div>
     
 {{#if user}}

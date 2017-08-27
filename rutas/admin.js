@@ -1,9 +1,11 @@
 var express = require('express'),
-	venta_model = require("../modelos/ventas");
-E_DBF_PRODUCTO_OBJ = require('../modelos/productos')
-E_DBF_EMPLEADO_OBJ = require('../modelos/empleados')
-E_DBF_CLIENTE_OBJ = require('../modelos/cliente')
-router = express.Router(),
+	venta_model = require("../modelos/ventas"),
+	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
+	empleados_controller = require('../controladores/empleados'),
+	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
+	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
+	venta_controller = require("../controladores/ventas"),//todas las funciones de venta	
+	router = express.Router(),
 	multer = require('multer');
 
 function ensureAuthenticated(req, res, next) {
@@ -126,7 +128,6 @@ router.post('/productos', function (req, res) {
 		E_DBF_PRODUCTO_OBJ.findOne().where({ Cod_Prod: req.body.Cod_Prod }).exec(function (err, respu) {
 			if (respu == null) {
 				var nuevoP = new E_DBF_PRODUCTO_OBJ({
-
 					Cod_Prod: req.body.Cod_Prod,
 					Descripcion: req.body.Des_Prod,
 					Existencia: req.body.Exis_Prod,
@@ -135,7 +136,6 @@ router.post('/productos', function (req, res) {
 				})
 				nuevoP.save(function (erro, resp) {
 					if (erro) {
-						console.log(erro)
 						res.render('productos', { error: erro })
 					} else {
 						res.render('productos', { success_msg: 'Producto guardado correctamente.' })
@@ -147,162 +147,45 @@ router.post('/productos', function (req, res) {
 		})
 	}
 })
-router.get('/inventario', ensureAuthenticated, function (req, res) {
-	E_DBF_PRODUCTO_OBJ.find({}, function (err, users) {
+router.get('/inventario', ensureAuthenticated,(req, res)=> {
+	E_DBF_PRODUCTO_OBJ.find({}, (err, users) =>{
 		res.render('inventario', { producto: users });
 	});
 });
 
 
-// router.get('/inventario', ensureAuthenticated,function (req, res) {
-// 	var empleadosDisponibles=new Array(), 
-// 	empleadoNoDisponibles=new Array();
-// 	E_DBF_EMPLEADO_OBJ.find().where({Estd_Emp:'Disponible'}).exec(function(error,disponibles){
-// 		empleadosDisponibles=disponibles;
-// 		E_DBF_EMPLEADO_OBJ.find().where({Estd_Emp:'No Disponible'}).exec(function(error,Nodisponibles){
-// 			empleadoNoDisponibles=Nodisponibles;
-// 			res.render('inventario',{disponibles:empleadosDisponibles,noDisponibles:empleadoNoDisponibles});
-// 		});
-// });
-// });
-
 //===================Productos fin===============================================//
 
-router.get('/cliente', ensureAuthenticated, function (req, res) {
-	res.render('cliente')
-});
-router.get('/administracion', ensureAuthenticated, function (req, res) {
-	res.render('administracion')
-})
+router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');});
+router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
-router.get('/registro_empleado', ensureAuthenticated, function (req, res) {
-	E_DBF_EMPLEADO_OBJ.find({}, function (err, users) {
-		res.render('registro_empleado', { usuarios: users });
-	});
-});
+router.get('/registro_empleado', ensureAuthenticated, (req, res)=> { res.render('registro_empleado');});
 
-/*
-router.post('/empleados', ensureAuthenticated, function (req, res) {
-	var accion = req.body.accion;
-	console.log(accion)
-	if (accion) {
-		if (accion == "Eliminar") {
+router.get('/tabla_empleados', ensureAuthenticated, empleados_controller.searchAllEmployeed);
 
-			var cedula = req.body.Ced_Emp;
-			var query = { 'Ced_Emp': cedula };
-			E_DBF_EMPLEADO_OBJ.findOneAndRemove(query, function (err, userUpdated) {
-				if (err) {
-					res.status(500).send({ message: "Error al borrar el usuario" });
-				} else {
-					if (!userUpdated) {
-						res.status(404).send({ message: "No se ha podido borrar el usuario" });
-					} else {
-						res.render('empleados', { success_msg: 'Borrado' })
-					}
-				}
-			});
-		}
-		else {
-			if (accion == "Actualizar") {
-				console.log("Actualizar")
-				var cedula = req.body.Ced_Emp;
-				var objeto = {
-					Nomb_Emp: req.body.Nomb_Emp,
-					Telf_Emp: req.body.Telf_Emp,
-					Tur_Emp: req.body.Tur_Emp
-				}
-				var query = { 'Ced_Emp': cedula };
-				E_DBF_EMPLEADO_OBJ.findOneAndUpdate(query, objeto, { new: false }, function (err, userUpdated) {
+router.post('/getEmployeeByCed',empleados_controller.getEmployeeByCed)
 
-					if (err) {
-						res.status(500).send({ message: "Error al actualizar el usuario" });
-					} else {
-						if (!userUpdated) {
-							res.status(404).send({ message: "No se ha podido actualizar el usuario" });
-						} else {
-							res.render('empleados', { success_msg: 'Editado' })
-						}
-					}
-				});
-			}
-		}
-	}
-	else {
-		var storage = multer.diskStorage({
-			destination: function (req, file, cb) { cb(null, 'recursos/general/imagenes/empleados') },
-			filename: function (req, file, cb) { cb(null, 'empleado' + (req.body.Ced_Emp) + '.png') }
-		});
-		var upload = multer({
-			storage: storage, fileFilter: function (req, file, cb) {
-				if (file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg') { cb(null, true); } else { cb(null, false); }
-			}
-		}).single('image_producto');
-		upload(req, res, function (err) {
-			if (err) { res.render('500', { error: 'Error al cargar la imágen' }) } else {
-				var objeto = {
-					Ced_Emp: req.body.Ced_Emp,
-					Nomb_Emp: req.body.Nomb_Emp,
-					Telf_Emp: req.body.Telf_Emp,
-					Img_Emp: "../general/imagenes/empleados/empleado" + (req.body.Ced_Emp) + ".png",
-					Tur_Emp: req.body.Tur_Emp,
-					Estd_Emp: req.body.Estd_Emp
-				}
-				var nuevoEmpleado = new E_DBF_EMPLEADO_OBJ(objeto)
-				nuevoEmpleado.save(function (error, resp) {
-					if (error) {
-						res.render('500', { error: error })
-					} else {
-						res.render('empleados', { success_msg: 'Guardado' })
-					}
-				})
-			}
-		});
-	}
-})
-*/
+router.post('/editEmployee',ensureAuthenticated, empleados_controller.editEmployeed)
+
+router.post('/deleteEmployee',ensureAuthenticated, empleados_controller.deleteEmployeed)
 
 //Este codigo funciona para la subida, generen dos rutas mas una para actualizar y otra para eliminar NO TODO AHI MISMO
-//Sino preguntenle a Jairo lo que pasa si pones todo en el mismo lugar :v 
-router.post('/empleados', ensureAuthenticated, function (req, res) {
-	var storage = multer.diskStorage({
-		destination: function (req, file, cb) {cb(null, 'recursos/general/imagenes/empleados')},
-			filename: function (req, file, cb) {cb(null, 'empleado'+(req.body.Ced_Emp)+'.png')}
-		});
-	var upload = multer({ storage: storage,fileFilter:function(req,file,cb){
-		if(file.mimetype=='image/png'|| file.mimetype=='image/jpg' || file.mimetype=='image/jpeg'){cb(null, true);}else{cb(null, false);}
-	}}).single('image_producto');
-	upload(req, res, function (err) {
-		if(err){res.render('500',{error:'Error al cargar la imágen'})}else{
-			var objeto = {
-				Ced_Emp: req.body.Ced_Emp,
-				Nomb_Emp: req.body.Nomb_Emp,
-				Telf_Emp: req.body.Telf_Emp,
-				Img_Emp:"../general/imagenes/empleados/empleado"+(req.body.Ced_Emp)+".png",
-				Tur_Emp: req.body.Tur_Emp,
-				Estd_Emp: req.body.Estd_Emp
-			}
-			var nuevoEmpleado = new E_DBF_EMPLEADO_OBJ(objeto)
-			nuevoEmpleado.save(function(error,resp){
-				if(error){
-					res.render('500',{error:error})
-				}else{
-					res.render('empleados',{success_msg:'Guardado'})
-				}
-			})
-		}
-});
-	
-})
+//Sino preguntenle a Jairo lo que pasa si pones todo en el mismo lugar :v createEmpleado
+router.post('/saveEmployee', ensureAuthenticated, empleados_controller.createEmpleado)
 
-router.get('/asignar_empleados', ensureAuthenticated, function (req, res) {
-	var empleadosDisponibles = new Array(),
-		empleadoNoDisponibles = new Array();
-	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec(function (error, disponibles) {
-		empleadosDisponibles = disponibles;
-		E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'No Disponible' }).exec(function (error, Nodisponibles) {
-			empleadoNoDisponibles = Nodisponibles;
-			res.render('Control_Actividades', { disponibles: empleadosDisponibles, noDisponibles: empleadoNoDisponibles });
-		});
-	});
+router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
+	E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'Disponible' }).exec((error, disponibles)=> {
+		E_DBF_EMPLEADO_OBJ.find().where({ Estd_Emp: 'No Disponible' }).exec((error, Nodisponibles)=> {
+			E_DBF_CLIENTE_OBJ.find().exec((error,clientes)=>{
+				res.render('Control_Actividades', {
+					disponibles: disponibles, 
+					noDisponibles: Nodisponibles,
+					clientes: clientes	
+	});});});});
 });
+
+router.post('/datos-empleados',(req,res)=>{
+	E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:req.body.cedula}).exec((err,resp)=>{res.send(resp)});
+});
+
 module.exports = router;

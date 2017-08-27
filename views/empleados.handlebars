@@ -1,14 +1,42 @@
 <script type="text/javascript">
-	swal({
-	  	title: 'Empleado registrado con éxito',
-	  	type: 'info',
+	function Modal (title,type,accion,dir) {
+		swal({
+	  	title: title,
+	  	type: type,
 	  	confirmButtonText: 'Ok',
 	  	closeOnConfirm: false
 		},
 		function(isConfirm) {
 			if (isConfirm) { 
-			location.href="/admin/registro_empleado"
+				if (accion == "redireccionar") {
+					location.href="/admin/"+dir
+				}
+				else{
+					if (accion == "retroceder") {
+						window.history.back();
+					}
+				}
 		  	}
 		}
 		)
+	}
 </script>
+{{#if error }}
+	<input id="inputError" type="hidden" value="{{error}}">
+    <script type="text/javascript">
+	    input = document.getElementById("inputError").value || "Error inesperado"
+	    Modal(input,'error',"retroceder");
+    </script>
+{{else if registro}}
+    <script type="text/javascript">
+    	Modal('Empleado registrado con exito','success',"redireccionar","registro_empleado")
+    </script>
+{{else if edicion}}
+    <script type="text/javascript">
+    	Modal('Datos de Empleado editados con exito','success',"redireccionar","tabla_empleados")
+    </script>
+{{else if eliminacion}}
+    <script type="text/javascript">
+    	Modal('Datos de Empleado eliminados con exito','success',"redireccionar","tabla_empleados")
+    </script>
+{{/if}}

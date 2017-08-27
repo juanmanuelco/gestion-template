@@ -12,12 +12,12 @@ function ValidarDatosFormulario(formulario,formModal) {
 			var span = inputs[i].parentNode.getElementsByTagName("span");
 			if (span.length>=1) {
 				span=span[0]
-				ValorOriginal[inputs[i]] = span.innerHTML;
+				ValorOriginal[inputs[i].name] = span.innerHTML;
 				span.innerHTML="Campo Vacío"
 			};
 			inputs[i].addEventListener("focus", function(){
 				var span = this.parentNode.getElementsByTagName("span");
-				if (span) {span[0].innerHTML=ValorOriginal[this]};
+				if (span) {span[0].innerHTML=ValorOriginal[this.name]};
 				this.parentNode.classList.remove("is-invalid");
 			 })
 			inputs[i].parentNode.classList.add("is-invalid");
@@ -25,7 +25,6 @@ function ValidarDatosFormulario(formulario,formModal) {
 			mensaje="Por favor asegurese que no haya campos vacios";
 		}
 	};	
-	/* Habia un error aqui hay que evitar preguntar de esta forma por el input type file
 	if (!formNoValido) {
 		var divs = formulario.getElementsByTagName("div")
 		for (var i = 0; i < divs.length; i++) {
@@ -35,13 +34,12 @@ function ValidarDatosFormulario(formulario,formModal) {
 			}
 		};
 	};
-	*/
 	
 	if (formNoValido) {
 		if (!formModal) {
 			swal({
 			  	title: 'Formulario No Válido',
-			  	type: 'warning',
+			  	type: 'error',
 			  	text:mensaje,
 			  	confirmButtonText: 'Ok',
 			  	closeOnConfirm: false
