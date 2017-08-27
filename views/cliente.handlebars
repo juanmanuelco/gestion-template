@@ -8,6 +8,8 @@
 							<div class="full-width panel-tittle bg-primary text-center tittles">
 								Nuevo Cliente
 							</div>
+							{{#if success_msg}}<div class="alert alert-success">{{success_msg}}</div>{{/if}} 
+							{{#if error_msg}}<div class="alert alert-danger">{{error_msg}}</div>{{/if}} 
 							<div class="full-width panel-content">
 								<form action="/admin/saveClient" method="post">
 									<div class="mdl-grid">

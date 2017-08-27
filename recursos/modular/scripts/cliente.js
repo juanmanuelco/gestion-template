@@ -32,7 +32,7 @@ FuncionesCliente["saveCliente"] = function (e){
 
 
 FuncionesCliente["editClient"] = function () {
-	var divpadre = this.parentNode
+	var divpadre = this.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	var formhtml = '<form style="text-align: left;">'+
@@ -43,19 +43,14 @@ FuncionesCliente["editClient"] = function () {
 	'<label>Direccion</label>'+
 	'<input class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'"><br>'+
 	'<label>Numero Convencional</label>'+
-	'<input class="mdl-textfield__input" type="text" value="'+datos[3].innerHTML+'"><br>'+
+	'<input class="mdl-textfield__input" type="text" value="'+datos[2].id+'"><br>'+
 	'<label>Correo Electronico</label>'+
-	'<input class="mdl-textfield__input" type="text" value="'+datos[4].innerHTML+'"><br>'+
+	'<input class="mdl-textfield__input" type="text" value="'+datos[3].id+'"><br>'+
 	'<label>Tipo Cliente</label>'+
-	'<select class="mdl-textfield__input" value="'+datos[5].innerHTML+'">'+
+	'<select class="mdl-textfield__input" value="'+datos[3].innerHTML+'">'+
 		'<option>Ocasional</option>'+
 		'<option>Premium</option>'+
 	'</select><br>'+
-	'<label>Porcentaje Descuento</label>'+
-	'<select class="mdl-textfield__input" value="'+datos[6].innerHTML+'">'+
-	'<option value="0">0</option>'+
-	'<option value="5">5</option>'+
-	'</select>'+
 	'</form>'
 	swal({
 		  	title: 'Datos Cliente',
@@ -87,7 +82,7 @@ FuncionesCliente["editClient"] = function () {
 //para borrar los datos de un cliente
 FuncionesCliente["deleteClient"] = function() {
 
-	var divpadre = this.parentNode
+	var divpadre = this.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	var infoHTML = '<label>Cedula: '+datos[0].innerHTML+'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
@@ -131,37 +126,37 @@ FuncionesCliente["init"] = function (argument) {
 		//funciones mientras se usa otra como por ejemplo cedula
 		var solonum = elements[i].getAttribute("solonum") || false;
 		if (solonum) {
-			elements[i].addEventListener("keypress",Funciones["NumeroEntero"])
-			elements[i].addEventListener("keyup",Funciones["NumeroEntero"])
+			elements[i].addEventListener("keypress",FuncionesCliente["NumeroEntero"])
+			elements[i].addEventListener("keyup",FuncionesCliente["NumeroEntero"])
 		};
 		var solodecimal = elements[i].getAttribute("solodecimal") || false;
 		if (solodecimal) {
-			elements[i].addEventListener("keypress",Funciones["NumDecimal"])
-			elements[i].addEventListener("keyup",Funciones["NumDecimal"])
+			elements[i].addEventListener("keypress",FuncionesCliente["NumDecimal"])
+			elements[i].addEventListener("keyup",FuncionesCliente["NumDecimal"])
 		};
 		var soloLetras = elements[i].getAttribute("soloLetras") || false;
 		if (soloLetras) {
-			elements[i].addEventListener("keypress",Funciones["soloLetras"])
-			elements[i].addEventListener("keyup",Funciones["soloLetras"])
+			elements[i].addEventListener("keypress",FuncionesCliente["soloLetras"])
+			elements[i].addEventListener("keyup",FuncionesCliente["soloLetras"])
 		};
 		var EnterNext = elements[i].getAttribute("EnterNext") || false;
-		if (EnterNext) {elements[i].addEventListener("keyup",Funciones["EnterNext"])};
+		if (EnterNext) {elements[i].addEventListener("keyup",FuncionesCliente["EnterNext"])};
 
-		if ( atributo && Funciones[atributo] ){
+		if ( atributo && FuncionesCliente[atributo] ){
 			var evento = elements[i].getAttribute("event") || false;
 			//modificacion del codigo para poder agregar más de 1 evento a las funciones
 			if (evento) {
 				var arrayEvent = evento.split(",")
 				if (arrayEvent.length > 1) {
 					for (var i = 0; i < arrayEvent.length; i++) {
-						elements[i].addEventListener(arrayEvent[i],Funciones[atributo]);
+						elements[i].addEventListener(arrayEvent[i],FuncionesCliente[atributo]);
 					};
 				}
 				else{
-					elements[i].addEventListener(evento,Funciones[atributo]);
+					elements[i].addEventListener(evento,FuncionesCliente[atributo]);
 				}
 			}
-			elements[i].addEventListener("change",Funciones[atributo]);
+			elements[i].addEventListener("change",FuncionesCliente[atributo]);
 			/*elements[i].addEventListener("paste", function (e) {
 				e.preventDefault();
 				return false;
@@ -169,6 +164,44 @@ FuncionesCliente["init"] = function (argument) {
 		}
 	}
 }
+
+
+FuncionesCliente["infoCliente"] = function (argument) {
+	var divpadre = this.parentNode.parentNode
+	var divButton = divpadre.parentNode
+	var datos = divButton.parentNode.getElementsByTagName("td")
+	textHTML=''+
+	'<div class="mdl-grid">'+
+			'<div class="mdl-cell mdl-cell--8-col-phone mdl-cell--16-col-tablet mdl-cell--12-col-desktop">'+
+					'<label class="text-condensedLight" style="float:left;font-size:20px;">Ruc/Cédula</label>'+
+					'<input class="mdl-textfield__input" type="text" value="'+datos[0].innerHTML+'" readonly>'+
+			'</div>'+
+	'</div>'+
+	'<div class="mdl-grid">'+
+			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+					'<label class="text-condensedLight" style="float:left;font-size:20px;">Nombres</label>'+
+					'<input class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" readonly>'+
+					'<br>'+
+					'<label class="text-condensedLight" style="float:left;font-size:20px;">Teléfono</label>'+
+					'<input class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" readonly>'+
+	'</div>'+
+			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+					'<label class="text-condensedLight" style="float:left;font-size:20px;">Turno</label>'+
+					'<input class="mdl-textfield__input" type="text" value="'+datos[3].innerHTML+'" readonly>'+
+					'<br>'+
+					'<label class="text-condensedLight" style="float:left;font-size:20px;">Estado</label>'+
+					'<input class="mdl-textfield__input" type="text" value="'+datos[3].id+'" readonly>'+
+			'</div>'+
+	'</div>'
+
+	swal({
+	  	title: 'Informacion del Empleado',
+	  	html: textHTML,
+	  	width: "550px",
+	  	confirmButtonText: 'Ok',
+	  	closeOnConfirm: true
+	});
+} 
 
 
 //inicializa la funcion que recorre el html en busca de los elementos con los atributos explicados

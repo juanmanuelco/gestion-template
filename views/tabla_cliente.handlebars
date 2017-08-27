@@ -20,30 +20,24 @@
 						    <tr>
 								<th>Ruc/Cedula</th>
 								<th>Nombre</th>
-								<th>Dirección</th>
-								<th>Número Convencional</th>
-								<th>Correo Electrónico</th>
+								<th>Dirección</th>			
 								<th>Tipo Cliente</th>
-								<th>Porcentaje Descuento</th>
 								<th><center>Opción</center></th>
 							</tr>
 						</thead>
 					<tbody id="contenidoTabla">
-						{{#if usuarios}}{{#each usuarios}}
+						{{#if clientes}}{{#each clientes}}
 						<tr>
 							<td>{{this.Ced_Cli}}</td>
 							<td>{{this.Nomb_Cli}}</td>
-							<td>{{this.Dir_Cli}}</td>
-							<td>{{this.Telf_Emp}}</td>
-							<td>{{this.Cor_Emp}}</td>
-							<td>{{this.Tip_Cli}}</td>
-							<td>{{this.Por_Emp}}</td>
+							<td id="{{this.Telf_Cli}}">{{this.Dir_Cli}}</td>
+							<td id="{{this.Cor_Cli}}">{{this.Tip_Cli}}</td>
 							<td>
 								<div>
 									<center>
 									<button title="Más Informacion" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoCliente" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
-									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editCliente" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
-									</button>&nbsp;&nbsp;&nbsp;<button validation="deleteCliente" event="click" id="borrarClient" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editClient" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
+									</button>&nbsp;&nbsp;&nbsp;<button validation="deleteClient" event="click" id="deleteClient" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
 									</center>
 								</div>
 							</td>
