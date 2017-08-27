@@ -1,6 +1,7 @@
 var express = require('express'),
 	venta_model = require("../modelos/ventas"),
 	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
+	producto_controller= require('../controladores/productosController')
 	empleados_controller = require('../controladores/empleados'),
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
 	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
@@ -27,9 +28,9 @@ router.post('/ventas', ensureAuthenticated, venta_controller.registrarVenta);
 router.get('/productos', ensureAuthenticated, function (req, res) {
 	res.render('productos')
 });
-router.post('/crearProducto', ensureAuthenticated, E_DBF_PRODUCTO_OBJ.crearProduct);
-router.post('/editarProducto', ensureAuthenticated, E_DBF_PRODUCTO_OBJ.editProduct);
-router.post('/eliminarProducto', ensureAuthenticated, E_DBF_PRODUCTO_OBJ.deletedProduct);
+router.post('/crearProducto', ensureAuthenticated, producto_controller.crearProduct);
+router.post('/editarProducto', ensureAuthenticated, producto_controller.editProduct);
+router.post('/eliminarProducto', ensureAuthenticated, producto_controller.deletedProduct);
 //Obtener los valores de los input para guardarlos en el esquema o eso se supone..
 
 router.get('/inventario', ensureAuthenticated, function (req, res) {

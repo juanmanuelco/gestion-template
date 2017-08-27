@@ -111,9 +111,8 @@ FuncionesProducto["deleteProduct"] = function () {
                         swal({
                             title: 'No se puede eliminar este producto, por que aun está en stock',
                             type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Si'
-                    
+                            confirmButtonText: 'Ok',
+                            closeOnConfirm: true
                       })
                     }
                     else{
