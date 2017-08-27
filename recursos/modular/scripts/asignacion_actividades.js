@@ -1,9 +1,6 @@
 function asignacion(identificador){
-    var envio={'cedula':identificador.id}
-    var fecha=new Date;
-    var horaInicial=``;
-    var horaFinal=``;
-    var minuto,hora,horaF=fecha.getHours()+1;
+    var envio={'cedula':identificador.id},
+        fecha=new Date, horaInicial=``, horaFinal=``, minuto,hora,horaF=fecha.getHours()+1;
     if(fecha.getHours()<10)
         hora='0'+fecha.getHours();
     else
@@ -40,7 +37,7 @@ function asignacion(identificador){
         contentType:"application/json",
         data: JSON.stringify(envio)
     }).done(function(resp){
-        var formulario=`
+        var formulario=`<div>
                         <h3>Designado a: <b id="lblCedEmpl">${resp.Nomb_Emp} </b></h3><br>
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
@@ -50,20 +47,21 @@ function asignacion(identificador){
                                 </div>
                                 <div class="form-group" onmouseover="inforElement('Hora en que será asignada la tarea')">
                                     <label>Hora de asignación del servicio</label> 
-                                    <input id="tmHrAsig" style="text-align:center" class="mdl-textfield__input form-control" value="${horaInicial}" type="time">
+                                    <input readonly id="tmHrAsig" style="text-align:center" class="mdl-textfield__input form-control" value="${horaInicial}" type="time">
                                 </div>
-                                <div class="form-group " onmouseover="inforElement('Escoja al cliente que necesita un servicio')">
-                                    <label>Cliente</label> 
-                                    <input id="lblCedClien" type="text" list="clientes" class="mdl-textfield__input form-control" autofocus>
-                                    <datalist id="clientes">
+                                <div style="position:relative" class="form-group " onmouseover="inforElement('Escoja al cliente que necesita un servicio')" >
+                                    <label>Cliente (cédula)</label>                                  
+                                    <input id="lblCedClien" type="text" list="clientes" class="mdl-textfield__input form-control" autofocus>   
+                                    <label>O escoja</label>
+                                    <select id="selecCedula" class="form-control input-field" size="4" onclick="getCedula()">
                                         ${todosClientes}
-                                    </datalist>
+                                    </select>                            
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group" onmouseover="inforElement('Fecha a realizar la actividad')">
                                     <label>Fecha de asignación</label>
-                                    <input style="text-align:center" id="cedu_emple" id="dtFechAsig" value="${cadenaFecha}" type="date" class="mdl-textfield__input form-control">
+                                    <input readonly style="text-align:center" id="cedu_emple" id="dtFechAsig" value="${cadenaFecha}" type="date" class="mdl-textfield__input form-control">
                                 </div>
                                 <div class="form-group" onmouseover="inforElement('Hora esperada de finalización de la actividad')">
                                     <label>Hora de Finalización del servicio</label> 
@@ -71,11 +69,15 @@ function asignacion(identificador){
                                 </div>
                                 <div class="form-group " onmouseover="inforElement('Indique la información necesaria acerca de la actividad')">
                                     <label>Detalle de la actividad</label> 
-                                    <textarea id="lblDesc" required style="resize: none;" class="mdl-textfield__input form-control" rows="4" cols="50">Hágase el favor de:
+                                    <textarea id="lblDesc" required style="resize: none;" class="mdl-textfield__input form-control" rows="7" cols="50">
                                     </textarea>
                                 </div>
+                                
                             </div>
-                        </div>`;
+                            
+                        </div>                      
+                    </div>
+                   `;
         swal({
             title: `Servicio N°: ${Number(resp.Conta_Emp)+1}`,
             html: formulario,
@@ -84,71 +86,116 @@ function asignacion(identificador){
             cancelButtonText: 'Cancelar',
             closeOnConfirm: false
         }, function (isConfirm) {
+            document.getElementById('lblCedClien').focus();
             if (isConfirm) {
-                var actividad=document.getElementById('lblDesc').value;
-                var cliente=document.getElementById('lblCedClien').value;
-                swal({
-                    title: `¿Está seguro de asignar la tarea a ${resp.Nomb_Emp} ?`,
-                    html: `<b>Actividad</b><br>
-                            <p>${actividad}</p><br>
-                            <label>Para el cliente ${cliente}</lable>`,
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Si',
-                    cancelButtonText: 'No'
-                },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            location.reload();
-                        }else{
-                            alert('ha cancelado')
+                var actividad=document.getElementById('lblDesc').value,
+                    cliente=document.getElementById('lblCedClien').value,
+                    horaInicializacion=document.getElementById('tmHrAsig').value,
+                    detalle=(document.getElementById('lblDesc').value).trim(),
+                    horaFinalizacion=document.getElementById('tmHrFnl').value,
+                    ha=Number(horaInicializacion.substr(0,2)),
+                    hf=Number(horaFinalizacion.substr(0,2)),
+                    error='';            
+                if(resp.Tur_Emp=='Matutino'){
+                    if((ha<6 || ha>14) || (hf<6 || hf>14) )
+                        error='Esta hora esta fuera del horario del empleado';                  
+                }
+                if(resp.Tur_Emp=='Vespertino'){
+                    if((ha<14 || ha>19) || (hf<14 || hf>19))
+                        error='Esta hora esta fuera del horario del empleado';                  
+                }
+                if(resp.Tur_Emp=='Nocturno'){
+                    if(((ha<=6 || ha>=19) && (hf<6 || hf>=19)))
+                        error=''
+                    else
+                        error='Esta hora esta fuera del horario del empleado';                  
+                }
+                if(detalle=='')
+                    error+=`- No ha definido un detalle`
+                $.ajax({
+                    type:"POST",
+                    url:"/admin/cedula-cliente",
+                    async:false,
+                    contentType:"application/json",
+                    data: JSON.stringify({'cedula':cliente})
+                }).done(function(cedulaCliente){
+                    if(cedulaCliente!=1)
+                        error+=`- Este cliente no está registrado`;
+                    if(error!='')
+                        swal('Que mal', error,'error' )
+                    else{
+                        envio={
+                            'cedulaEmp':resp.Ced_Emp,
+                            'fechaAsig':cadenaFecha,
+                            'horaAsig':horaInicializacion,
+                            'horaFAsig':horaFinalizacion,
+                            'cedulaCli':cliente,
+                            'descripcion':detalle,
+                            'contador':Number(resp.Conta_Emp)+1
                         }
-                    });
+                        var guardado='';
+                        $.ajax({
+                            type:"POST",
+                            url:"/admin/registrar_actividad",
+                            dataType:"text",
+                            async:false,
+                            contentType:"application/json",
+                            data: JSON.stringify(envio)
+                        }).done(function(guard){
+                            if(guard=='mal')
+                                swal('Algo ha salido mal','Por favor intentelo de nuevo','error');
+                            else
+                                swal('Correcto', 'Registro guardado con éxito',  'success' )
+                            location.reload();        
+                        })
+                    }
+                })               
             }
         });
     });
 }
 function liberacion(identificador){
-    $('#modalLiberacion').modal({backdrop: "static"})
+    var envio={'cedulaEmp':identificador.id};
+    swal({
+        title: `Está seguro de liberar de sus actividades al empleado`,
+        html: 'Estos cambios no se pueden deshacer',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        closeOnConfirm: false
+    }, function (isConfirm) {
+        if(isConfirm){
+            $.ajax({
+                type:"POST",
+                url:"/admin/liberar-empleados",
+                dataType:"text",
+                async:false,
+                contentType:"application/json",
+                data: JSON.stringify(envio)
+            }).done(function(resp){
+                swal(
+                    'Actividad finalizada con éxito',
+                    'Empleado listo para otra actividad',
+                    'success'
+                  )
+                  location.reload();
+            });           
+        }
+    })
+      /*
+    $.ajax({
+        type:"POST",
+        url:"/admin/datos-empleados",
+        dataType:"text",
+        async:false,
+        contentType:"application/json",
+        data: JSON.stringify(envio)
+    }).done(function(resp){
+
+    });
+    */
 }
-
-
-/*
+function getCedula(){
+    var escogido=document.getElementById('selecCedula').value;
+    document.getElementById('lblCedClien').value=escogido;
 }
-
-//funcion para abrir un modal en la asignacion de empleados
-Funciones["AsignacionTarea"] = function (e) {
-	var formhtml = '<label>Contador de Servicio</label> <input class="mdl-textfield__input" type="number" readonly><br>'+
-	'<label>Cédula del Empleado</label> <input  class="mdl-textfield__input" type="number" ><br>'+
-	'<label>Fecha de asignación del servicio</label> <input  class="mdl-textfield__input" type="date" step="1" min="2017-08-01" max="2030-12-31"><br>'+
-	'<label>Hora de asignación del servicio</label> <input  class="mdl-textfield__input" type="time"><br>'+
-	'<label>Hora de Finalización del servicio</label> <input   class="mdl-textfield__input"type="time"><br>'+
-	'<label>RUC/Cédula Cliente</label> <input   class="mdl-textfield__input" type="number" ><br>'+
-	'<label>Descripción del servicio </label><br><textarea  cols="60" rows="10"></textarea>';
-	swal({
-		  	title: 'Tarea Empleado',
-		 	html: formhtml,
-		  	showCancelButton: true,
-		  	confirmButtonText: 'Asignar',
-		  	cancelButtonText: 'Atrás',
-		  	closeOnConfirm: false
-		},
-		function(isConfirm) {
-		  	if (isConfirm) {
-		    	swal({
-			  	title: '¿Seguro que desea asignar una tarea al Empleado?',
-			  	type: 'warning',
-			  	showCancelButton: true,
-			  	confirmButtonText: 'Si',
-			  	cancelButtonText:'No'
-
-			},
-			function(isConfirm) {
-			  	if (isConfirm) {
-			    	location.reload(); 
-			  	}
-			}); 
-		  	}
-		});
-}
-*/

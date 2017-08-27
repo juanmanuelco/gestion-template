@@ -4,6 +4,7 @@ var express = require('express'),
 	empleados_controller = require('../controladores/empleados'),
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
 	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
+	E_DBF_ACTIVIDADES_OBJ=require('../modelos/actividades'),
 	venta_controller = require("../controladores/ventas"),//todas las funciones de venta	
 	router = express.Router(),
 	multer = require('multer');
@@ -82,6 +83,42 @@ router.get('/asignar_empleados', ensureAuthenticated,  (req, res)=> {
 
 router.post('/datos-empleados',(req,res)=>{
 	E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:req.body.cedula}).exec((err,resp)=>{res.send(resp)});
+});
+
+router.post('/cedula-cliente',(req,res)=>{
+	E_DBF_CLIENTE_OBJ.findOne().where({Ced_Cli:req.body.cedula}).count().exec((err,resp)=>{
+		res.send(resp+'');
+	});
+});
+
+router.post('/registrar_actividad',(req,res)=>{
+	var nuevaActividad=new E_DBF_ACTIVIDADES_OBJ({
+		CedEm_CtrActE:req.body.cedulaEmp,
+		FchAs_CtrActE:req.body.fechaAsig,
+		HrAsg_CtrActE:req.body.horaAsig,
+		HrFnl_CtrActE:req.body.horaFAsig,
+		CedCl_CtrActE:req.body.cedulaCli,
+		Desct_CtrActE:req.body.descripcion,
+		Contd_CtrActE:req.body.contador
+	});
+	nuevaActividad.save((err,resp)=>{
+		if(err)
+			res.send('mal');
+		else{
+			E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:req.body.cedulaEmp}).exec((err,result)=>{
+				var conteo=Number(result.Conta_Emp)+1;
+				E_DBF_EMPLEADO_OBJ.findOneAndUpdate({Ced_Emp:req.body.cedulaEmp},{Conta_Emp:conteo,Estd_Emp:'No Disponible'}).exec((err,respuesta)=>{
+					res.send('ok');
+				});
+			});
+		}
+	});
+});
+
+router.post('/liberar-empleados',(req,res)=>{
+	E_DBF_EMPLEADO_OBJ.findOneAndUpdate({Ced_Emp:req.body.cedulaEmp},{Estd_Emp:'Disponible'}).exec((err,respuesta)=>{
+		res.send('ok');
+	});
 });
 
 module.exports = router;
