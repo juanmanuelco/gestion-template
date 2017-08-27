@@ -1,0 +1,69 @@
+<section class="full-width pageContent">
+	<div id="divTabla">
+		<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+			<form action="#">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="searchPayment">
+						<i class="zmdi zmdi-search"></i>
+					</label>
+					<div class="mdl-textfield__expandable-holder">
+						<input class="mdl-textfield__input" type="text" id="searchPayment" validation="buscarTabla" event="keyup" TablaID="tblCliente"
+						 datos="0,1,3,4" placeholder=" Buscar">
+						<label class="mdl-textfield__label"></label>
+					</div>
+					<a href="/admin/cliente" title="Registrar nuevo Cliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5;position:absolute; right: 5%;" >Nuevo Registro</a>
+				</div>
+			</form>
+			<div style="overflow-x:auto;">
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblCliente">
+					<thead>
+						    <tr>
+								<th>Ruc/Cedula</th>
+								<th>Nombre</th>
+								<th>Dirección</th>
+								<th>Número Convencional</th>
+								<th>Correo Electrónico</th>
+								<th>Tipo Cliente</th>
+								<th>Porcentaje Descuento</th>
+								<th><center>Opción</center></th>
+							</tr>
+						</thead>
+					<tbody id="contenidoTabla">
+						{{#if usuarios}}{{#each usuarios}}
+						<tr>
+							<td>{{this.Ced_Cli}}</td>
+							<td>{{this.Nomb_Cli}}</td>
+							<td>{{this.Dir_Cli}}</td>
+							<td>{{this.Telf_Emp}}</td>
+							<td>{{this.Cor_Emp}}</td>
+							<td>{{this.Tip_Cli}}</td>
+							<td>{{this.Por_Emp}}</td>
+							<td>
+								<div>
+									<center>
+									<button title="Más Informacion" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoCliente" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
+									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editCliente" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
+									</button>&nbsp;&nbsp;&nbsp;<button validation="deleteCliente" event="click" id="borrarClient" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+									</center>
+								</div>
+							</td>
+						</tr>
+						{{/each}} {{else}}
+						<tr>
+							<td colspan="8">
+								<center>No hay datos para mostrar</center>
+							</td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script src="../modular/scripts/validacion_form.js"></script>
+<script src="../modular/scripts/indentificaciones.js"></script>
+<script src="../modular/scripts/validation.js"></script>
+<script src="../modular/scripts/cliente.js"></script>
+<link rel="stylesheet" href="../modular/estilos/empleados.css">
