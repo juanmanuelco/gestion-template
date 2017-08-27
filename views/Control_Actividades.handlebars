@@ -34,10 +34,10 @@
                                     </div>
                                     <div class="contenido-empleados">
                                         {{#if noDisponibles}}{{#each noDisponibles}}
-                                       <div  id="{{this.Ced_Emp}}" onmouseover="inforElement(this.id+ ' No esta disponible')">
+                                       <div  id="{{this.Ced_Emp}}" onclick="liberacion(this)" onmouseover="inforElement(this.id+ ' No esta disponible')">
                                             <img src="{{this.Img_Emp}}" class="img-circle img-ndisp" alt="avatar" style="height: 75px; width:75px;">
                                             <span class="mdl-radio__label">Horario {{this.Tur_Emp}}, Nombre: {{this.Nomb_Emp}}</span>  
-                                        </div>
+                                        </div><br><br>
                                         {{/each}}{{/if}}
                                     </div>
                                 </div>

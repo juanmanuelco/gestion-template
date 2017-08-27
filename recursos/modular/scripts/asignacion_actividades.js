@@ -1,9 +1,6 @@
 function asignacion(identificador){
-    var envio={'cedula':identificador.id}
-    var fecha=new Date;
-    var horaInicial=``;
-    var horaFinal=``;
-    var minuto,hora,horaF=fecha.getHours()+1;
+    var envio={'cedula':identificador.id},
+        fecha=new Date, horaInicial=``, horaFinal=``, minuto,hora,horaF=fecha.getHours()+1;
     if(fecha.getHours()<10)
         hora='0'+fecha.getHours();
     else
@@ -122,12 +119,11 @@ function asignacion(identificador){
                     contentType:"application/json",
                     data: JSON.stringify({'cedula':cliente})
                 }).done(function(cedulaCliente){
-                    if(cedulaCliente!=1){
-                        error+=`- Este cliente no está registrado`
-                    }
-                    if(error!=''){
+                    if(cedulaCliente!=1)
+                        error+=`- Este cliente no está registrado`;
+                    if(error!='')
                         swal('Que mal', error,'error' )
-                    }else{
+                    else{
                         envio={
                             'cedulaEmp':resp.Ced_Emp,
                             'fechaAsig':cadenaFecha,
@@ -147,12 +143,11 @@ function asignacion(identificador){
                             data: JSON.stringify(envio)
                         }).done(function(guard){
                             if(guard=='mal')
-                                guardado='error'          
+                                swal('Algo ha salido mal','Por favor intentelo de nuevo','error');
+                            else
+                                swal('Correcto', 'Registro guardado con éxito',  'success' )
+                            location.reload();        
                         })
-                        if(guardado=='')
-                            swal('Correcto', 'Registro guardado con éxito',  'success' )
-                        else
-                            swal('Algo ha salido mal','Por favor intentelo de nuevo','error')
                     }
                 })               
             }
@@ -160,7 +155,45 @@ function asignacion(identificador){
     });
 }
 function liberacion(identificador){
-    $('#modalLiberacion').modal({backdrop: "static"})
+    var envio={'cedulaEmp':identificador.id};
+    swal({
+        title: `Está seguro de liberar de sus actividades al empleado`,
+        html: 'Estos cambios no se pueden deshacer',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        closeOnConfirm: false
+    }, function (isConfirm) {
+        if(isConfirm){
+            $.ajax({
+                type:"POST",
+                url:"/admin/liberar-empleados",
+                dataType:"text",
+                async:false,
+                contentType:"application/json",
+                data: JSON.stringify(envio)
+            }).done(function(resp){
+                swal(
+                    'Actividad finalizada con éxito',
+                    'Empleado listo para otra actividad',
+                    'success'
+                  )
+                  location.reload();
+            });           
+        }
+    })
+      /*
+    $.ajax({
+        type:"POST",
+        url:"/admin/datos-empleados",
+        dataType:"text",
+        async:false,
+        contentType:"application/json",
+        data: JSON.stringify(envio)
+    }).done(function(resp){
+
+    });
+    */
 }
 function getCedula(){
     var escogido=document.getElementById('selecCedula').value;

@@ -101,11 +101,23 @@ router.post('/registrar_actividad',(req,res)=>{
 		Desct_CtrActE:req.body.descripcion,
 		Contd_CtrActE:req.body.contador
 	});
-	nuevaActividad.save().exec((err,resp)=>{
+	nuevaActividad.save((err,resp)=>{
 		if(err)
 			res.send('mal');
-		else
-			res.send('ok');
+		else{
+			E_DBF_EMPLEADO_OBJ.findOne().where({Ced_Emp:req.body.cedulaEmp}).exec((err,result)=>{
+				var conteo=Number(result.Conta_Emp)+1;
+				E_DBF_EMPLEADO_OBJ.findOneAndUpdate({Ced_Emp:req.body.cedulaEmp},{Conta_Emp:conteo,Estd_Emp:'No Disponible'}).exec((err,respuesta)=>{
+					res.send('ok');
+				});
+			});
+		}
+	});
+});
+
+router.post('/liberar-empleados',(req,res)=>{
+	E_DBF_EMPLEADO_OBJ.findOneAndUpdate({Ced_Emp:req.body.cedulaEmp},{Estd_Emp:'Disponible'}).exec((err,respuesta)=>{
+		res.send('ok');
 	});
 });
 
