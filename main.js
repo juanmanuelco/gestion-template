@@ -119,8 +119,19 @@ var menu = Menu.buildFromTemplate(
 //Asignamos el menú personalizado
 var aCerrar = true;
 function ventanaPrincipal() {
-  mainWindow = new BrowserWindow({ width: 1000, height: 860, icon: icono, minWidth: 1000, title: "Car de lujo" });
+  mainWindow = new BrowserWindow({
+    width: 1000, 
+    height: 860, 
+    icon: icono, 
+    minWidth: 1000, 
+    title: "Car de lujo",
+    webPreferences:{
+      experimentalFeatures:true,
+      experimentalCanvasFeatures:true
+    }
+  });
   mainWindow.maximize();
+  mainWindow.webContents.executeJavaScript();
   let cargando = new BrowserWindow({parent: mainWindow, modal: true, show: false, frame:false})
   cargando.once('show', () => {
     mainWindow.hide();

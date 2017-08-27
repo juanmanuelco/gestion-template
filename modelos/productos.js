@@ -7,7 +7,9 @@ var E_DBF_PRODUCTO_OBJ = mongoose.Schema({
     Descripcion:{type:String},
     Existencia:{type:Number},
     PrecComp_Pro:{type:String},
-    PrecVen_Pro: {type:String}
+    PrecVen_Pro: {type:String},
+    Img_Prod:{type:String}
+    
 });
 
 //Exporta el esquema para poder ser usado en cada ruta que sea  necesario____________________________________________________________________

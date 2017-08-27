@@ -62,7 +62,6 @@ FuncionesEmpleados["editEmpleado"] = function () {
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	var formhtml = '<form id="editForm" style="text-align: left;" enctype="multipart/form-data" action="/admin/editEmployee?cedula='+datos[0].innerHTML+'" method="post">'+
-	'<div></div>'+
 	'<div class="mdl-grid">'+
 			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
 				'<label class="text-condensedLight" style="font-size:20px;">Foto del empleado</label>'+
@@ -77,34 +76,40 @@ FuncionesEmpleados["editEmpleado"] = function () {
 				'</div>'+
 			'</div>'+
 	'</div>'+
-	'<span id="msgError" style="display:none;color:#d50000;position:absolute;font-size:14px;margin-top:3px;">Solo se admite fotos de menos de 300kb</span>'+
-	'<br>'+
-	'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
-		'<label class="text-condensedLight" style="font-size:20px;">Cédula</label>'+
-		'<input class="mdl-textfield__input" type="text" id="Ced_Emp" name="Ced_Emp" validation="cedula" event="keyup" solonum="true"'+
-		' EnterNext="true" idNext="Nomb_Emp" value="'+datos[0].innerHTML+'" readonly="readonly">'+
-		'<label class="mdl-textfield__label" for="Ced_Emp" maxlength="10"></label>'+
-		'<span class="mdl-textfield__error" style="font-size:14px;">Ingrese Solo Números en Cédula</span>'+
-	'</div>'+
-	'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
-		'<label class="text-condensedLight" style="font-size:20px;">Nombre</label>'+
-		'<input class="mdl-textfield__input" type="text" id="Nomb_Emp" name="Nomb_Emp" EnterNext="true" idNext="Telf_Emp" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'">'+
-		'<label class="mdl-textfield__label" for="Nomb_Emp" ></label>'+
-		'<span class="mdl-textfield__error" style="font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
-	'</div>'+
-	'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
-		'<label class="text-condensedLight" style="font-size:20px;">Teléfono</label>'+
-		'<input class="mdl-textfield__input" type="text" id="Telf_Emp" value="'+datos[2].innerHTML+'" name="Telf_Emp" solonum="true" EnterNext="true" idNext="Tur_Emp" maxlength="10">'+
-		'<label class="mdl-textfield__label" for="Telf_Emp"></label>'+
-		'<span class="mdl-textfield__error" style="font-size:14px;">Ingrese solo números</span>'+
-	'</div>'+
-	'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
-		'<label class="text-condensedLight" id="Turno" style="font-size:20px;">Turno</label>'+
-		'<select class="mdl-textfield__input" id="Tur_Emp" name="Tur_Emp" value="'+datos[3].innerHTML+'">'+
-			'<option>Matutino</option>'+
-			'<option>Vespertino</option>'+
-			'<option>Nocturno</option>'+
-		'</select>'+
+	'<span id="msgError" style="display:none;color:#d50000;position:absolute;font-weight: bold;font-size:14px;;margin-top:3px;">Solo se admite fotos de menos de 300kb</span>'+
+	
+	'<div class="mdl-grid">'+
+		'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Cédula</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Ced_Emp" name="Ced_Emp" validation="cedula" event="keyup" solonum="true"'+
+				' EnterNext="true" idNext="Nomb_Emp" value="'+datos[0].innerHTML+'" readonly="readonly">'+
+				'<label class="mdl-textfield__label" for="Ced_Emp" maxlength="10"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Nombre</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Nomb_Emp" name="Nomb_Emp" EnterNext="true" idNext="Telf_Emp" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'">'+
+				'<label class="mdl-textfield__label" for="Nomb_Emp" ></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
+			'</div>'+
+		'</div>'+
+		'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Teléfono</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Telf_Emp" value="'+datos[2].innerHTML+'" name="Telf_Emp" solonum="true" EnterNext="true" idNext="Tur_Emp" maxlength="10">'+
+				'<label class="mdl-textfield__label" for="Telf_Emp"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" id="Turno" style="font-size:20px;">Turno</label>'+
+				'<select class="mdl-textfield__input" id="Tur_Emp" name="Tur_Emp" value="'+datos[3].innerHTML+'">'+
+					'<option>Matutino</option>'+
+					'<option>Vespertino</option>'+
+					'<option>Nocturno</option>'+
+				'</select>'+
+			'</div>'+	
+		'</div>'+
 	'</div>'+
 	'<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
 	'</form>'
@@ -217,7 +222,7 @@ FuncionesEmpleados["deleteEmpleado"] = function () {
 					swal({
 					  	title: 'Error al eliminar este Usuario',
 					  	text: "Usuario no puede ser eliminado por que tiene una tarea asignada",
-					  	type: 'warning',
+					  	type: 'error',
 					  	confirmButtonText: 'Ok'
 					})
 				}
@@ -294,27 +299,33 @@ FuncionesEmpleados["infoEmpleado"] = function (argument) {
 						'<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
 					'</div>'+
 					'<br>'+
-					'<br>'+
+	'<div class="mdl-grid">'+
+			'<div class="mdl-cell mdl-cell--8-col-phone mdl-cell--16-col-tablet mdl-cell--12-col-desktop">'+
 					'<label class="text-condensedLight" style="float:left;font-size:20px;">Cédula</label>'+
 					'<input class="mdl-textfield__input" type="text" value="'+datos[0].innerHTML+'" readonly>'+
-					'<br>'+
+			'</div>'+
+	'</div>'+
+	'<div class="mdl-grid">'+
+			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
 					'<label class="text-condensedLight" style="float:left;font-size:20px;">Nombre</label>'+
 					'<input class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" readonly>'+
 					'<br>'+
 					'<label class="text-condensedLight" style="float:left;font-size:20px;">Teléfono</label>'+
 					'<input class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" readonly>'+
-					'<br>'+
+	'</div>'+
+			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
 					'<label class="text-condensedLight" style="float:left;font-size:20px;">Turno</label>'+
 					'<input class="mdl-textfield__input" type="text" value="'+datos[3].innerHTML+'" readonly>'+
 					'<br>'+
 					'<label class="text-condensedLight" style="float:left;font-size:20px;">Estado</label>'+
 					'<input class="mdl-textfield__input" type="text" value="'+datos[3].id+'" readonly>'+
-					'<br>'
+			'</div>'+
+	'</div>'
 
 	swal({
 	  	title: 'Informacion del Empleado',
 	  	html: textHTML,
-	  	width: "570px",
+	  	width: "550px",
 	  	confirmButtonText: 'Ok',
 	  	closeOnConfirm: true
 	});
