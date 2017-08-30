@@ -22,6 +22,8 @@ function ensureAuthenticated(req, res, next) {
 //=============================rutas para clientes==============================
 
 router.post('/saveClient', ensureAuthenticated,cliente_controller.createClient)
+router.post('/editClient', ensureAuthenticated,cliente_controller.editClient)
+router.post('/deleteClient', ensureAuthenticated,cliente_controller.deleteClient)
 router.get('/tabla_cliente', ensureAuthenticated, cliente_controller.getAllClients);
 
 router.get('/ventas', ensureAuthenticated, function (req, res) {

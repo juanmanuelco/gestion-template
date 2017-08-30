@@ -1,4 +1,54 @@
 var cliente = require('../modelos/cliente');
+
+module.exports.editClient=function(req,res){
+	var porcentajeDescuento=0;
+	if(req.body.Tip_Cli=="Premiun"){
+		porcentajeDescuento=5;
+	}
+	var cedula = req.body.Ced_Cli;
+	var objeto = {
+		Nomb_Cli: req.body.Nomb_Cli,
+		Dir_Cli: req.body.Dir_Cli,
+		Telf_Cli: req.body.Telf_Cli,
+		Cor_Cli: req.body.Cor_Cli,
+		Tip_Cli: req.body.Tip_Cli,
+		Por_Cli: porcentajeDescuento
+	}
+	var query = { 'Ced_Cli': cedula };
+	cliente.findOneAndUpdate(query, objeto, { new: false }, function (err, userUpdated) {
+		if (err) {
+			res.render('500', { error: 'Error al actualizar el cliente'})
+		} else {
+			if (!userUpdated) {
+				res.render('404', {error: "No se ha podido actualizar el usuario (Error 404)"});
+			} else {
+				req.session['success'] = 'Usuario actualizado con exito';
+				res.redirect('tabla_cliente');
+			}
+		}
+	})
+}
+
+module.exports.deleteClient=function(req,res){
+	
+	var cedula = req.body.Ced_Cli;
+	var query = { 'Ced_Cli': cedula };
+	cliente.findOneAndRemove().where({query}), function (err, userDeleted) {
+		console.log(err)
+		if (err) {
+			res.render('500', { error: 'Error al eliminar el cliente'})
+		} else {
+			if (!userDeleted) {
+				res.render('404', {error: "No se ha podido eliminar el usuario (Error 404)"});
+			} else {
+				req.session['success'] = 'Usuario eliminado con exito';
+				res.redirect('tabla_cliente');
+			}
+		}
+	}
+}
+
+
 module.exports.createClient = function (req, res) {
 	var params = req.body;
 	var porcentajeDescuento=0;
@@ -27,7 +77,9 @@ module.exports.createClient = function (req, res) {
 
 module.exports.getAllClients = function (req, res) {
     cliente.find({}, function (err, clients) {
-        res.render('tabla_cliente', { clientes: clients });
+		var msg = req.session.success;
+		req.session.success=null;
+		res.render('tabla_cliente', { clientes: clients,success_msg: msg});
     });   
 }
 //Para poder usar la encriptación es necesario usar estas líneas______________________________________________________________________________
