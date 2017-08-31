@@ -58,10 +58,42 @@
 		</div>
 	</div>
 </section>
-
 <script src="../modular/scripts/validacion_form.js"></script>
 <script src="../modular/scripts/indentificaciones.js"></script>
 <script src="../modular/scripts/validacionPrecios.js"></script>
 <script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/empleados.js"></script>
 <link rel="stylesheet" href="../modular/estilos/empleados.css">
+<script type="text/javascript">
+	function Modal (title,type,accion) {
+		var close = true
+		if (accion) {close = false};
+		swal({
+	  	title: title,
+	  	type: type,
+	  	confirmButtonText: 'Ok',
+	  	closeOnConfirm: close
+		},
+		function(isConfirm) {
+			if (isConfirm) { 
+				if (accion == "retroceder") {
+					window.history.back();
+				}
+		  	}
+		}
+		)
+	}
+</script>
+{{#if success_msg }}
+	<input id="inputsucces" type="hidden" value="{{success_msg}}">
+    <script type="text/javascript">
+	    input = document.getElementById("inputsucces").value || "Accion realizada con éxito"
+	    Modal(input,'success',null);
+    </script>
+{{else if  error }}
+	<input id="inputError" type="hidden" value="{{error}}">
+    <script type="text/javascript">
+	    input = document.getElementById("inputError").value || "Error inesperado"
+	    Modal(input,'error',"retroceder");
+    </script>
+{{/if}}

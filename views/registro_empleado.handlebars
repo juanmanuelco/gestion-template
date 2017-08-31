@@ -81,3 +81,15 @@
 <script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/empleados.js"></script>
 <link rel="stylesheet" href="../modular/estilos/empleados.css">
+{{#if success_msg }}
+	<input id="inputsucces" type="hidden" value="{{success_msg}}">
+    <script type="text/javascript">
+	    input = document.getElementById("inputsucces").value || "Accion realizada con éxito"
+	    swal({
+	  	title: input,
+	  	type: 'success',
+	  	confirmButtonText: 'Ok',
+	  	closeOnConfirm: true
+		})
+    </script>
+{{/if}}
