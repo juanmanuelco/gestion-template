@@ -1,7 +1,9 @@
 var express = require('express'),
 	venta_model = require("../modelos/ventas"),
 	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
+	producto_controller= require('../controladores/productosController')
 	empleados_controller = require('../controladores/empleados'),
+	cliente_controller = require('../controladores/cliente'),
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
 	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
 	E_DBF_ACTIVIDADES_OBJ=require('../modelos/actividades'),
@@ -16,20 +18,48 @@ function ensureAuthenticated(req, res, next) {
 		res.redirect('/users/login');
 }
 
-//====================Ventas====================================================//
-router.get('/ventas', ensureAuthenticated, venta_controller.obtenerVistaVenta);
-router.get('/buscarcliente/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
-router.get('/buscarproducto/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
-router.post('/ventas', ensureAuthenticated, venta_controller.registrarVenta);
+
+//=============================rutas para clientes==============================
+
+router.post('/saveClient', ensureAuthenticated,cliente_controller.createClient)
+router.post('/editClient', ensureAuthenticated,cliente_controller.editClient)
+router.post('/deleteClient', ensureAuthenticated,cliente_controller.deleteClient)
+router.get('/tabla_cliente', ensureAuthenticated, cliente_controller.getAllClients);
+
+router.get('/ventas', ensureAuthenticated, function (req, res) {
+	//res.render('ventas');
+	res.render('ventas', { incrementar: "00001" })
+});
+
+router.post('/ventas', ensureAuthenticated, function (req, res) {
+	var params = req.body;
+	var nuevaVenta = new venta_model({
+		CodVen_Vent: params.codigo_venta,
+		Ced_Vent: params.cedula,
+		Fech_Vent: params.fecha,
+		CodPro_Vent: params.codigo_producto,
+		Desc_Vent: params.descuento
+	})
+	nuevaVenta.save(function (error, resp) {
+		if (error) {
+			res.render('500', { error: error })
+			console.log("Error");
+		} else {
+			res.render('ventas', { success_msg: 'Guardado' })
+			console.log("Guardado");
+		}
+	})
+})
+
 //===================Productos===============================================//
 
 //renderiza en la ruta /productos la vista productos 
 router.get('/productos', ensureAuthenticated, function (req, res) {
 	res.render('productos')
 });
-router.post('/crearProducto', ensureAuthenticated, E_DBF_PRODUCTO_OBJ.crearProduct);
-router.post('/editarProducto', ensureAuthenticated, E_DBF_PRODUCTO_OBJ.editProduct);
-router.post('/eliminarProducto', ensureAuthenticated, E_DBF_PRODUCTO_OBJ.deletedProduct);
+router.post('/crearProducto', ensureAuthenticated, producto_controller.crearProduct);
+router.post('/editarProducto', ensureAuthenticated, producto_controller.editProduct);
+router.post('/eliminarProducto', ensureAuthenticated, producto_controller.deletedProduct);
 //Obtener los valores de los input para guardarlos en el esquema o eso se supone..
 
 router.get('/inventario', ensureAuthenticated, function (req, res) {

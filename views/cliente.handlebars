@@ -8,31 +8,33 @@
 							<div class="full-width panel-tittle bg-primary text-center tittles">
 								Nuevo Cliente
 							</div>
+							{{#if success_msg}}<div class="alert alert-success">{{success_msg}}</div>{{/if}} 
+							{{#if error_msg}}<div class="alert alert-danger">{{error_msg}}</div>{{/if}} 
 							<div class="full-width panel-content">
-								<form>
+								<form action="/admin/saveClient" method="post">
 									<div class="mdl-grid">
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Ruc/Cédula</label>
-												<input class="mdl-textfield__input" type="number" id="BarCode" solonum="true" validation="cedruc" event="keyup" maxlength="10">
+												<input class="mdl-textfield__input" name="Ced_Cli" type="number" id="BarCode" solonum="true" validation="cedruc" event="keyup" maxlength="10">
 												<label class="mdl-textfield__label" for="BarCode"></label>
 												<span class="mdl-textfield__error">Ingrese Solo Números en Ruc/Cédula de Cliente</span>
 								    		</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre</label>
-												<input class="mdl-textfield__input" type="text" soloLetras="true"  id="NameClient" maxlength="100">
+												<input class="mdl-textfield__input" name="Nomb_Cli" type="text" soloLetras="true"  id="NameClient" maxlength="100">
 												<label class="mdl-textfield__label" for="NameClient"></label>
 												<span class="mdl-textfield__error">Ingrese solo letras </span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Dirección</label>
-												<input class="mdl-textfield__input" type="text" id="addressClient1">
+												<input class="mdl-textfield__input" name="Dir_Cli" type="text" id="addressClient1">
 												<label class="mdl-textfield__label" for="addressClient1"></label>
 												<span class="mdl-textfield__error">Dirección no válida</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Celular/Convencional</label>
-												<input class="mdl-textfield__input" type="number" solonum="true" id="NumeroConvencional" maxlength="10">
+												<input class="mdl-textfield__input" name="Telf_Cli" type="number" solonum="true" id="NumeroConvencional" maxlength="10">
 												<label class="mdl-textfield__label" for="NumeroConvencional"></label>
 												<span class="mdl-textfield__error">Ingrese solo números</span>
 											</div>
@@ -40,20 +42,21 @@
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Correo electronico</label>
-												<input class="mdl-textfield__input" type="text" id="Correo" validation="email" event="keyup">
+												<input class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" event="keyup">
 												<label class="mdl-textfield__label" for="Correo"></label>
 												<span class="mdl-textfield__error">Correo No válido</span>
 											</div>
 												<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>
 											<div class="mdl-textfield mdl-js-textfield">
-												<select class="mdl-textfield__input">
+												<select class="mdl-textfield__input" name="Tip_Cli">
 													<option value="Ocasional">Ocasional</option>
-													<option value="Premiun">Premium</option>
+													<option value="Premium">Premium</option>
 												</select>
 											</div>
+											
 											<div align="center">
 		                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" validation="saveCliente" >Guardar</button>
-		                                       <button id="btn-verClientes" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" id="Consultar" validation="ocultarmostrar" mostrarID="divTabla" ocultarID="tabNewAdmin" event="click" title="Mostrar Cliente Registrados">Ver Clientes Registrados</button>
+		                                       <a href="/admin/tabla_cliente" id="btn-upClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5; float:left;" title="Mostrar Cliente Registrados">Ver Clientes Registrados</a>
 		                                   	</div>
 										</div>
 									</div>
@@ -62,73 +65,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
-			
-			<div class="full-width divider-menu-h"></div>
-			<div class="mdl-grid" id="divTabla" style="display:none;">
-				<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-					<form action="#">
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-							<label class="mdl-button mdl-js-button mdl-button--icon" for="searchPayment">
-								<i class="zmdi zmdi-search"></i>
-							</label>
-							<div class="mdl-textfield__expandable-holder">
-								<input class="mdl-textfield__input" type="text" id="searchPayment" validation="buscarTabla" event="keyup" TablaID="tblPersonas" placeholder=" Buscar">
-								<label class="mdl-textfield__label"></label>
-							</div>
-						</div>
-					</form>
-					 
-					<div style="overflow-x:auto;">				
-						<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblPersonas">
-							<thead>
-								<tr>
-									<th>Ruc/Cedula</th>
-									<th>Nombre</th>
-									<th>Dirección</th>
-									<th>Número Convencional</th>
-									<th>Correo Electrónico</th>
-									<th>Tipo Cliente</th>
-									<th>Porcentaje Descuento</th>
-									<th><center>Opción</center></th>
-								</tr>
-							</thead>
-								<tbody id="contenidoTabla">
-								{{#if usuarios}}{{#each usuarios}}
-								<tr>
-									<td>{{this.Ced_Cli}}</td>
-									<td>{{this.Nomb_Cli}}</td>
-									<td>{{this.Telf_Cli}}</td>
-									<td>{{this.Dir_Cli}}</td>
-									<td>{{this.Cor_Cli}}</td>
-									<td>{{this.Tip_Cli}}</td>
-									<td>{{this.Por_Cli}}</td>
-									<td>
-										<div>
-											<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editCliente"
-											event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
-											<button
-											validation="deleteCliente" event="click" id="borrarClient" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
-										</div>
-									</td>
-								</tr>
-								{{/each}} {{else}}
-								<tr>
-									<td colspan="8">
-										<center>No hay datos para mostrar</center>
-									</td>
-								</tr>
-								{{/if}}
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-				 
-				<center>
-		           <button id="btn-addClient"  title="Registrar nuevo Cliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;" validation="ocultarmostrar" ocultarID="divTabla" mostrarID="tabNewAdmin" event="click">Nuevo Registro</button>
-		       	</center>
 			</div>
 		</div>
 
