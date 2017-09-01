@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 
 //Se crea el esquema necesario_______________________________________________________________________________________________________________
 var E_DBF_PRODUCTO_OBJ = mongoose.Schema({
+    //Definimos cada uno de los campos que llevara el esquema de Productos que se almacenara 
+    // en la base de datos 
+    //Tambien definimos el tipo de dato que sera nuestra variable
     Cod_Prod:{type: Number},
     Descripcion:{type:String},
     Existencia:{type:Number},
