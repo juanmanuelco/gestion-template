@@ -11,7 +11,7 @@ module.exports.crearProduct=function(req, res){
         if(file.mimetype=='image/png'|| file.mimetype=='image/jpg' || file.mimetype=='image/jpeg'){cb(null, true);}else{cb(null, false);}
     }}).single('image_producto');
     upload(req, res, function (err) {
-        if(err){res.render('productos',{error:'Error al cargar la imágen (Error 500)'})}else{
+        if(err){res.render('productos',{error:'Error al cargar la imagen (Error 500)'})}else{
             var nuevoP = new productos({
                 Cod_Prod: req.body.Cod_Prod,
                 Descripcion: req.body.Des_Prod,
@@ -43,7 +43,7 @@ module.exports.editProduct=function(req, res){
         if(file.mimetype=='image/png'|| file.mimetype=='image/jpg' || file.mimetype=='image/jpeg'){cb(null, true);}else{cb(null, false);}
     }}).single('image_producto');
     upload(req, res, function (err) {
-        if(err){res.render('productos',{error:'Error al cargar la imágen (Error 500)'})}else{
+        if(err){res.render('productos',{error:'Error al cargar la imagen (Error 500)'})}else{
             var codigoP = req.body.Cod_Prod;
             var objeto = {
                 Descripcion: req.body.Des_Prod,

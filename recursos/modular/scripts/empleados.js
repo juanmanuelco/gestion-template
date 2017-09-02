@@ -66,7 +66,7 @@ FuncionesEmpleados["editEmpleado"] = function () {
 			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
 				'<label class="text-condensedLight" style="font-size:20px;">Foto del empleado</label>'+
 				'<div class="div_file btn">'+
-					'<p class="texto">Cambiar imágen (102x102) </p>'+
+					'<p class="texto">Cambiar imagen (102x102) </p>'+
 					'<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
 				'</div>'+
 			'</div>'+
@@ -259,7 +259,7 @@ FuncionesEmpleados["deleteEmpleado"] = function () {
 }
 
 /*
-	PD: las FuncionesEmpleados de edit,delete fueron echas para crear formularios en modales de esos modulos
+	PD: las FuncionesEmpleados de edit,delete fueron hechas para crear formularios en modales de esos módulos
 	por lo cual no es recomendable intentar usarlas en cosas que no sean tablas
 */
 
@@ -323,7 +323,7 @@ FuncionesEmpleados["infoEmpleado"] = function (argument) {
 	'</div>'
 
 	swal({
-	  	title: 'Informacion del Empleado',
+	  	title: 'Información del Empleado',
 	  	html: textHTML,
 	  	width: "550px",
 	  	confirmButtonText: 'Ok',
