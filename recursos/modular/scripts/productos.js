@@ -1,91 +1,92 @@
 FuncionesProducto = {}
 function alertaOferta(input, val) {
-	var imagenAnterior = document.getElementById('img_destino').src;
-	if ((val / 1024) > 300) {
-		document.getElementById('msgError').style.display="block";
-		document.getElementById('file_url').value = ''
-		$('#esconder').css("display", "none")
-		document.getElementById('img_destino').src = imagenAnterior;
-	} else {
-		$('#esconder').css("display", "block")
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				$('#img_destino').attr('src', e.target.result);
-				document.getElementById('poder').style.display = 'block';
-				document.getElementById('msgError').style.display="none";
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
+    var imagenAnterior = document.getElementById('img_destino').src;
+    if ((val / 1024) > 300) {
+        document.getElementById('msgError').style.display="block";
+        document.getElementById('file_url').value = ''
+        $('#esconder').css("display", "none")
+        document.getElementById('img_destino').src = imagenAnterior;
+    } else {
+        $('#esconder').css("display", "block")
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img_destino').attr('src', e.target.result);
+                document.getElementById('poder').style.display = 'block';
+                document.getElementById('msgError').style.display="none";
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 }
 
 FuncionesProducto["saveProducto"] = function (e){
-	e.preventDefault();
-	var form = this.form
-	if (!form) {return false}
-	var bool = ValidarDatosFormulario(form);
-	if (bool){ 
-		var foto = document.getElementById("file_url").value ||  ''
-		if (foto === '' ) { 
-			swal({
-			  	title: 'Formulario No Válido',
-			  	type: 'error',
-			  	text:"Por favor introduzca una foto válida",
-			  	showCancelButton: true,
-			  	confirmButtonText: 'Ok',
-			  	closeOnConfirm: true
-			});
-			return false
-		}
-		swal({
-			  	title: 'Formulario Válido',
-			  	type: 'success',
-			  	text:"Se guardarán los datos correctamente",
-			  	showCancelButton: true,
-			  	confirmButtonText: 'Ok',
-			  	closeOnConfirm: true
-			},
-			function(isConfirm) {
-			  	if (isConfirm) {
+    e.preventDefault();
+    var form = this.form
+    if (!form) {return false}
+    var bool = ValidarDatosFormulario(form);
+    if (bool){ 
+        var foto = document.getElementById("file_url").value ||  ''
+        if (foto === '' ) { 
+            swal({
+                title: 'Formulario No Válido',
+                type: 'error',
+                text:"Por favor introduzca una foto válida",
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                closeOnConfirm: true
+            });
+            return false
+        }
+        swal({
+                title: 'Formulario Válido',
+                type: 'success',
+                text:"Se guardarán los datos correctamente",
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                closeOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
                     form.action = '/admin/crearProducto?Cod_Prod='+form.Cod_Prod.value
-			  		form.submit();
-			  	}
-			  	else{
-			  		return false;
-			  	}
-			});
-	}
+                    form.submit();
+                }
+                else{
+                    return false;
+                }
+            });
+    }
 }
 
 textoAnterior={}
 function validarUsuario (input) {
-	var divPadre = input.parentNode
-	if (divPadre.classList.contains("is-invalid")) {return false;};
-	var span = divPadre.getElementsByTagName("span");
-	if (span && textoAnterior[input.id] == undefined) {
-		textoAnterior[input.id] = span[0].innerHTML;
+    var divPadre = input.parentNode
+    if (divPadre.classList.contains("is-invalid")) {return false;};
+    var span = divPadre.getElementsByTagName("span");
+    if (span && textoAnterior[input.id] == undefined) {
+        textoAnterior[input.id] = span[0].innerHTML;
     };
     var Cod_Prod = input.value
-  	$.post("/admin/getProducts",
+    $.post("/admin/getProducts",
     {
         Cod_Prod: Cod_Prod,
     },
     function(data,status){
-    	if (status == "success") {
-    		if (data.length >= 1) {
-				span[0].innerHTML = "El producto con este código ya está registrado en la base de datos";
-    			divPadre.classList.add("is-invalid")
-    			input.addEventListener("focus", function(){
-					var span = this.parentNode.getElementsByTagName("span");
-					if (span && textoAnterior[input.id]) {
-						span[0].innerHTML=textoAnterior[input.id];
-						textoAnterior[input.id]=undefined;
-					};
-					this.parentNode.classList.remove("is-invalid");
-			 	})
-    		}
-    	}
+        if (status == "success") {
+            console.log(data)
+            if (data.length >= 1) {
+                span[0].innerHTML = "El producto con este código ya está registrado en la base de datos";
+                divPadre.classList.add("is-invalid")
+                input.addEventListener("focus", function(){
+                    var span = this.parentNode.getElementsByTagName("span");
+                    if (span && textoAnterior[input.id]) {
+                        span[0].innerHTML=textoAnterior[input.id];
+                        textoAnterior[input.id]=undefined;
+                    };
+                    this.parentNode.classList.remove("is-invalid");
+                })
+            }
+        }
     });
 }
 
@@ -297,65 +298,65 @@ FuncionesProducto["infoProductos"] = function (argument) {
     //funcion inicializacion pensada para poder ser llamada en el caso de que se genere nuevos elementos html 
 //desde javascript
 FuncionesProducto["init"] = function (argument) {
-	// se a cambiado la forma de obtener los elementos del html
-	// en este caso se recorre por tipo de elemento ya que lo anterior no identificaba los buttons que estaban
-	// dentro de tablas como en el inentario
-	// se define la variable elements donde se guardaran todos los elementos
-	var elements=[]
-	// se define los elementos a buscar por medio del tagname
-	var inputs = document.getElementsByTagName("input");
-	var button = document.getElementsByTagName("button");
-	var divs = document.getElementsByTagName("div");
-	// con los for se recorren y se insertan en el arrat "elements"
-	for (var i = 0; i < inputs.length; i++) {elements.push(inputs[i])};
-	for (var i = 0; i < button.length; i++) {elements.push(button[i])};
-	for (var i = 0; i < divs.length; i++) {elements.push(divs[i])};
-	// con este for recorremos todos los elementos guardados en busca de la validacion y evento
-	for (var i = 0; i < elements.length; i++) {
-	var atributo = elements[i].getAttribute("validation") || false;
+    // se a cambiado la forma de obtener los elementos del html
+    // en este caso se recorre por tipo de elemento ya que lo anterior no identificaba los buttons que estaban
+    // dentro de tablas como en el inentario
+    // se define la variable elements donde se guardaran todos los elementos
+    var elements=[]
+    // se define los elementos a buscar por medio del tagname
+    var inputs = document.getElementsByTagName("input");
+    var button = document.getElementsByTagName("button");
+    var divs = document.getElementsByTagName("div");
+    // con los for se recorren y se insertan en el arrat "elements"
+    for (var i = 0; i < inputs.length; i++) {elements.push(inputs[i])};
+    for (var i = 0; i < button.length; i++) {elements.push(button[i])};
+    for (var i = 0; i < divs.length; i++) {elements.push(divs[i])};
+    // con este for recorremos todos los elementos guardados en busca de la validacion y evento
+    for (var i = 0; i < elements.length; i++) {
+    var atributo = elements[i].getAttribute("validation") || false;
 
-		//Validacion de atributos solonum y solodecimal, por si se quiere usar estas 2 
-		//funcionesProducto mientras se usa otra como por ejemplo cedula
-		var solonum = elements[i].getAttribute("solonum") || false;
-		if (solonum) {
-			elements[i].addEventListener("keypress",FuncionesProducto["NumeroEntero"])
-			elements[i].addEventListener("keyup",FuncionesProducto["NumeroEntero"])
-		};
-		var solodecimal = elements[i].getAttribute("solodecimal") || false;
-		if (solodecimal) {
-			elements[i].addEventListener("keypress",FuncionesProducto["NumDecimal"])
-			elements[i].addEventListener("keyup",FuncionesProducto["NumDecimal"])
-		};
-		var soloLetras = elements[i].getAttribute("soloLetras") || false;
-		if (soloLetras) {
-			elements[i].addEventListener("keypress",FuncionesProducto["soloLetras"])
-			elements[i].addEventListener("keyup",FuncionesProducto["soloLetras"])
-			elements[i].addEventListener("blur",FuncionesProducto["soloLetras"])
-		};
-		var EnterNext = elements[i].getAttribute("EnterNext") || false;
-		if (EnterNext) {elements[i].addEventListener("keyup",FuncionesProducto["EnterNext"])};
+        //Validacion de atributos solonum y solodecimal, por si se quiere usar estas 2 
+        //funcionesProducto mientras se usa otra como por ejemplo cedula
+        var solonum = elements[i].getAttribute("solonum") || false;
+        if (solonum) {
+            elements[i].addEventListener("keypress",FuncionesProducto["NumeroEntero"])
+            elements[i].addEventListener("keyup",FuncionesProducto["NumeroEntero"])
+        };
+        var solodecimal = elements[i].getAttribute("solodecimal") || false;
+        if (solodecimal) {
+            elements[i].addEventListener("keypress",FuncionesProducto["NumDecimal"])
+            elements[i].addEventListener("keyup",FuncionesProducto["NumDecimal"])
+        };
+        var soloLetras = elements[i].getAttribute("soloLetras") || false;
+        if (soloLetras) {
+            elements[i].addEventListener("keypress",FuncionesProducto["soloLetras"])
+            elements[i].addEventListener("keyup",FuncionesProducto["soloLetras"])
+            elements[i].addEventListener("blur",FuncionesProducto["soloLetras"])
+        };
+        var EnterNext = elements[i].getAttribute("EnterNext") || false;
+        if (EnterNext) {elements[i].addEventListener("keyup",FuncionesProducto["EnterNext"])};
 
-		if ( atributo && FuncionesProducto[atributo] ){
-			var evento = elements[i].getAttribute("event") || false;
-			//modificacion del codigo para poder agregar más de 1 evento a las funcionesProducto
-			if (evento) {
-				var arrayEvent = evento.split(",")
-				if (arrayEvent.length > 1) {
-					for (var i = 0; i < arrayEvent.length; i++) {
-						elements[i].addEventListener(arrayEvent[i],FuncionesProducto[atributo]);
-					};
-				}
-				else{
-					elements[i].addEventListener(evento,FuncionesProducto[atributo]);
-				}
-			}
-			elements[i].addEventListener("change",FuncionesProducto[atributo]);
-			/*elements[i].addEventListener("paste", function (e) {
-				e.preventDefault();
-				return false;
-			});*/
-		}
-	}
+        if ( atributo && FuncionesProducto[atributo] ){
+            var evento = elements[i].getAttribute("event") || false;
+            //modificacion del codigo para poder agregar más de 1 evento a las funcionesProducto
+            if (evento) {
+                var arrayEvent = evento.split(",")
+                if (arrayEvent.length > 1) {
+                    for (var i = 0; i < arrayEvent.length; i++) {
+                        elements[i].addEventListener(arrayEvent[i],FuncionesProducto[atributo]);
+                    };
+                }
+                else{
+                    elements[i].addEventListener(evento,FuncionesProducto[atributo]);
+                }
+            }
+            elements[i].addEventListener("change",FuncionesProducto[atributo]);
+            /*elements[i].addEventListener("paste", function (e) {
+                e.preventDefault();
+                return false;
+            });*/
+        }
+    }
 }
 FuncionesProducto.init();
 
@@ -368,7 +369,7 @@ function validarPrecioVenta() {
     pc = pc.replace(",", ".")
     pc = parseFloat(pc)
     if (pv<pc) {validacion=false;}
-
+    
     if (!validacion) {
         var pv = document.getElementById("PrecVen_Pro")
         span = pv.parentNode.getElementsByTagName("span")
