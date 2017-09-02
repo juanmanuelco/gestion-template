@@ -158,35 +158,61 @@ FuncionesProducto["deleteProduct"] = function () {
         var datos = divButton.parentNode.getElementsByTagName("td")
         var formhtml = '<form id="editForm" style="text-align: left;"  enctype="multipart/form-data" action="/admin/editarProducto?Cod_Prod='+datos[0].innerHTML+'" method="post">'+
         '<div class="mdl-grid">'+
-        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
-            '<label class="text-condensedLight" style="font-size:20px;">Foto del Producto</label>'+
-            '<div class="div_file btn">'+
-                '<p class="texto">Cambiar imágen (102x102) </p>'+
-                '<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
+            '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Foto del Producto</label>'+
+                '<div class="div_file btn">'+
+                    '<p class="texto">Cambiar imágen (102x102) </p>'+
+                    '<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
+                '</div>'+
             '</div>'+
-        '</div>'+
-        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
-            '<div id="poder" style="display: block;margin:0 auto; border:solid #000000; height:108px; width:108px;">'+
-                '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
+            '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+                '<div id="poder" style="display: block;margin:0 auto; border:solid #000000; height:108px; width:108px;">'+
+                    '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
+                '</div>'+
             '</div>'+
-        '</div>'+
         '</div>'+
         '<span id="msgError" style="display:none;color:#d50000;position:absolute;font-size:14px;margin-top:3px;">Solo se admite fotos de menos de 300kb</span>'+
         '<br>'+
-        '<label style="text-align: left;">Código del Producto: </label>'+
-        '<input class="mdl-textfield__input"  name="Cod_Prod" id="Ced_Emp" type="number" value="'+datos[0].innerHTML+'" readonly="readonly"><br>'+
-        '<label>Descripción</label>'+
-        '<input class="mdl-textfield__input"  name="Des_Prod" id="Des_Prod" type="text" value="'+datos[1].innerHTML+'"><br>'+
-        '<label>Existencia</label>'+
-        '<input class="mdl-textfield__input" name="Exis_Prod" id="Exis_Prod" type="number" value="'+datos[2].innerHTML+'"><br>'+
-        '<label>Precio de la Compra</label>'+
-        '<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" solodecimal="true" type="text" value="'+datos[3].innerHTML+'"><br>'+
-        '<label>Precio de la Venta</label>'+
-        '<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" solodecimal="true" event="key"  type="text" value="'+datos[4].innerHTML+'"><br>'+
-        '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
-        '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+        '<div class="mdl-grid">'+
+        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label style="text-align: left;">Código del Producto: </label>'+
+                '<input class="mdl-textfield__input"  name="Cod_Prod" id="Ced_Emp" type="number" value="'+datos[0].innerHTML+'" readonly="readonly">'+
+                '<label class="mdl-textfield__label" for="Cod_Prod"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+            '</div>'+    
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label>Descripción</label>'+
+                '<input class="mdl-textfield__input"  name="Des_Prod" id="Des_Prod" type="text" value="'+datos[1].innerHTML+'">'+
+                '<label class="mdl-textfield__label" for="Des_Prod"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+            '</div>'+
+        '</div>'+
+        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label>Existencia</label>'+
+                '<input class="mdl-textfield__input" name="Exis_Prod" id="Exis_Prod" type="number" value="'+datos[2].innerHTML+'">'+
+                '<label class="mdl-textfield__label" for="Exis_Prod"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+            '</div>'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label>Precio de la Compra</label>'+
+                '<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" solodecimal="true" type="text" value="'+datos[3].innerHTML+'">'+
+                '<label class="mdl-textfield__label" for="PrecComp_Pro"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+    
+            '</div>'+
+        '</div>'+
+        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label>Precio de la Venta</label>'+
+                '<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" solodecimal="true" type="text" value="'+datos[4].innerHTML+'">'+
+                '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+            '</div>'+
+        '</div>'+
+            '<input type="hidden" value="Actualizar" name="accion" id="accion">'+
+        '</div>'+
         '<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
-        '<input type="hidden" value="Actualizar" name="accion" id="accion">'+
         '</form>'
         swal({
             title: 'Datos Producto',
