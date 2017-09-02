@@ -19,6 +19,7 @@ function alertaOferta(input, val) {
 		}
 	}
 }
+
 FuncionesProducto["saveProducto"] = function (e){
 	e.preventDefault();
 	var form = this.form
@@ -72,7 +73,6 @@ function validarUsuario (input) {
     },
     function(data,status){
     	if (status == "success") {
-            console.log(data)
     		if (data.length >= 1) {
 				span[0].innerHTML = "El producto con este código ya está registrado en la base de datos";
     			divPadre.classList.add("is-invalid")
@@ -151,118 +151,149 @@ FuncionesProducto["deleteProduct"] = function () {
     }
     
     
-    // //modal editar producto
-    FuncionesProducto["editProducto"] = function () {
-        var divpadre = this.parentNode.parentNode
-        var divButton = divpadre.parentNode
-        var datos = divButton.parentNode.getElementsByTagName("td")
-        var formhtml = '<form id="editForm" style="text-align: left;"  enctype="multipart/form-data" action="/admin/editarProducto?Cod_Prod='+datos[0].innerHTML+'" method="post">'+
-        '<div class="mdl-grid">'+
-        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
-            '<label class="text-condensedLight" style="font-size:20px;">Foto del Producto</label>'+
-            '<div class="div_file btn">'+
-                '<p class="texto">Cambiar imágen (102x102) </p>'+
-                '<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
+// //modal editar producto
+FuncionesProducto["editProducto"] = function () {
+    var divpadre = this.parentNode.parentNode
+    var divButton = divpadre.parentNode
+    var datos = divButton.parentNode.getElementsByTagName("td")
+    var formhtml = '<form id="editForm" style="text-align: left;"  enctype="multipart/form-data" action="/admin/editarProducto?Cod_Prod='+datos[0].innerHTML+'" method="post">'+
+    '<div class="mdl-grid">'+
+            '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Foto del empleado</label>'+
+                '<div class="div_file btn">'+
+                    '<p class="texto">Cambiar imagen (102x102) </p>'+
+                    '<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
+                '</div>'+
+            '</div>'+
+            '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+                '<div id="poder" style="display: block;margin:0 auto; border:solid #000000; height:108px; width:108px;">'+
+                    '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
+                '</div>'+
+            '</div>'+
+    '</div>'+
+    '<span id="msgError" style="display:none;color:#d50000;position:absolute;font-weight: bold;font-size:14px;;margin-top:3px;">Solo se admite fotos de menos de 300kb</span>'+
+    '<div class="mdl-grid">'+
+        '<div class="mdl-cell mdl-cell--8-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Código del Producto</label>'+
+                '<input class="mdl-textfield__input" type="number" id="Cod_Prod" name="Cod_Prod"'+
+                ' EnterNext="true" idNext="Des_Prod" value="'+datos[0].innerHTML+'" readonly="readonly">'+
+                '<label class="mdl-textfield__label" for="Cod_Prod" maxlength="10"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
             '</div>'+
         '</div>'+
         '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
-            '<div id="poder" style="display: block;margin:0 auto; border:solid #000000; height:108px; width:108px;">'+
-                '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Descripción</label>'+
+                '<input class="mdl-textfield__input" type="text" id="Des_Prod" name="Des_Prod" EnterNext="true" idNext="Exis_Prod" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'">'+
+                '<label class="mdl-textfield__label" for="Des_Prod" ></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
+            '</div>'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Existencia</label>'+
+                '<input class="mdl-textfield__input" type="text" id="Exis_Prod" value="'+datos[2].innerHTML+'" name="Exis_Prod" solonum="true" EnterNext="true" idNext="PrecComp_Pro" maxlength="10">'+
+                '<label class="mdl-textfield__label" for="Exis_Prod"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+
         '</div>'+
+        '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Precio de Compra</label>'+
+                '<input class="mdl-textfield__input" type="text" id="PrecComp_Pro" value="'+datos[3].innerHTML+'" name="PrecComp_Pro" solodecimal="true" EnterNext="true" idNext="PrecVen_Pro" maxlength="10">'+
+                '<label class="mdl-textfield__label" for="PrecComp_Pro"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+            '</div>'+  
+            '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+                '<label class="text-condensedLight" style="font-size:20px;">Precio de Venta</label>'+
+                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="10">'+
+                '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
+                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+            '</div>'+  
         '</div>'+
-        '<span id="msgError" style="display:none;color:#d50000;position:absolute;font-size:14px;margin-top:3px;">Solo se admite fotos de menos de 300kb</span>'+
-        '<br>'+
-        '<label style="text-align: left;">Código del Producto: </label>'+
-        '<input class="mdl-textfield__input"  name="Cod_Prod" id="Ced_Emp" type="number" value="'+datos[0].innerHTML+'" readonly="readonly"><br>'+
-        '<label>Descripción</label>'+
-        '<input class="mdl-textfield__input"  name="Des_Prod" id="Des_Prod" type="text" value="'+datos[1].innerHTML+'"><br>'+
-        '<label>Existencia</label>'+
-        '<input class="mdl-textfield__input" name="Exis_Prod" id="Exis_Prod" type="number" value="'+datos[2].innerHTML+'"><br>'+
-        '<label>Precio de la Compra</label>'+
-        '<input class="mdl-textfield__input" name="PrecComp_Pro" id="PrecComp_Pro" solodecimal="true" type="text" value="'+datos[3].innerHTML+'"><br>'+
-        '<label>Precio de la Venta</label>'+
-        '<input class="mdl-textfield__input" name="PrecVen_Pro" id="PrecVen_Pro" solodecimal="true" event="key"  type="text" value="'+datos[4].innerHTML+'"><br>'+
-        '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
-        '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
-        '<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
-        '<input type="hidden" value="Actualizar" name="accion" id="accion">'+
-        '</form>'
-        swal({
-            title: 'Datos Producto',
-           html: formhtml,
-            showCancelButton: true,
-            confirmButtonText: 'Guardar',
-            closeOnConfirm: false
-      },
-      function(isConfirm) {
-            if (isConfirm) {
-                var divs = document.getElementsByTagName("div")
-                var form;
-                for (var i = 0; i < divs.length; i++) {
-                    if (divs[i].className=="sweet-content") {
-                        if (divs[i].firstChild.id=="editForm") {
-                            form=divs[i].firstChild;
-                            break;
-                        };
+    '</div>'+
+    '<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
+    '</form>'
+
+    swal({
+        title: 'Datos Producto',
+       html: formhtml,
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        closeOnConfirm: false
+  },
+  function(isConfirm) {
+        if (isConfirm) {
+            var divs = document.getElementsByTagName("div")
+            var form;
+            for (var i = 0; i < divs.length; i++) {
+                if (divs[i].className=="sweet-content") {
+                    if (divs[i].firstChild.id=="editForm") {
+                        form=divs[i].firstChild;
+                        break;
                     };
                 };
-                var bool;
-                if (form) {bool = ValidarDatosFormulario(form,true)}
-                if (form && !bool) {
-                    document.getElementById("labelFormModal").style.display="block";
-                    return false;
-                };
-              swal({
-                title: '¿Seguro que desea modificar los datos del Producto?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Si',
-                cancelButtonText:'No'
-    
-              },
-              function(isConfirm) {
-                    if (isConfirm) {
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-              }); 
-            }
-      });
-    }
-    FuncionesProducto["infoProductos"] = function (argument) {
-        var divpadre = this.parentNode.parentNode
-        var divButton = divpadre.parentNode
-        var datos = divButton.parentNode.getElementsByTagName("td")
-                textHTML='<div id="poder" style="display: block; left: 80%; position: absolute; margin:0 auto">'+
-                            '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
-                        '</div>'+
-                        '<br>'+
-                        '<br>'+
-                        '<label class="text-condensedLight" style="float:left;font-size:20px;">Código del Producto</label>'+
-                        '<input class="mdl-textfield__input" type="text" value="'+datos[0].innerHTML+'" readonly>'+
-                        '<br>'+
-                        '<label class="text-condensedLight" style="float:left;font-size:20px;">Descripción</label>'+
-                        '<input class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" readonly>'+
-                        '<br>'+
-                        '<label class="text-condensedLight" style="float:left;font-size:20px;">Existencia</label>'+
-                        '<input class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" readonly>'+
-                        '<br>'+
-                        '<label class="text-condensedLight" style="float:left;font-size:20px;">Precio de Compra</label>'+
-                        '<input class="mdl-textfield__input" type="text" value="'+datos[3].innerHTML+'" readonly>'+
-                        '<br>'+
-                        '<label class="text-condensedLight" style="float:left;font-size:20px;">Precio de Venta</label>'+
-                        '<input class="mdl-textfield__input" type="text" value="'+datos[4].innerHTML+'" readonly>'+
-                        '<br>'
-    
-        swal({
-              title: 'Información del Producto',
-              html: textHTML,
-              width: "570px",
-              confirmButtonText: 'Ok',
-              closeOnConfirm: true
-        });
-    } 
+            };
+            var bool;
+            if (form) {bool = ValidarDatosFormulario(form,true)}
+            if (form && !bool) {
+                document.getElementById("labelFormModal").style.display="block";
+                return false;
+            };
+          swal({
+            title: '¿Seguro que desea modificar los datos del Producto?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText:'No'
+
+          },
+          function(isConfirm) {
+                if (isConfirm) {
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+          }); 
+        }
+  });
+
+    setTimeout(function (a){
+            Funciones.init();
+        },200);
+}
+
+
+FuncionesProducto["infoProductos"] = function (argument) {
+    var divpadre = this.parentNode.parentNode
+    var divButton = divpadre.parentNode
+    var datos = divButton.parentNode.getElementsByTagName("td")
+    var textHTML='<div id="poder" style="display: block; left: 80%; position: absolute; margin:0 auto">'+
+        '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
+    '</div>'+
+    '<br>'+
+    '<br>'+
+    '<label class="text-condensedLight" style="float:left;font-size:20px;">Código del Producto</label>'+
+    '<input class="mdl-textfield__input" type="text" value="'+datos[0].innerHTML+'" readonly>'+
+    '<br>'+
+    '<label class="text-condensedLight" style="float:left;font-size:20px;">Descripción</label>'+
+    '<input class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" readonly>'+
+    '<br>'+
+    '<label class="text-condensedLight" style="float:left;font-size:20px;">Existencia</label>'+
+    '<input class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" readonly>'+
+    '<br>'+
+    '<label class="text-condensedLight" style="float:left;font-size:20px;">Precio de Compra</label>'+
+    '<input class="mdl-textfield__input" type="text" value="'+datos[3].innerHTML+'" readonly>'+
+    '<br>'+
+    '<label class="text-condensedLight" style="float:left;font-size:20px;">Precio de Venta</label>'+
+    '<input class="mdl-textfield__input" type="text" value="'+datos[4].innerHTML+'" readonly>'+
+    '<br>'
+    swal({
+      title: 'Información del Producto',
+      html: textHTML,
+      width: "570px",
+      confirmButtonText: 'Ok',
+      closeOnConfirm: true
+    });
+} 
     //funcion inicializacion pensada para poder ser llamada en el caso de que se genere nuevos elementos html 
 //desde javascript
 FuncionesProducto["init"] = function (argument) {
@@ -326,4 +357,24 @@ FuncionesProducto["init"] = function (argument) {
 		}
 	}
 }
-    FuncionesProducto.init();
+FuncionesProducto.init();
+
+function validarPrecioVenta() {
+    validacion = true
+    var pv = document.getElementById("PrecVen_Pro").value||""
+    var pc = document.getElementById("PrecComp_Pro").value||""
+    pv = pv.replace(",", ".")
+    pv = parseFloat(pv)
+    pc = pc.replace(",", ".")
+    pc = parseFloat(pc)
+    if (pv<pc) {validacion=false;}
+
+    if (!validacion) {
+        var pv = document.getElementById("PrecVen_Pro")
+        span = pv.parentNode.getElementsByTagName("span")
+        if (span && span[0]) {span[0].innerHTML="El precio de venta debe ser mayor o igual al precio de compra"};
+        pv.parentNode.classList.add("is-invalid");
+        return false;
+    };
+    return true;
+}
