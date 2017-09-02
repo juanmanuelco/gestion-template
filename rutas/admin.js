@@ -81,13 +81,6 @@ router.post('/getProducts', ensureAuthenticated, function (req, res) {
 router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');});
 router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
-
-//===================Configuracion===============================================//
-
-router.get('/configuracion', ensureAuthenticated, (req, res)=> { res.render('configuracion');});
-
-//===================Configuracion fin===============================================//
-
 //===================Empleados===============================================//
 
 router.get('/registro_empleado', ensureAuthenticated, (req, res)=> { res.render('registro_empleado');});
