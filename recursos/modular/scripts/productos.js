@@ -74,7 +74,7 @@ function validarUsuario (input) {
     	if (status == "success") {
             console.log(data)
     		if (data.length >= 1) {
-				span[0].innerHTML = "El producto con este codigo ya está registrado en la base de datos";
+				span[0].innerHTML = "El producto con este código ya está registrado en la base de datos";
     			divPadre.classList.add("is-invalid")
     			input.addEventListener("focus", function(){
 					var span = this.parentNode.getElementsByTagName("span");
@@ -254,7 +254,7 @@ FuncionesProducto["deleteProduct"] = function () {
                         '<br>'
     
         swal({
-              title: 'Informacion del Producto',
+              title: 'Información del Producto',
               html: textHTML,
               width: "570px",
               confirmButtonText: 'Ok',

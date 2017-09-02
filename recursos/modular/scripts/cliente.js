@@ -109,7 +109,7 @@ FuncionesCliente["deleteClient"] = function() {
 	var divpadre = this.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
-	var infoHTML = '<label>Cedula: '+datos[0].innerHTML+'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
+	var infoHTML = '<label>Cédula: '+datos[0].innerHTML+'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
 	swal({
 	  	title: '¿Seguro que desea eliminar los datos del cliente?',
 	  	html: infoHTML,
@@ -227,7 +227,7 @@ FuncionesCliente["infoCliente"] = function (argument) {
 	'</div>'
 
 	swal({
-	  	title: 'Informacion del Cliente',
+	  	title: 'Información del Cliente',
 	  	html: textHTML,
 	  	width: "550px",
 	  	confirmButtonText: 'Ok',

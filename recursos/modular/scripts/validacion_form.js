@@ -22,14 +22,14 @@ function ValidarDatosFormulario(formulario,formModal) {
 			 })
 			inputs[i].parentNode.classList.add("is-invalid");
 			formNoValido=true;
-			mensaje="Por favor asegurese que no haya campos vacios";
+			mensaje="Por favor asegúrese que no haya campos vacios";
 		}
 	};	
 	if (!formNoValido) {
 		var divs = formulario.getElementsByTagName("div")
 		for (var i = 0; i < divs.length; i++) {
 			if(divs[i].classList.contains("is-invalid")){
-				mensaje="Por favor asegurese que todos los datos estén correctos";
+				mensaje="Por favor asegúrese que todos los datos estén correctos";
 				formNoValido=true;
 			}
 		};

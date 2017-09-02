@@ -324,14 +324,14 @@ function validarnum(numero,span){
         var array = numero.split(".")
             if(array[1] && array[1].length > 2){
                 if(span){
-                    span.innerHTML="Solo se acepta 2 decimales";
+                    span.innerHTML="Sólo se aceptan 2 decimales";
                 }
                 return false;
             }
         return true;
     }
     if (span) {
-        span.innerHTML="Ingrese solo valores numericos";
+        span.innerHTML="Ingrese sólo valores numéricos";
     };
     return false
 }
