@@ -87,6 +87,7 @@
                             </a>
                         </li>
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
                             <a href="#!" class="full-width btn-subMenu">
                                 <div class="navLateral-body-cl">
@@ -110,8 +111,10 @@
                                 </li>
                             </ul>
                         </li>
+                        {{/if}}
 
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
                             <a href="#!" class="full-width btn-subMenu">
                                 <div class="navLateral-body-cl">
@@ -142,7 +145,9 @@
                                 </li>
                             </ul>
                         </li>
+                        {{/if}}
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
                             <a href="#!" class="full-width btn-subMenu">
                                 <div class="navLateral-body-cl">
@@ -173,7 +178,9 @@
                                 </li>
                             </ul>
                         </li>
+                        {{/if}}
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
                             <a href="/admin/productos" class="full-width">
                                 <div class="navLateral-body-cl">
@@ -184,7 +191,9 @@
                                 </div>
                             </a>
                         </li>
+                        {{/if}}
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
                             <a href="/admin/ventas" class="full-width">
                                 <div class="navLateral-body-cl">
@@ -193,6 +202,7 @@
                                 <div class="navLateral-body-cr hide-on-tablet">VENTAS</div>
                             </a>
                         </li>
+                        {{/if}}
                         <li class="full-width divider-menu-h"></li>
                         <li class="full-width">
                             <a href="/admin/inventario" class="full-width">
@@ -204,6 +214,7 @@
                             </a>
                         </li>
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
                             <a href="/admin/configuracion" class="full-width">
                                 <div class="navLateral-body-cl">
@@ -212,6 +223,7 @@
                                 <div class="navLateral-body-cr hide-on-tablet">CONFIGURACIONES</div>
                             </a>
                         </li>
+                        {{/if}}
                     </ul>
                 </nav>
             </div>
