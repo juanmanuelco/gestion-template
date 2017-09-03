@@ -105,8 +105,6 @@ FuncionesCliente["editClient"] = function () {
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
 //para borrar los datos de un cliente
 FuncionesCliente["deleteClient"] = function() {
-
-
 	var divpadre = this.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")

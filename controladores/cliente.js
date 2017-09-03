@@ -88,7 +88,7 @@ module.exports.getClienteByName = function(Name, callback){
     EMAEVENTINV.findOne(query, callback);
 }
 //Obtener clientes por la cedula
-module.exports.getClienteByCedula = function(Cedula, callback){
+module.exports.getClienteByCedula = function(req, res){
     var query = { 'Ced_Cli': req.body.cedula};
     cliente.find(query, function (err, users) {
         res.send(users);

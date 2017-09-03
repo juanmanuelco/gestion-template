@@ -1,0 +1,65 @@
+<section class="full-width pageContent">
+		{{#if success_msg}}<div class="alert alert-success">{{success_msg}}</div>{{/if}} 
+		{{#if error_msg}}<div class="alert alert-danger">{{error_msg}}</div>{{/if}} 
+		{{#if error}}<div class="alert alert-danger">{{error}}</div>{{/if}}
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+										<label class="mdl-button mdl-js-button mdl-button--icon" for="searchPayment">
+											<i class="zmdi zmdi-search"></i>
+										</label>
+										<div class="mdl-textfield__expandable-holder">
+											<input class="mdl-textfield__input" type="text" id="searchPayment" validation="buscarTabla" event="keyup" TablaID="tablaProduct" datos="0,1" placeholder=" Buscar">
+											<label class="mdl-textfield__label"></label>
+										</div>
+									</div>
+		<div class="full-width divider-menu-h"></div>
+		<div class="mdl-grid" align="center">
+			<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+				<div style="overflow-x:auto;height:510px;">				
+					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaProduct">
+						<thead>
+							<tr>
+								<th>Código del Producto</th>
+								<th>Descripción</th>
+								<th>Existencia</th>
+								<th>Precio de Compra</th>
+								<th>Precio de Venta</th>
+								<th><center>Opción</center></th>
+							</tr>
+						</thead>
+						<tbody id="contenidoTabla">
+							{{#if producto}}{{#each producto}}
+							<tr>
+							<td id="{{this.Img_Prod}}" >{{this.Cod_Prod}}</td>
+							<td>{{this.Des_Prod}}</td>
+							<td>{{this.Exis_Prod}}</td>
+							<td>{{this.PrecComp_Pro}}</td>
+							<td>{{this.PrecVen_Pro}}</td>
+							<td>
+								<div>
+									<center>
+									<button title="Más Información" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoProductos" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
+									</center>
+								</div>
+							</td>
+							</tr>
+                            {{/each}}{{/if}}
+						</tbody>
+					</table>
+				</div>
+				</div>
+		</div>
+	</section>
+
+<script src="../modular/scripts/validacion_form.js"></script>
+<script src="../modular/scripts/indentificaciones.js"></script>
+<script src="../modular/scripts/validacionPrecios.js"></script>
+<script src="../modular/scripts/validation.js"></script>
+<script src="../modular/scripts/productos.js"></script>>
+<link rel="stylesheet" href="../modular/estilos/empleados.css">
+
+<script type="text/javascript">
+    var titulo = document.getElementById("title_static");
+    if (titulo) {
+        titulo.innerHTML = '<i class="zmdi zmdi-store"></i><span class="hide-on-tablet">&nbsp;INVENTARIO</span>'
+    };
+</script>

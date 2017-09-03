@@ -31,7 +31,7 @@
 												<div class="col-lg-6 col-md-6 col-sm-6">
 													<div id="poder" style="visibility: hidden;margin:0 auto">
 														{{#if linkFoto}}
-														<img style="" src="{{linkFoto}}" height="102px" width="102px" id="img_destino">
+														<img style="" src="{{Logo_Empresa}}" height="102px" width="102px" id="img_destino">
 														{{else}}
 														<img style="" src="" height="102px" width="102px" id="img_destino">
 														{{/if}}
@@ -43,7 +43,7 @@
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre del Local</label>
 												{{#if nameLocal}}
-												<input class="mdl-textfield__input" name="Name_Local" id="LocalName" maxlength="30" value="{{nameLocal}}">
+												<input class="mdl-textfield__input" name="Name_Local" id="LocalName" maxlength="30" value="{{Name_Local}}">
 												{{else}}
 												<input class="mdl-textfield__input" name="Name_Local" id="LocalName" maxlength="30">
 												{{/if}}
@@ -53,7 +53,7 @@
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Correo electrónico</label>
 												{{#if emailLocal}}
-												<input class="mdl-textfield__input" name="Email_Local" type="email" id="Correo" validation="email" event="keyup" value="{{emailLocal}}">
+												<input class="mdl-textfield__input" name="Email_Local" type="email" id="Correo" validation="email" event="keyup" value="{{Email_Local}}">
 												{{else}}
 												<input class="mdl-textfield__input" name="Email_Local" type="email" id="Correo" validation="email" event="keyup">
 												{{/if}}
@@ -65,21 +65,21 @@
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre del Propietario</label>
 												{{#if NamePropi}}
-												<input class="mdl-textfield__input" name="Name_Propi" type="text" id="Name_Propi" soloLetras="true" maxlength="30" value="{{NamePropi}}">
+												<input class="mdl-textfield__input" name="Name_Owner" type="text" id="Name_Owner" soloLetras="true" maxlength="30" value="{{Name_Owner}}">
 												{{else}}
-												<input class="mdl-textfield__input" name="Name_Propi" type="text" id="Name_Propi" soloLetras="true" maxlength="30">
+												<input class="mdl-textfield__input" name="Name_Owner" type="text" id="Name_Owner" soloLetras="true" maxlength="30">
 												{{/if}}
-												<label class="mdl-textfield__label" for="Name_Propi"></label>
+												<label class="mdl-textfield__label" for="Name_Owner"></label>
 												<span class="mdl-textfield__error">Ingrese sólo letras</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Nombre del Gerente</label>
 												{{#if NameGerente}}
-												<input class="mdl-textfield__input" name="Name_Geren" type="text" id="Name_Geren" soloLetras="true" maxlength="30" value="{{NamePropi}}">
+												<input class="mdl-textfield__input" name="Name_Manager" type="text" id="Name_Manager" soloLetras="true" maxlength="30" value="{{Name_Manager}}">
 												{{else}}
-												<input class="mdl-textfield__input" name="Name_Geren" type="text" id="Name_Geren" soloLetras="true" maxlength="30">
+												<input class="mdl-textfield__input" name="Name_Manager" type="text" id="Name_Manager" soloLetras="true" maxlength="30">
 												{{/if}}
-												<label class="mdl-textfield__label" for="Name_Geren"></label>
+												<label class="mdl-textfield__label" for="Name_Manager"></label>
 												<span class="mdl-textfield__error">Ingrese sólo letras</span>
 											</div>
 										</div>
@@ -93,11 +93,11 @@
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Impuesto de Valor Agregado (IVA)</label>
 												{{#if emailLocal}}
-												<input class="mdl-textfield__input" name="IVA" type="IVA" id="IVA" solonum="true" value="{{emailLocal}}">
+												<input class="mdl-textfield__input" name="IVA" type="IVA" id="IVA" solonum="true" value="{{IVA}}">
 												{{else}}
 												<input class="mdl-textfield__input" name="IVA" type="IVA" id="IVA" solonum="true">
 												{{/if}}
-												<label class="mdl-textfield__label" for="Correo"></label>
+												<label class="mdl-textfield__label" for="IVA"></label>
 												<span class="mdl-textfield__error">Solo se acepta valores númericos</span>
 											</div>
 										</div>
@@ -105,19 +105,18 @@
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Existencia Minima</label>
 												{{#if emailLocal}}
-												<input class="mdl-textfield__input" name="Existencia_Min" type="email" id="existencia_min" solonum="true" value="{{emailLocal}}">
+												<input class="mdl-textfield__input" name="Exist_Min" type="email" id="Exist_Min" solonum="true" value="{{Exist_Min}}">
 												{{else}}
-												<input class="mdl-textfield__input" name="Existencia_Min" type="email" id="existencia_min" solonum="true">
+												<input class="mdl-textfield__input" name="Exist_Min" type="email" id="Exist_Min" solonum="true">
 												{{/if}}
-												<label class="mdl-textfield__label" for="Correo"></label>
+												<label class="mdl-textfield__label" for="Exist_Min"></label>
 												<span class="mdl-textfield__error">Solo se acepta valores númericos</span>
 											</div>
 										</div>
 									</div>
 										<div align="center">
-	                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;">Editar Datos del sistema</button>
+	                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Editar Datos del sistema</button>
 	                                   	</div>
-                                   	<br><br>
                                    	<br><br>
 								</form>
 							</div>
