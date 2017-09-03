@@ -108,7 +108,7 @@ FuncionesProducto["deleteProduct"] = function () {
         function(data,status){
             if (status == "success") {
                 if (data.length >= 1) {
-                    if (data[0].Existencia > 0){
+                    if (data[0].Exis_Prod > 0){
                         swal({
                             title: 'No se puede eliminar este producto, por que aun está en stock',
                             type: 'warning',
