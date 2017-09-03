@@ -158,7 +158,10 @@ router.get('/reportes',ensureAuthenticated,(req,res)=>{
 	res.render('reportes');
 })
 router.get('/reportes-actividades',ensureAuthenticated,(req,res)=>{
-	res.render('reporteActividades');
+	E_DBF_ACTIVIDADES_OBJ.find().exec((err,resp)=>{
+		res.render('reporteActividades',{actividades:resp});
+	})
+	
 })
 router.get('/tod-empleados',(req,res)=>{
 	E_DBF_EMPLEADO_OBJ.find().exec((err,resp)=>{
