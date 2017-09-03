@@ -37,6 +37,7 @@
 
 
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+
 						{{#if usuarios}}{{#each usuarios}}
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaAdmin">
 					<thead>
@@ -49,7 +50,12 @@
 						<tr>
 							<td class="mdl-data-table__cell--non-numeric">{{this.username}}</td>
 							<td>{{this.typoUser}}</td>
+							<td>
+									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editUsuario" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
+									<button validation="deleteUsuario" event="click" id="borrarUsuario" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+						    </td>
 						</tr>
+						
 					</tbody>
 				</table>
 				{{/each}}{{/if}}
@@ -89,7 +95,9 @@
 
 									<div>
 	                                               <button type="submit" id="btn-addClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Guardar</button>
-                                                <a href="/admin/tabla_user" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;">Editar Usuarios Registrados</a>
+	                                                 <button id="btn-updClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Modificar</button>
+	                                                   <button id="btn-seaClient"  class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Buscar</button>
+	                                                     <button id="btn-delClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Eliminar</button>
                                                </div>							
 										</div>
 									</div>

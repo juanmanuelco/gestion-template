@@ -28,6 +28,7 @@ router.post('/editClient', ensureAuthenticated,cliente_controller.editClient)
 router.post('/deleteClient', ensureAuthenticated,cliente_controller.deleteClient)
 router.get('/tabla_cliente', ensureAuthenticated, cliente_controller.getAllClients);
 
+
 router.get('/ventas', ensureAuthenticated, function (req, res) {
 	//res.render('ventas');
 	res.render('ventas', { incrementar: "00001" })
@@ -64,17 +65,14 @@ router.post('/editarProducto', ensureAuthenticated, producto_controller.editProd
 router.post('/eliminarProducto', ensureAuthenticated, producto_controller.deletedProduct);
 //Obtener los valores de los input para guardarlos en el esquema o eso se supone..
 
+
+
 router.get('/inventario', ensureAuthenticated, function (req, res) {
 	E_DBF_PRODUCTO_OBJ.find({}, function (err, users) {
 		res.render('inventario', { producto: users });
 	});
 });
 
-router.get('/tabla_user',ensureAuthenticated,function(req,res){
-	E_DBF_USUARIO.find().exec((err,resp)=>{
-		res.render('tabla_user',{usuarios:resp})
-	})
-})
 router.post('/getProducts', ensureAuthenticated, function (req, res) {
 	var query = { 'Cod_Prod': req.body.Cod_Prod};
 	E_DBF_PRODUCTO_OBJ.find(query, function (err, users) {
