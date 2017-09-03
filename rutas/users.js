@@ -35,6 +35,7 @@ router.post('/administracion', function(req, res){
 			errors:errors
 		});
 	} else {
+		
 		var newUser = new E_DBF_USUARIO({
 			//name: name,
 			//email:email,
@@ -51,7 +52,7 @@ router.post('/administracion', function(req, res){
 
 		req.flash('success_msg', 'Ha sido registrado satisfactoriamente');
 
-		res.redirect('/users/login');
+		res.redirect('/admin/administracion');
 	}
 });
 
