@@ -58,6 +58,7 @@ router.post('/administracion', function(req, res){
 		})
 	}
 });
+
 //compara los input del login con los del esquema para ver si el usuario exite e ingresa
 passport.use(new LocalStrategy(
   function(username, password, done) {
