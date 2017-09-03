@@ -34,19 +34,19 @@
 											<br>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Código Producto</label>
-												<input class="mdl-textfield__input" type="text" solonum="true"  id="Cod_Prod" EnterNext="true" idNext="Des_Prod" name="Cod_Prod" maxlength="5" onblur="validarUsuario(this)">
+												<input class="mdl-textfield__input" type="text" solonum="true"  id="Cod_Prod" EnterNext="true" idNext="Des_Prod" name="Cod_Prod" maxlength="5" onblur="validarUsuario(this)" requerido>
 												<label class="mdl-textfield__label" for="Cod_Prod"></label>
 												<span class="mdl-textfield__error">Ingrese sólo números</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Descripción</label>
-												<input class="mdl-textfield__input" type="text" id="Des_Prod" EnterNext="true" idNext="Exis_Prod" name="Des_Prod">
+												<input class="mdl-textfield__input" type="text" id="Des_Prod" EnterNext="true" idNext="Exis_Prod" name="Des_Prod" requerido>
 												<label class="mdl-textfield__label" for="Des_Prod"></label>
 												<span class="mdl-textfield__error">Campo vacío</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Existencia</label>
-												<input class="mdl-textfield__input" solonum="true" type="number"  id="Exis_Prod" EnterNext="true" idNext="PrecComp_Pro" name="Exis_Prod">
+												<input class="mdl-textfield__input" solonum="true" type="number"  id="Exis_Prod" EnterNext="true" idNext="PrecComp_Pro" name="Exis_Prod" requerido>
 												<label class="mdl-textfield__label" for="Exis_Prod"></label>
 												<span class="mdl-textfield__error">Ingrese sólo numeros</span>
 											</div>
@@ -55,13 +55,13 @@
 											<br>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Precio de Compra</label>
-												<input class="mdl-textfield__input" solodecimal="true" type="text"  id="PrecComp_Pro" EnterNext="true" idNext="PrecVen_Pro" name="PrecComp_Pro">
+												<input class="mdl-textfield__input" solodecimal="true" type="text"  id="PrecComp_Pro" EnterNext="true" idNext="PrecVen_Pro" name="PrecComp_Pro" requerido>
 												<label class="mdl-textfield__label" for="PrecComp_Pro"></label>
 												<span class="mdl-textfield__error">Ingrese sólo valores numéricos separados por una coma</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Precio de Venta</label>
-												<input class="mdl-textfield__input" solodecimal="true" type="text" id="PrecVen_Pro" EnterNext="true" idNext="PrecVen_Pro" name="PrecVen_Pro" onblur="validarPrecioVenta()">
+												<input class="mdl-textfield__input" solodecimal="true" type="text" id="PrecVen_Pro" EnterNext="true" idNext="PrecVen_Pro" name="PrecVen_Pro" onblur="validarPrecioVenta()" requerido>
 												<label class="mdl-textfield__label" for="PrecVen_Pro"></label>
 												<span class="mdl-textfield__error" id="mensajePV">Ingrese sólo valores numéricos separados por una coma</span>
 											</div>

@@ -179,20 +179,20 @@ FuncionesProducto["editProducto"] = function () {
                 '<label class="text-condensedLight" style="font-size:20px;">Código del Producto</label>'+
                 '<input class="mdl-textfield__input" type="text" id="Cod_Prod" name="Cod_Prod"'+
                 ' EnterNext="true" idNext="Des_Prod" value="'+datos[0].innerHTML+'" readonly="readonly">'+
-                '<label class="mdl-textfield__label" for="Cod_Prod" maxlength="5"></label>'+
+                '<label class="mdl-textfield__label" for="Cod_Prod" maxlength="5" requerido></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
             '</div>'+
         '</div>'+
         '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Descripción</label>'+
-                '<input class="mdl-textfield__input" type="text" id="Des_Prod" name="Des_Prod" EnterNext="true" idNext="Exis_Prod" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'">'+
+                '<input class="mdl-textfield__input" type="text" id="Des_Prod" name="Des_Prod" EnterNext="true" idNext="Exis_Prod" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'" requerido>'+
                 '<label class="mdl-textfield__label" for="Des_Prod" ></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
             '</div>'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Existencia</label>'+
-                '<input class="mdl-textfield__input" type="text" id="Exis_Prod" value="'+datos[2].innerHTML+'" name="Exis_Prod" solonum="true" EnterNext="true" idNext="PrecComp_Pro" maxlength="10">'+
+                '<input class="mdl-textfield__input" type="text" id="Exis_Prod" value="'+datos[2].innerHTML+'" name="Exis_Prod" solonum="true" EnterNext="true" idNext="PrecComp_Pro" maxlength="10" requerido>'+
                 '<label class="mdl-textfield__label" for="Exis_Prod"></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+
@@ -200,13 +200,13 @@ FuncionesProducto["editProducto"] = function () {
         '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Precio de Compra</label>'+
-                '<input class="mdl-textfield__input" type="text" id="PrecComp_Pro" value="'+datos[3].innerHTML+'" name="PrecComp_Pro" solodecimal="true" EnterNext="true" idNext="PrecVen_Pro" maxlength="10">'+
+                '<input class="mdl-textfield__input" type="text" id="PrecComp_Pro" value="'+datos[3].innerHTML+'" name="PrecComp_Pro" solodecimal="true" EnterNext="true" idNext="PrecVen_Pro" maxlength="10" requerido>'+
                 '<label class="mdl-textfield__label" for="PrecComp_Pro"></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+  
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Precio de Venta</label>'+
-                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="10" onblur="validarPrecioVenta()">'+
+                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="10" onblur="validarPrecioVenta()" requerido>'+
                 '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
                 '<span class="mdl-textfield__error" id="mensajePV" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+  

@@ -67,7 +67,7 @@ FuncionesEmpleados["editEmpleado"] = function () {
 				'<label class="text-condensedLight" style="font-size:20px;">Foto del empleado</label>'+
 				'<div class="div_file btn">'+
 					'<p class="texto">Cambiar imagen (102x102) </p>'+
-					'<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
+					'<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)"/>'+
 				'</div>'+
 			'</div>'+
 			'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
@@ -83,13 +83,13 @@ FuncionesEmpleados["editEmpleado"] = function () {
 			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
 				'<label class="text-condensedLight" style="font-size:20px;">Cédula</label>'+
 				'<input class="mdl-textfield__input" type="text" id="Ced_Emp" name="Ced_Emp" validation="cedula" event="keyup" solonum="true"'+
-				' EnterNext="true" idNext="Nomb_Emp" value="'+datos[0].innerHTML+'" readonly="readonly">'+
+				' EnterNext="true" idNext="Nomb_Emp" value="'+datos[0].innerHTML+'" readonly="readonly" requerido>'+
 				'<label class="mdl-textfield__label" for="Ced_Emp" maxlength="10"></label>'+
 				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
 			'</div>'+
 			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
 				'<label class="text-condensedLight" style="font-size:20px;">Nombre</label>'+
-				'<input class="mdl-textfield__input" type="text" id="Nomb_Emp" name="Nomb_Emp" EnterNext="true" idNext="Telf_Emp" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'">'+
+				'<input class="mdl-textfield__input" type="text" id="Nomb_Emp" name="Nomb_Emp" EnterNext="true" idNext="Telf_Emp" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'" requerido>'+
 				'<label class="mdl-textfield__label" for="Nomb_Emp" ></label>'+
 				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
 			'</div>'+

@@ -15,13 +15,13 @@
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 											<label class="text-condensedLight" style="font-size:20px;">Cédula</label>
 											<input class="mdl-textfield__input" type="text" id="Ced_Emp" name="Ced_Emp" validation="cedula" event="keyup" solonum="true"
-											 EnterNext="true" idNext="Nomb_Emp" onblur="validarUsuario(this);" maxlength="10">
+											 EnterNext="true" idNext="Nomb_Emp" onblur="validarUsuario(this);" maxlength="10" requerido>
 											<label class="mdl-textfield__label" for="Ced_Emp"></label>
 											<span class="mdl-textfield__error">Ingrese Solo Números en Cédula</span>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 											<label class="text-condensedLight" style="font-size:20px;">Nombre</label>
-											<input class="mdl-textfield__input" type="text" id="Nomb_Emp" name="Nomb_Emp" EnterNext="true" idNext="Telf_Emp" soloLetras="true" maxlength="100">
+											<input class="mdl-textfield__input" type="text" id="Nomb_Emp" name="Nomb_Emp" EnterNext="true" idNext="Telf_Emp" soloLetras="true" maxlength="100" requerido>
 											<label class="mdl-textfield__label" for="Nomb_Emp" ></label>
 											<span class="mdl-textfield__error">Sólo se permite caracteres de la A a la Z con tildes y espacios</span>
 										</div>

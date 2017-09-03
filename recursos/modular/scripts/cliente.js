@@ -6,6 +6,7 @@ FuncionesCliente["saveCliente"] = function (e){
 	var form = this.form
 	if (!form) {return false}
 	var bool = ValidarDatosFormulario(form);
+	console.log(bool)
 	if (bool){ 
 	swal({
 		  	title: 'Formulario Válido',
@@ -41,9 +42,9 @@ FuncionesCliente["editClient"] = function () {
 	'<label style="text-align: left;">Ruc/Cédula: </label>'+
 	'<input name="Ced_Cli" class="mdl-textfield__input" type="number" value="'+datos[0].innerHTML+'" readonly="true"><br>'+
 	'<label>Nombres</label>'+
-	'<input name="Nomb_Cli" class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'"><br>'+
+	'<input name="Nomb_Cli" class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" requerido><br>'+
 	'<label>Dirección</label>'+
-	'<input name="Dir_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'"><br>'+
+	'<input name="Dir_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" requerido><br>'+
 	'<label>Número</label>'+
 	'<input name="Telf_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].id+'"><br>'+
 	'<label>Correo Electrónico</label>'+
