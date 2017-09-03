@@ -8,9 +8,6 @@
 							<div class="full-width panel-tittle bg-primary text-center tittles">
 								Nuevo Producto
 							</div>
-							{{#if success_msg}}<div class="alert alert-success">{{success_msg}}</div>{{/if}} 
-							{{#if error_msg}}<div class="alert alert-danger">{{error_msg}}</div>{{/if}} 
-							{{#if error}}<div class="alert alert-danger">{{error}}</div>{{/if}}
 							<div class="full-width panel-content">
 								<form action='/admin/crearProducto' method="post" enctype="multipart/form-data">
 									<div>
@@ -92,6 +89,18 @@
 <script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/productos.js"></script>
 <link rel="stylesheet" href="../modular/estilos/empleados.css">
+{{#if success_msg }}
+	<input id="inputsucces" type="hidden" value="{{success_msg}}">
+    <script type="text/javascript">
+	    input = document.getElementById("inputsucces").value || "Acción realizada con éxito"
+	    swal({
+	  	title: input,
+	  	type: 'success',
+	  	confirmButtonText: 'Ok',
+	  	closeOnConfirm: true
+		})
+    </script>
+{{/if}}
 <script type="text/javascript">
     var titulo = document.getElementById("title_static");
     if (titulo) {
