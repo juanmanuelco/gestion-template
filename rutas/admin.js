@@ -154,8 +154,15 @@ router.post('/liberar-empleados',(req,res)=>{
 	});
 });
 
-router.get('/reporte-actividades',(req,res)=>{
+router.get('/reportes',ensureAuthenticated,(req,res)=>{
+	res.render('reportes');
+})
+router.get('/reportes-actividades',ensureAuthenticated,(req,res)=>{
 	res.render('reporteActividades');
 })
-
+router.get('/tod-empleados',(req,res)=>{
+	E_DBF_EMPLEADO_OBJ.find().exec((err,resp)=>{
+		res.send(resp)
+	})
+})
 module.exports = router;
