@@ -28,7 +28,7 @@
     <div id="contenido">
         <!-- navBar -->
         {{#if user}}
-        <div class="full-width navBar">
+        <div class="full-width navBar" id="NavPrincipal">
             <div class="full-width navBar-options">
                 <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu" title="Menú"></i>
                 <nav class="navBar-options-list">
@@ -57,7 +57,7 @@
         </div>
         {{/if}}
         {{#if user}}
-        <section class="full-width navLateral" style="overflow: auto;"> 
+        <section class="full-width navLateral" style="overflow: auto;" id="lateralGeneral"> 
             <div class="full-width navLateral-body">
                 <div class="full-width navLateral-body-logo text-center tittles">
                     <i class="zmdi zmdi-close btn-menu"></i>CAR DE LUJO</div>
@@ -233,7 +233,9 @@
             {{{body}}}  
         </div>         
     </div>
-    
+    <div id="printer">
+        <canvas id="grafico1" width="100" height="100"></canvas>
+    </div>
 {{#if user}}
     <footer class="navbar-fixed-bottom">
         <!--Puede ser usado para mostrar la función de cada elemento cuando se pase el mouse arriba -->

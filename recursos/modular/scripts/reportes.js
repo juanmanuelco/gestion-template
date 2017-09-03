@@ -1,5 +1,5 @@
-function mostrarGrafico(forma){
-    var ctx = document.getElementById("grafico");
+function mostrarGrafico(forma, id){
+    var ctx = document.getElementById(id);
     var T_empleados=new Array();
     var actividades=new Array();
     var T_colores=new Array();
@@ -40,8 +40,6 @@ function mostrarGrafico(forma){
         }})
     
 }
-
-
 
     function colores(){
         var hexadecimal = new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
