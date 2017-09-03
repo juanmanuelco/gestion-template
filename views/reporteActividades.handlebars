@@ -2,11 +2,36 @@
 <section class="full-width pageContent">
     <div class="row" >
         <h1 style="text-align:Center">Reporte de actividades</h1>
+        
         <div class="col-lg-1 col-md-1"></div>
-        <div class="col-lg-10 col-md-10" style="position: relative; height:600px; width:600px;margin-top:30px">
-            <canvas id="grafico" width="100" height="100"></canvas>           
+        <div class="col-lg-10 col-md-10" >
+            <div class="form-group">
+                <label for="selectForma">Vista</label>
+                <select name="" id="selectForma" class="form-control" onchange="javascript:obtenerVista()">
+                    <option value="doughnut">Dona</option>
+                    <option value="line">Lineal</option>
+                    <option value="bar">Barra</option>
+                    <option value="pie">Pastel</option>
+                    <option value="polarArea">Área polar</option>
+                </select>
+            </div>
+            
+        <div style="position: relative; height:600px; width:600px;margin-top:30px" id="aCanvas">
+            <canvas id="grafico" width="100" height="100"></canvas>   
+        </div>
+                    
         </div>
         <div class="col-lg-1 col-md-1"></div>
     </div>
 </section>
 <script src="../modular/scripts/reportes.js"></script>
+<script>
+    window.addEventListener('load',()=>{
+        mostrarGrafico('doughnut');
+    })
+    function obtenerVista(){
+        document.getElementById('aCanvas').innerHTML='<canvas id="grafico" width="100" height="100"></canvas>   '
+        var modo=document.getElementById('selectForma').value;
+        mostrarGrafico(modo)
+    }
+</script>

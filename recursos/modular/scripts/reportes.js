@@ -1,43 +1,45 @@
-var ctx = document.getElementById("grafico");
-var T_empleados=new Array();
-var actividades=new Array();
-var T_colores=new Array();
-
-$.ajax({
-	type:"GET", 
-	url:'/admin/tod-empleados', 
-	dataType:"json", 
-	async:false,
-	contentType:"text/plain", 
-	success: function(empleados){
-        empleados.forEach(function(element) {
-            T_empleados.push(element.Nomb_Emp+' '+element.Ced_Emp)
-            actividades.push(element.Conta_Emp)
-            T_colores.push(colores())
-        }, this);
-
-
-		var datos={
-            labels: T_empleados,
-            datasets: [{
-                label: 'Número de actividades realizadas',
-                data: actividades,
-                backgroundColor: T_colores,
-                borderColor: ['#000','#000','#000','#000','#000','#000'],
-                borderWidth: 0.7
-            }]
-        };
-        var GraficoActividades = new Chart(ctx, {
-            type: 'doughnut',
-            data: datos,
-            options:{
-                legend:{
-                    position:'left'
+function mostrarGrafico(forma){
+    var ctx = document.getElementById("grafico");
+    var T_empleados=new Array();
+    var actividades=new Array();
+    var T_colores=new Array();
+    
+    $.ajax({
+        type:"GET", 
+        url:'/admin/tod-empleados', 
+        dataType:"json", 
+        async:false,
+        contentType:"text/plain", 
+        success: function(empleados){
+            empleados.forEach(function(element) {
+                T_empleados.push(element.Nomb_Emp+' '+element.Ced_Emp)
+                actividades.push(element.Conta_Emp)
+                T_colores.push(colores())
+            }, this);
+    
+    
+            var datos={
+                labels: T_empleados,
+                datasets: [{
+                    label: 'Número de actividades realizadas',
+                    data: actividades,
+                    backgroundColor: T_colores,
+                    borderColor: ['#000','#000','#000','#000','#000','#000'],
+                    borderWidth: 0.7
+                }]
+            };
+            var GraficoActividades = new Chart(ctx, {
+                type: forma,
+                data: datos,
+                options:{
+                    legend:{
+                        position:'left'
+                    }
                 }
-            }
-        });
-	}})
-
+            });
+        }})
+    
+}
 
 
 
