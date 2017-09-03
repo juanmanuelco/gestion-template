@@ -30,22 +30,20 @@ module.exports.editClient=function(req,res){
 }
 
 module.exports.deleteClient=function(req,res){
-	
 	var cedula = req.body.Ced_Cli;
-	var query = { 'Ced_Cli': cedula };
-	cliente.findOneAndRemove().where({query}), function (err, userDeleted) {
-		console.log(err)
-		if (err) {
-			res.render('500', { error: 'Error al eliminar el cliente'})
-		} else {
-			if (!userDeleted) {
-				res.render('404', {error: "No se ha podido eliminar el usuario (Error 404)"});
-			} else {
-				req.session['success'] = 'Usuario eliminado con exito';
-				res.redirect('tabla_cliente');
-			}
-		}
-	}
+    var query = { 'Ced_Cli': cedula };
+    cliente.findOneAndRemove(query, function (err, userUpdated) {
+        if (err) {
+            res.render('500', { error: "Error al borrar el cliente" });
+        } else {
+            if (!userUpdated) {
+                res.render('500', {error: "No se ha podido borrar el cliente"});
+            } else {
+                req.session['success_client'] = 'Cliente eliminado con éxito';
+                res.redirect('tabla_cliente');
+            }
+        }
+	});
 }
 
 
@@ -91,8 +89,10 @@ module.exports.getClienteByName = function(Name, callback){
 }
 //Obtener clientes por la cedula
 module.exports.getClienteByCedula = function(Cedula, callback){
-    var query = {Ced_Cli: Cedula};
-    EMAEVENTINV.findOne(query, callback);
+    var query = { 'Ced_Cli': req.body.cedula};
+    cliente.find(query, function (err, users) {
+        res.send(users);
+    });
 }
 //Obtener clientes por el tipo
 module.exports.getClienteByTipo = function(Tipo, callback){
