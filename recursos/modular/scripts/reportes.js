@@ -1,5 +1,5 @@
-function mostrarGrafico(forma){
-    var ctx = document.getElementById("grafico");
+function mostrarGrafico(forma, id){
+    var ctx = document.getElementById(id);
     var T_empleados=new Array();
     var actividades=new Array();
     var T_colores=new Array();

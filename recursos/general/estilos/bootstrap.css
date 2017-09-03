@@ -1140,6 +1140,9 @@ img {
        -o-transition: all .2s ease-in-out;
           transition: all .2s ease-in-out;
 }
+.centrado{
+  margin:0 auto;
+}
 .img-circle {
   border-radius: 50%;
 }

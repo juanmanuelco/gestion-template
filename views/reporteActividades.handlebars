@@ -1,11 +1,10 @@
-<script src="../modular/scripts/Chart.js"></script>
-<section class="full-width pageContent">
-    <div class="row" id="reportePDF">
+<section class="full-width pageContent" id="reportePDF">
+    <script src="../modular/scripts/Chart.js"></script>
+    <div class="row">
         <h1 style="text-align:Center">Reporte de actividades</h1>
-        
         <div class="col-lg-1 col-md-1"></div>
-        <div class="col-lg-10 col-md-10" style="height: 600px; overflow-y: scroll;">
-            <div class="form-group">
+        <div class="col-lg-10 col-md-10" style="height: 100%; overflow-y: scroll;" id="parImp">
+            <div class="form-group" id="selector">
                 <label for="selectForma">Vista</label>
                 <select name="" id="selectForma" class="form-control" onchange="javascript:obtenerVista()">
                     <option value="doughnut">Dona</option>
@@ -15,55 +14,76 @@
                     <option value="polarArea">Área polar</option>
                 </select>
             </div>
-            <div style="position: relative; height:430px; width:60%;margin-top:30px;margin:0 auto" id="aCanvas">
-                <canvas id="grafico"></canvas>   
+            <div class="centrado" style="position: relative; height:430px; width:60%;margin-top:30px;" id="aCanvas">
+                <canvas id="grafico"></canvas>
+
             </div>
-             <div class="table" style="margin-top:30px;position: absolute">
-                 <h2 style="text-align:center">Detalles</h2>
-                 
-                 <table class="table" style="">
-                     <tr>
+            <div class="table" style="margin-top:30px;position: relative">
+                <h2 style="text-align:center">Detalles</h2>
+
+                <table class="table" style="">
+                    <tr>
                         <th title="Cédula del empleado">Cédula Emp.</th>
                         <th title="Fecha de asignación de la actividad">Fecha</th>
                         <th title="Hora de asignación">Hora A.</th>
                         <th title="Hora de finalización">Hora F.</th>
                         <th title="Cédula del cliente">Cliente</th>
                         <th title="Detalle">Detalle</th>
-                     </tr>
-                     {{#if actividades}}
-                        {{#each actividades}}
-                            <tr>
-                                <td>{{this.CedEm_CtrActE}}</td>
-                                <td class="fechaAct">{{this.FchAs_CtrActE}}</td>
-                                <td>{{this.HrAsg_CtrActE}}</td>
-                                <td>{{this.HrFnl_CtrActE}}</td>
-                                <td>{{this.CedCl_CtrActE}}</td>
-                                <td>{{this.Desct_CtrActE}}</td>
-                            </tr>
-                        {{/each}}
-                     {{/if}}
-                     
-                 </table>
-                 <div style="height:30px"></div>
-            </div>       
+                    </tr>
+                    {{#if actividades}} {{#each actividades}}
+                    <tr>
+                        <td>{{this.CedEm_CtrActE}}</td>
+                        <td class="fechaAct">{{this.FchAs_CtrActE}}</td>
+                        <td>{{this.HrAsg_CtrActE}}</td>
+                        <td>{{this.HrFnl_CtrActE}}</td>
+                        <td>{{this.CedCl_CtrActE}}</td>
+                        <td>{{this.Desct_CtrActE}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr id="botonImpr">
+                        <td colspan="5"></td>
+                    <td><button class="btn btn-primary" onclick="PrintPDF()">Imprimir reporte</button> </td>
+                    </tr>
+                     <tr id="botonVolver" style="display:none">
+                        <td colspan="5"></td>
+                    <td><button class="btn btn-primary" onclick="javascript:location.reload()">Cerrar vista de impresión</button> </td>
+                    </tr>
+                    {{/if}}
+
+                </table>
+                <div style="height:30px"></div>
+            </div>
+
         </div>
         <div class="col-lg-1 col-md-1"></div>
     </div>
 </section>
 <script src="../modular/scripts/reportes.js"></script>
 <script>
-    window.addEventListener('load',()=>{
-        mostrarGrafico('doughnut');
-        var columnaFecha=document.getElementsByClassName('fechaAct');
-        for(var i=0;i<columnaFecha.length;i++){
-            var fechaLarga=document.getElementsByClassName('fechaAct')[i].innerHTML;
-            fechaLarga=new Date(fechaLarga)
-            document.getElementsByClassName('fechaAct')[i].innerHTML=fechaLarga.getDate()+'/'+(fechaLarga.getMonth()+1)+'/'+fechaLarga.getFullYear();
+    window.addEventListener('load', () => {
+        mostrarGrafico('doughnut', 'grafico');
+        var columnaFecha = document.getElementsByClassName('fechaAct');
+        for (var i = 0; i < columnaFecha.length; i++) {
+            var fechaLarga = document.getElementsByClassName('fechaAct')[i].innerHTML;
+            fechaLarga = new Date(fechaLarga)
+            document.getElementsByClassName('fechaAct')[i].innerHTML = fechaLarga.getDate() + '/' + (fechaLarga.getMonth() + 1) + '/' + fechaLarga.getFullYear();
         }
     })
-    function obtenerVista(){
-        document.getElementById('aCanvas').innerHTML='<canvas id="grafico" width="100" height="100"></canvas>   '
-        var modo=document.getElementById('selectForma').value;
-        mostrarGrafico(modo)
+    function obtenerVista() {
+        document.getElementById('aCanvas').innerHTML = '<canvas id="grafico" width="100" height="100"></canvas>   '
+        var modo = document.getElementById('selectForma').value;
+        mostrarGrafico(modo, 'grafico')
     }
+    function PrintPDF() {
+        $('#reportePDF').removeClass("full-width");
+        $('#reportePDF').removeClass("pageContent");
+        $('#aCanvas').removeClass("centrado");
+        document.getElementById('selector').style.display='none'
+        document.getElementById('NavPrincipal').style.display = 'none';
+        document.getElementById('lateralGeneral').style.display = 'none'
+        document.getElementById('botonImpr').style.display='none'
+        window.print();
+        document.getElementById('botonVolver').style.display='block'
+    }
+
 </script>
