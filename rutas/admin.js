@@ -151,4 +151,8 @@ router.post('/liberar-empleados',(req,res)=>{
 	});
 });
 
+router.get('/reporte-actividades',(req,res)=>{
+	res.render('reporteActividades');
+})
+
 module.exports = router;
