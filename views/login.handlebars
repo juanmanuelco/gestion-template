@@ -17,6 +17,17 @@
 			<button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Iniciar Sesión</button> 
 		</form>
 	</div>
+	{{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-danger">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+          {{/if}}
 </div>
 <!--Aquí deben ir los estilos y los scripts que serán usados únicamente para esta vista-->
 <!--index.css y index.js son solo un ejemplo-->

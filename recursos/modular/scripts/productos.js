@@ -108,7 +108,7 @@ FuncionesProducto["deleteProduct"] = function () {
         function(data,status){
             if (status == "success") {
                 if (data.length >= 1) {
-                    if (data[0].Existencia > 0){
+                    if (data[0].Exis_Prod > 0){
                         swal({
                             title: 'No se puede eliminar este producto, por que aun está en stock',
                             type: 'warning',
@@ -177,9 +177,9 @@ FuncionesProducto["editProducto"] = function () {
         '<div class="mdl-cell mdl-cell--8-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Código del Producto</label>'+
-                '<input class="mdl-textfield__input" type="number" id="Cod_Prod" name="Cod_Prod"'+
+                '<input class="mdl-textfield__input" type="text" id="Cod_Prod" name="Cod_Prod"'+
                 ' EnterNext="true" idNext="Des_Prod" value="'+datos[0].innerHTML+'" readonly="readonly">'+
-                '<label class="mdl-textfield__label" for="Cod_Prod" maxlength="10"></label>'+
+                '<label class="mdl-textfield__label" for="Cod_Prod" maxlength="5"></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
             '</div>'+
         '</div>'+
