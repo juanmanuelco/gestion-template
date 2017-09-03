@@ -37,26 +37,24 @@
 
 
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+						{{#if usuarios}}{{#each usuarios}}
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaAdmin">
 					<thead>
 						<tr>
 							<th class="mdl-data-table__cell--non-numeric">Nombre</th>
-							<th>Cédula</th>
+							<th>Rol</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="mdl-data-table__cell--non-numeric">Ronald Cedeño</td>
-							<td>13127188883</td>
-							<td><button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="zmdi zmdi-more"></i></button></td>
+							<td class="mdl-data-table__cell--non-numeric">{{this.username}}</td>
+							<td>{{this.typoUser}}</td>
 						</tr>
 					</tbody>
 				</table>
+				{{/each}}{{/if}}
 			</div>
 			</div>
-
-
-
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 											<h4 class="text-condensedLight">Detalles de la Cuenta</h4>
 
@@ -91,9 +89,7 @@
 
 									<div>
 	                                               <button type="submit" id="btn-addClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Guardar</button>
-	                                                 <button id="btn-updClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Modificar</button>
-	                                                   <button id="btn-seaClient"  class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Buscar</button>
-	                                                     <button id="btn-delClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Eliminar</button>
+                                                <a href="/admin/tabla_user" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;">Editar Usuarios Registrados</a>
                                                </div>							
 										</div>
 									</div>

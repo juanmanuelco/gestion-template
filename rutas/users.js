@@ -44,9 +44,11 @@ router.post('/administracion', function(req, res){
 		//comprueba de que no exista otro ususario con el mismo nombre
 		E_DBF_USUARIO.findOne().where({username:req.body.username}).exec((err,resp)=>{
 			if(resp!=null){
+				//mensaje y redireccionamiento
 				req.flash('success_msg','El nombre de usuario ya esta registrado en el sistema intente con otro nombre')
 				res.redirect('/admin/administracion');
 			}else{
+				//crea al usuario 
 				E_DBF_USUARIO.createUser(newUser, function(err, user){
 					if(err) {throw err}
 					req.flash('success_msg', 'Ha sido registrado satisfactoriamente');

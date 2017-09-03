@@ -6,6 +6,7 @@ var express = require('express'),
 	cliente_controller = require('../controladores/cliente'),
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
 	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
+	E_DBF_USUARIO = require('../modelos/user'),
 	E_DBF_ACTIVIDADES_OBJ=require('../modelos/actividades'),
 	venta_controller = require("../controladores/ventas"),//todas las funciones de venta	
 	router = express.Router(),
@@ -68,6 +69,11 @@ router.get('/inventario', ensureAuthenticated, function (req, res) {
 	});
 });
 
+router.get('/tabla_user',ensureAuthenticated,function(req,res){
+	E_DBF_USUARIO.find().exec((err,resp)=>{
+		res.render('tabla_user',{usuarios:resp})
+	})
+})
 router.post('/getProducts', ensureAuthenticated, function (req, res) {
 	var query = { 'Cod_Prod': req.body.Cod_Prod};
 	E_DBF_PRODUCTO_OBJ.find(query, function (err, users) {
@@ -75,11 +81,15 @@ router.post('/getProducts', ensureAuthenticated, function (req, res) {
 	});
 });
 
-
+router.get('/administracion',ensureAuthenticated,function(req,res){
+	E_DBF_USUARIO.find().exec((err,resp)=>{
+		res.render('administracion',{usuarios:resp})
+	})
+})
 //===================Productos fin===============================================//
 
 router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');});
-router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
+//router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
 //===================Configuracion===============================================//
 router.get('/configuracion', ensureAuthenticated, (req, res)=> {res.render('configuracion');});
