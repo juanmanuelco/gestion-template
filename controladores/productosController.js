@@ -16,8 +16,8 @@ module.exports.crearProduct=function(req, res){
         if(err){res.render('productos',{error:'Error al cargar la imagen (Error 500)'})}else{
             var nuevoP = new productos({
                 Cod_Prod: req.body.Cod_Prod,
-                Descripcion: req.body.Des_Prod,
-                Existencia: req.body.Exis_Prod,
+                Des_Prod: req.body.Des_Prod,
+                Exis_Prod: req.body.Exis_Prod,
                 PrecComp_Pro: req.body.PrecComp_Pro,
                 PrecVen_Pro: req.body.PrecVen_Pro,
                 Img_Prod:"../general/imagenes/productos/productos"+(req.body.Cod_Prod)+".png"
@@ -53,8 +53,8 @@ module.exports.editProduct=function(req, res){
         if(err){res.render('productos',{error:'Error al cargar la imagen (Error 500)'})}else{
             var codigoP = req.body.Cod_Prod;
             var objeto = {
-                Descripcion: req.body.Des_Prod,
-                Existencia: req.body.Exis_Prod,
+                Des_Prod: req.body.Des_Prod,
+                Exis_Prod: req.body.Exis_Prod,
                 PrecComp_Pro: req.body.PrecComp_Pro,
                 PrecVen_Pro: req.body.PrecVen_Pro,
                 Img_Prod:"../general/imagenes/productos/productos"+(req.body.Cod_Prod)+".png"

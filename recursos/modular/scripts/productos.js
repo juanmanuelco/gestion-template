@@ -206,9 +206,9 @@ FuncionesProducto["editProducto"] = function () {
             '</div>'+  
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Precio de Venta</label>'+
-                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="10">'+
+                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="10" onblur="validarPrecioVenta()">'+
                 '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
-                '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+                '<span class="mdl-textfield__error" id="mensajePV" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+  
         '</div>'+
     '</div>'+
