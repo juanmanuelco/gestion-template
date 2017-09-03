@@ -160,7 +160,7 @@ FuncionesProducto["editProducto"] = function () {
     var formhtml = '<form id="editForm" style="text-align: left;"  enctype="multipart/form-data" action="/admin/editarProducto?Cod_Prod='+datos[0].innerHTML+'" method="post">'+
     '<div class="mdl-grid">'+
             '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
-                '<label class="text-condensedLight" style="font-size:20px;">Foto del empleado</label>'+
+                '<label class="text-condensedLight" style="font-size:20px;">Foto del producto</label>'+
                 '<div class="div_file btn">'+
                     '<p class="texto">Cambiar imagen (102x102) </p>'+
                     '<input type="file" class="btn_enviar mdl-textfield__input" id="file_url" accept=".jpg,.png," name="image_producto" onchange="alertaOferta(this,this.files[0].size)" required/>'+
