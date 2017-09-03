@@ -24,21 +24,21 @@
 								<th>Existencia</th>
 								<th>Precio de Compra</th>
 								<th>Precio de Venta</th>
-								<th><center>Opcion</center></th>
+								<th><center>Opción</center></th>
 							</tr>
 						</thead>
 						<tbody id="contenidoTabla">
 							{{#if producto}}{{#each producto}}
 							<tr>
 							<td id="{{this.Img_Prod}}" >{{this.Cod_Prod}}</td>
-							<td>{{this.Descripcion}}</td>
-							<td>{{this.Existencia}}</td>
+							<td>{{this.Des_Prod}}</td>
+							<td>{{this.Exis_Prod}}</td>
 							<td>{{this.PrecComp_Pro}}</td>
 							<td>{{this.PrecVen_Pro}}</td>
 							<td>
 								<div>
 									<center>
-									<button title="Más Informacion" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoProductos" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
+									<button title="Más Información" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoProductos" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
 									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editProducto" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
 									<button validation="deleteProduct" event="click" id="borrarClient" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
 									</center>
@@ -59,3 +59,10 @@
 <script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/productos.js"></script>>
 <link rel="stylesheet" href="../modular/estilos/empleados.css">
+
+<script type="text/javascript">
+    var titulo = document.getElementById("title_static");
+    if (titulo) {
+        titulo.innerHTML = '<i class="zmdi zmdi-store"></i><span class="hide-on-tablet">&nbsp;INVENTARIO</span>'
+    };
+</script>
