@@ -105,25 +105,48 @@ FuncionesCliente["editClient"] = function () {
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
 //para borrar los datos de un cliente
 FuncionesCliente["deleteClient"] = function() {
-
 	var divpadre = this.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
-	var infoHTML = '<label>Cédula: '+datos[0].innerHTML+'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
-	swal({
-	  	title: '¿Seguro que desea eliminar los datos del cliente?',
-	  	html: infoHTML,
-	  	type: 'warning',
-	  	showCancelButton: true,
-	  	confirmButtonText: 'Si'
-
-	},
-	function(isConfirm) {
-	  	if (isConfirm) {
-			    
-	    	location.reload(); 
-	  	}
-	}); 
+	var infoHTML = '<form id="deleteForm" action="/admin/deleteClient" method="post"><label>Cedula: '+datos[0].innerHTML+
+	'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
+	infoHTML+='<input type="hidden" name="Ced_Cli" id="Ced_Cli" type="number" value="'+
+	datos[0].innerHTML+'" readonly="readonly"></form>';
+	$.post("/admin/getClienteByCedula",
+    {
+      cedula: datos[0].innerHTML,
+    },
+    function(data,status){
+    	if (status == "success") {
+    		if (data.length >= 1) {
+    			swal({
+					title: '¿Seguro que desea eliminar los datos de este Cliente?',
+					html: infoHTML,
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Si'
+			  },
+			  function(isConfirm) {
+					if (isConfirm) {
+						var divs = document.getElementsByTagName("div")
+							var form;
+							for (var i = 0; i < divs.length; i++) {
+								if (divs[i].className=="sweet-content") {
+									if (divs[i].firstChild.id=="deleteForm") {
+										form=divs[i].firstChild;
+										break;
+									};
+								};
+							};
+						if (form) {
+							document.body.appendChild(form);
+							form.submit()
+						};
+					}
+			  });
+    		}
+    	}
+    });
 }
 
 
