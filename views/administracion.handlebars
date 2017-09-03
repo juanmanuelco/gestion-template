@@ -1,5 +1,4 @@
 <section class="full-width pageContent">
-		
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
 				<div class="mdl-grid">
@@ -8,6 +7,17 @@
 							<div class="full-width panel-tittle bg-primary text-center tittles">
 								Nuevo Administrador
 							</div>
+							{{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-danger">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+          {{/if}}
 							<div class="full-width panel-content">
 								<form method="post" action="/users/administracion">
 									<div class="mdl-grid">
@@ -100,7 +110,6 @@
 				</div>
 			</div>
 	</section>
-
 <script type="text/javascript">
     var titulo = document.getElementById("title_static");
     if (titulo) {
