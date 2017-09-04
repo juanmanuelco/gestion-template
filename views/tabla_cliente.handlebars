@@ -39,9 +39,9 @@
 							<td>
 								<div>
 									<center>
-									<button title="Más Información" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoCliente" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
-									<button title="Modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editClient" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
-									</button>&nbsp;&nbsp;&nbsp;<button title="Borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="deleteClient" event="click" id="deleteClient" ><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+									<button title="Más Información" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="infoCliente(event,this)"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
+									<button title="Modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="editClient(event,this)"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
+									</button>&nbsp;&nbsp;&nbsp;<button title="Borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="deleteClient(event,this)" id="deleteClient" ><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
 									</center>
 								</div>
 							</td>
@@ -60,7 +60,6 @@
 		</div>
 	</div>
 </section>
-
 <script src="../modular/scripts/validacion_form.js"></script>
 <script src="../modular/scripts/indentificaciones.js"></script>
 <script src="../modular/scripts/validacionPrecios.js"></script>
