@@ -84,26 +84,57 @@ function editClient (e,button) {
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	// agregar en el form un action con la ruta del admin
 	var formhtml = '<form id="editForm" action="/admin/editClient" method="post" style="text-align: left;">'+
-	'<label style="text-align: left;">Ruc/Cédula: </label>'+
-	'<input name="Ced_Cli" class="mdl-textfield__input" type="number" value="'+datos[0].innerHTML+'" readonly="true"><br>'+
-	'<label>Nombres</label>'+
-	'<input name="Nomb_Cli" class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" requerido><br>'+
-	'<label>Dirección</label>'+
-	'<input name="Dir_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" requerido><br>'+
-	'<label>Número</label>'+
-	'<input name="Telf_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].id+'"><br>'+
-	'<label>Correo Electrónico</label>'+
-	'<input name="Cor_Cli" class="mdl-textfield__input" type="text" value="'+datos[3].id+'"><br>'+
-	'<label>Tipo Cliente</label>'+
-	'<select name="Tip_Cli" class="mdl-textfield__input" value="'+datos[3].innerHTML+'">'+
-		'<option>Ocasional</option>'+
-		'<option>Premium</option>'+
-	'</select><br>'+
+	'<div class="mdl-grid">'+
+		'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Cédula</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Ced_Cli" name="Ced_Cli" validation="cedula" event="keyup" solonum="true"'+
+				' EnterNext="true" idNext="Nomb_Cli" value="'+datos[0].innerHTML+'" readonly="readonly" requerido>'+
+				'<label class="mdl-textfield__label" for="Ced_Cli" maxlength="14"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Nombres y Apellidos</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Nomb_Cli" name="Nomb_Cli" EnterNext="true" idNext="Dir_Cli" soloLetras="true" maxlength="60" value="'+datos[1].innerHTML+'" requerido>'+
+				'<label class="mdl-textfield__label" for="Nomb_Cli" ></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Dirección</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Dir_Cli" name="Dir_Cli" EnterNext="true" idNext="Telf_Cli" maxlength="40" value="'+datos[2].innerHTML+'" requerido>'+
+				'<label class="mdl-textfield__label" for="Dir_Cli" ></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
+			'</div>'+
+		'</div>'+
+		'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Teléfono</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Telf_Cli" value="'+datos[2].id+'" name="Telf_Cli" solonum="true" EnterNext="true" idNext="Correo" maxlength="10">'+
+				'<label class="mdl-textfield__label" for="Telf_Cli"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Correo electrónico</label>'+
+				'<input value="'+datos[3].id+'"class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" maxlength="30" event="keyup">'+
+				'<label class="mdl-textfield__label" for="Correo"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Correo No válido</span>'+
+			'</div><br>'+
+			'<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<select value="'+datos[3].innerHTML+'" class="mdl-textfield__input" name="Tip_Cli">'+
+					'<option value="Ocasional">Ocasional</option>'+
+					'<option value="Premium">Premium</option>'+
+				'</select>'+
+			'</div>'+
+		'</div>'+
+	'</div>'+
+	'<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
 	'</form>'
 	swal({
 		  	title: 'Datos Cliente',
 		 	html: formhtml,
 		  	showCancelButton: true,
+		  	width: '700px',
 		  	confirmButtonText: 'Guardar',
 		  	closeOnConfirm: false
 		},
