@@ -1,0 +1,127 @@
+<section class="full-width pageContent" id="reportePDF">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("user_y7Af6QkBaPZkgbjAY2ZtN");
+        })();
+    </script>
+    <div class="row">
+        <h1 style="text-align:Center">Envío de email</h1>
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-lg-10 col-md-10">
+            <h3 style="text-align:center">Enviar catálogo de productos a clientes premium</h3>
+            <bR>
+            <div class="table" style="height:300px;overflow-y: true;">
+                <form onsubmit="validarMail(event)">
+                    {{#if clientes}} 
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8">
+                                <input type="radio" onchange="quitar()" id="noSel" value="No seleccionar" name="compro" checked >
+                                <label for="noSel" >No seleccionar ninguno</label>
+                                <input type="radio" id="Sel" onchange="seleccionar()" name="compro" value="Seleccionar todos">
+                                <label for="Sel" >Seleccionar todos</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <button class="btn btn-primary" type="submit">Enviar catálogos</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <table class="table">
+                        <tr>
+                            <th>Correo</th>
+                            <th>Cédula</th>
+                            <th>Nombre</th>
+                        </tr>
+                        {{#if clientes}} {{#each clientes}}
+                        <tr>
+                            <td>
+                                <input  id="C{{this.Ced_Cli}}" type="checkbox" name="clienteFind" value="{{this.Cor_Cli}}">
+                                <label class="correoCli" for="C{{this.Ced_Cli}}">{{this.Cor_Cli}}</label>
+                            </td>
+                            <td>{{this.Ced_Cli}}</td>
+                            <td>{{this.Nomb_Cli}}</td>
+                        </tr>
+                        {{/each}} {{/if}}
+                        <tr></tr>
+                    </table>
+                </form>
+                <div style="display:none">
+                    <div class="table" id="catalogo">
+                        <table class="table">
+                            <tr>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                            </tr>
+                            {{#if productos}} {{#each productos}}
+                                <tr>
+                                    <td>{{this.Cod_Prod}}</td>
+                                    <td>{{this.Des_Prod}}</td>
+                                    <td>$ {{this.PrecVen_Pro}}</td>
+                                </tr>
+                            {{/each}} {{/if}}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ <div class="modal fade" id="loading" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Enviando...</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+    function quitar(){
+        var elementos=document.getElementsByName('clienteFind');
+        for(var i=0;i<elementos.length;i++){
+            elementos[i].checked=false;
+        }
+    }
+    function seleccionar(){
+        var elementos=document.getElementsByName('clienteFind');
+        for(var i=0;i<elementos.length;i++){
+            elementos[i].checked=true;
+        }
+    }
+    function validarMail(event) {
+        $('#loading').modal({backdrop:"static"})
+        event.preventDefault();
+        var elementos=document.getElementsByName('clienteFind'),
+            estado=false,
+            continuar=true,
+            emails=new Array();
+        for(var i=0;i<elementos.length;i++){
+            if(elementos[i].checked){
+                estado=true;
+                emails.push(document.getElementsByName('clienteFind')[i]);
+            }    
+        }
+        if(!estado){
+            swal('Error inesperado', 'Ningún cliente ha sido seleccionado', 'error');
+            return;
+        }
+        else{
+            for(var j=0;j<emails.length;j++){
+                emailjs.send("default_service", "template_cPyplb5s", {
+                    to_email:emails[j].value,
+                    mensaje:document.getElementById('catalogo').innerHTML
+                }
+                ).then((response) => { 
+                    $('#loading').modal('hide')
+                    swal('Listo', 'El o los correos se han enviado', 'success')
+                }, (err) => { 
+                    $('#loading').modal('hide')
+                    swal('Error inesperado', 'No se puedo ejecutar la orden', 'error')                    
+                });
+            }
+        }  
+    }
+</script>
