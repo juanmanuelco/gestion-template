@@ -37,11 +37,11 @@ Funciones["cedruc"] = function (e) {
 	if (cedula == "") {this.parentNode.classList.remove("is-invalid"); return false;};
 	spansTextBefore[span] = span.innerHTML;
 	span.innerHTML="Cedula/Ruc no valida/o";
-	if (Timers[this]) {
-		clearTimeout(Timers[this]);
+	if (Timers[this.name]) {
+		clearTimeout(Timers[this.name]);
 	};
 	if (!ident.validarCedula(cedula) && !ident.validarRuc(cedula)) {
-		Timers[this] = setTimeout(function (a){
+		Timers[this.name] = setTimeout(function (a){
 			a.parentNode.classList.add("is-invalid");
 		},200,this);
 	}
@@ -57,11 +57,11 @@ Funciones["cedula"] = function (e) {
 	if (cedula == "") {this.parentNode.classList.remove("is-invalid"); return false;};
 	spansTextBefore[span] = span.innerHTML;
 	span.innerHTML= "Cedula no válida";
-	if (Timers[this]) {
-	clearTimeout(Timers[this])
+	if (Timers[this.name]) {
+	clearTimeout(Timers[this.name])
 	}
 	if (!ident.validarCedula(cedula)) {
-		Timers[this] = setTimeout(function (a){
+		Timers[this.name] = setTimeout(function (a){
 			a.parentNode.classList.add("is-invalid");
 		},1,this);
 	}
@@ -77,10 +77,10 @@ Funciones["ruc"] = function (e) {
 	if (ruc == "") {this.parentNode.classList.remove("is-invalid"); return false;};
 	spansTextBefore[span] = span.innerHTML;
 	span.innerHTML= "Ruc no válido";
-	if (Timers[this]) {
-	clearTimeout(Timers[this]);};
+	if (Timers[this.name]) {
+	clearTimeout(Timers[this.name]);};
 	if (!ident.validarRuc(ruc)) {
-		Timers[this] = setTimeout(function (a){
+		Timers[this.name] = setTimeout(function (a){
 			a.parentNode.classList.add("is-invalid");
 		},200,this);
 	}
@@ -93,10 +93,10 @@ Funciones["email"] = function(e){
 	if (this.value+""+ekey =="") {this.parentNode.classList.remove("is-invalid"); return false;};
 	var patt = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 	var res = patt.test(this.value+""+ekey);
-	if (Timers[this]) {
-	clearTimeout(Timers[this]);};
+	if (Timers[this.name]) {
+	clearTimeout(Timers[this.name]);};
 	if (!res) {
-		Timers[this] = setTimeout(function (a){
+		Timers[this.name] = setTimeout(function (a){
 			a.parentNode.classList.add("is-invalid");
 		},200,this);
 	};
@@ -265,16 +265,16 @@ Funciones["NumDecimal"] = function(e){
 		if (e.type=="keyup") {ekey=""};
 		var numero = this.value + "" + ekey;
 		var span = this.parentNode.getElementsByTagName("span")[0]
-		if (Timers[this]) {
-			clearTimeout(Timers[this]);}
+		if (Timers[this.name]) {
+			clearTimeout(Timers[this.name]);}
 		;
 		if(validarnum(numero,span)){
-			Timers[this] = setTimeout(function (a){
+			Timers[this.name] = setTimeout(function (a){
 				a.parentNode.classList.remove("is-invalid");
 			},1,this);
 		}
 		else{
-			Timers[this] = setTimeout(function (a){
+			Timers[this.name] = setTimeout(function (a){
 				a.parentNode.classList.add("is-invalid");
 			},1,this);
 		}
@@ -296,16 +296,16 @@ Funciones["NumeroEntero"] = function(e){
 		
 		var numero = this.value + "" + ekey;
 		var span = this.parentNode.getElementsByTagName("span")[0]
-		if (Timers[this]) {
-			clearTimeout(Timers[this]);}
+		if (Timers[this.name]) {
+			clearTimeout(Timers[this.name]);}
 		;
 		if(validarnum(numero,span)){
-			Timers[this] = setTimeout(function (a){
+			Timers[this.name] = setTimeout(function (a){
 				a.parentNode.classList.remove("is-invalid");
 			},1,this);
 		}
 		else{
-			Timers[this] = setTimeout(function (a){
+			Timers[this.name] = setTimeout(function (a){
 				a.parentNode.classList.add("is-invalid");
 			},1,this);
 		}
@@ -388,11 +388,11 @@ Funciones["soloLetras"] = function (e) {
 			};
 		}
 	}
-	if (Timers[this]) {
-		clearTimeout(Timers[this])
+	if (Timers[this.name]) {
+		clearTimeout(Timers[this.name])
 	}
 	if(!validacion){
-		Timers[this] = setTimeout(function (a){
+		Timers[this.name] = setTimeout(function (a){
 			a.parentNode.classList.add("is-invalid");
 		},1,this);
 	}

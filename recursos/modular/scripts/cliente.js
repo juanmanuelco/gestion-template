@@ -1,3 +1,51 @@
+var inputCed = document.getElementById("Ced_Cli");
+if (inputCed) { 
+	inputCed.addEventListener("blur",VerificarCliente)
+};
+var textoAnterior={}
+function VerificarCliente(e) {
+	var cedula = this.value;
+
+	if (cedula.length == 10 || cedula.length == 13 || cedula.length == 14) {
+		var divPadre = this.parentNode
+		if (divPadre.classList.contains("is-invalid")) {return false;};
+		var span = divPadre.getElementsByTagName("span");
+		if (span && textoAnterior[this.id] == undefined) {
+			textoAnterior[this.id] = span[0].innerHTML;
+		};
+		var input = this;
+		$.post("/admin/getClienteByCedula",
+	    {
+	      cedula: cedula,
+	    },
+	    function(data,status){
+	    	if (status == "success") {
+	    		console.log(data)
+	    		if (data.length >= 1) {
+	    			if (cedula.length == 10) {
+						span[0].innerHTML = "El cliente con esta cédula ya está registrado en la base de datos";
+					}
+					else{
+						if (cedula.length == 13 || cedula.length == 14) {
+							span[0].innerHTML = "El cliente con este ruc ya está registrado en la base de datos";
+						};
+					}
+	    			divPadre.classList.add("is-invalid")
+	    			input.addEventListener("focus", function(){
+						var span = this.parentNode.getElementsByTagName("span");
+						if (span && textoAnterior[this.id]) {
+							span[0].innerHTML=textoAnterior[this.id];
+							textoAnterior[this.id]=undefined;
+						};
+						this.parentNode.classList.remove("is-invalid");
+				 	})
+	    		}
+	    	}
+	    });
+	};
+}
+
+
 FuncionesCliente={}
 
 //funcion para agregar clientes
