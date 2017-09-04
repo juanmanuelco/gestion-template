@@ -6,6 +6,7 @@ FuncionesCliente["saveCliente"] = function (e){
 	var form = this.form
 	if (!form) {return false}
 	var bool = ValidarDatosFormulario(form);
+	console.log(bool)
 	if (bool){ 
 	swal({
 		  	title: 'Formulario Válido',
@@ -41,9 +42,9 @@ FuncionesCliente["editClient"] = function () {
 	'<label style="text-align: left;">Ruc/Cédula: </label>'+
 	'<input name="Ced_Cli" class="mdl-textfield__input" type="number" value="'+datos[0].innerHTML+'" readonly="true"><br>'+
 	'<label>Nombres</label>'+
-	'<input name="Nomb_Cli" class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'"><br>'+
+	'<input name="Nomb_Cli" class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" requerido><br>'+
 	'<label>Dirección</label>'+
-	'<input name="Dir_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'"><br>'+
+	'<input name="Dir_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" requerido><br>'+
 	'<label>Número</label>'+
 	'<input name="Telf_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].id+'"><br>'+
 	'<label>Correo Electrónico</label>'+
@@ -105,25 +106,48 @@ FuncionesCliente["editClient"] = function () {
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
 //para borrar los datos de un cliente
 FuncionesCliente["deleteClient"] = function() {
-
 	var divpadre = this.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
-	var infoHTML = '<label>Cédula: '+datos[0].innerHTML+'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
-	swal({
-	  	title: '¿Seguro que desea eliminar los datos del cliente?',
-	  	html: infoHTML,
-	  	type: 'warning',
-	  	showCancelButton: true,
-	  	confirmButtonText: 'Si'
-
-	},
-	function(isConfirm) {
-	  	if (isConfirm) {
-			    
-	    	location.reload(); 
-	  	}
-	}); 
+	var infoHTML = '<form id="deleteForm" action="/admin/deleteClient" method="post"><label>Cedula: '+datos[0].innerHTML+
+	'</label><br><label>Nombre: '+datos[1].innerHTML+'</label>';
+	infoHTML+='<input type="hidden" name="Ced_Cli" id="Ced_Cli" type="number" value="'+
+	datos[0].innerHTML+'" readonly="readonly"></form>';
+	$.post("/admin/getClienteByCedula",
+    {
+      cedula: datos[0].innerHTML,
+    },
+    function(data,status){
+    	if (status == "success") {
+    		if (data.length >= 1) {
+    			swal({
+					title: '¿Seguro que desea eliminar los datos de este Cliente?',
+					html: infoHTML,
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Si'
+			  },
+			  function(isConfirm) {
+					if (isConfirm) {
+						var divs = document.getElementsByTagName("div")
+							var form;
+							for (var i = 0; i < divs.length; i++) {
+								if (divs[i].className=="sweet-content") {
+									if (divs[i].firstChild.id=="deleteForm") {
+										form=divs[i].firstChild;
+										break;
+									};
+								};
+							};
+						if (form) {
+							document.body.appendChild(form);
+							form.submit()
+						};
+					}
+			  });
+    		}
+    	}
+    });
 }
 
 

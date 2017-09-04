@@ -8,22 +8,24 @@ function ValidarDatosFormulario(formulario,formModal) {
 	mensaje="";
 	formNoValido=false;
 	for (var i = 0; i < inputs.length; i++) {
-		if(inputs[i].value.trim() == "" && inputs[i].type != "file"){
-			var span = inputs[i].parentNode.getElementsByTagName("span");
-			if (span.length>=1) {
-				span=span[0]
-				ValorOriginal[inputs[i].name] = span.innerHTML;
-				span.innerHTML="Campo Vacío"
-			};
-			inputs[i].addEventListener("focus", function(){
-				var span = this.parentNode.getElementsByTagName("span");
-				if (span) {span[0].innerHTML=ValorOriginal[this.name]};
-				this.parentNode.classList.remove("is-invalid");
-			 })
-			inputs[i].parentNode.classList.add("is-invalid");
-			formNoValido=true;
-			mensaje="Por favor asegúrese que no haya campos vacios";
-		}
+		if (inputs[i].getAttribute("requerido")!=null) {
+			if(inputs[i].value.trim() == "" && inputs[i].type != "file"){
+				var span = inputs[i].parentNode.getElementsByTagName("span");
+				if (span.length>=1) {
+					span=span[0]
+					ValorOriginal[inputs[i].name] = span.innerHTML;
+					span.innerHTML="Campo Vacío"
+				};
+				inputs[i].addEventListener("focus", function(){
+					var span = this.parentNode.getElementsByTagName("span");
+					if (span) {span[0].innerHTML=ValorOriginal[this.name]};
+					this.parentNode.classList.remove("is-invalid");
+				 })
+				inputs[i].parentNode.classList.add("is-invalid");
+				formNoValido=true;
+				mensaje="Por favor asegúrese que no haya campos vacios";
+			}
+		};
 	};	
 	if (!formNoValido) {
 		var divs = formulario.getElementsByTagName("div")
@@ -34,7 +36,6 @@ function ValidarDatosFormulario(formulario,formModal) {
 			}
 		};
 	};
-	
 	if (formNoValido) {
 		if (!formModal) {
 			swal({

@@ -6,6 +6,7 @@ var express = require('express'),
 	cliente_controller = require('../controladores/cliente'),
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente'),
 	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
+	E_DBF_USUARIO = require('../modelos/user'),
 	E_DBF_ACTIVIDADES_OBJ=require('../modelos/actividades'),
 	venta_controller = require("../controladores/ventas"),//todas las funciones de venta	
 	router = express.Router(),
@@ -21,10 +22,12 @@ function ensureAuthenticated(req, res, next) {
 
 //=============================rutas para clientes==============================
 
+router.post('/getClienteByCedula', cliente_controller.getClienteByCedula)
 router.post('/saveClient', ensureAuthenticated,cliente_controller.createClient)
 router.post('/editClient', ensureAuthenticated,cliente_controller.editClient)
 router.post('/deleteClient', ensureAuthenticated,cliente_controller.deleteClient)
 router.get('/tabla_cliente', ensureAuthenticated, cliente_controller.getAllClients);
+
 
 router.get('/ventas', ensureAuthenticated, function (req, res) {
 	//res.render('ventas');
@@ -62,9 +65,16 @@ router.post('/editarProducto', ensureAuthenticated, producto_controller.editProd
 router.post('/eliminarProducto', ensureAuthenticated, producto_controller.deletedProduct);
 //Obtener los valores de los input para guardarlos en el esquema o eso se supone..
 
+
+
 router.get('/inventario', ensureAuthenticated, function (req, res) {
 	E_DBF_PRODUCTO_OBJ.find({}, function (err, users) {
 		res.render('inventario', { producto: users });
+	});
+});
+router.get('/inventariocliente', ensureAuthenticated, function (req, res) {
+	E_DBF_PRODUCTO_OBJ.find({}, function (err, users) {
+		res.render('inventario_clientes', { producto: users });
 	});
 });
 
@@ -75,11 +85,15 @@ router.post('/getProducts', ensureAuthenticated, function (req, res) {
 	});
 });
 
-
+router.get('/administracion',ensureAuthenticated,function(req,res){
+	E_DBF_USUARIO.find().exec((err,resp)=>{
+		res.render('administracion',{usuarios:resp})
+	})
+})
 //===================Productos fin===============================================//
 
 router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');});
-router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
+//router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
 //===================Configuracion===============================================//
 router.get('/configuracion', ensureAuthenticated, (req, res)=> {res.render('configuracion');});

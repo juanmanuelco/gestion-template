@@ -33,7 +33,7 @@ module.exports.crearProduct=function(req, res){
                 // de producto guardado  
                 else {
                     console.log("producto guardado")
-                    res.render('productos', { success_msg: 'Producto guardado correctamente.' })
+                    res.render('productos', {success_msg: 'Producto guardado correctamente.' })
                 }
             })
         }

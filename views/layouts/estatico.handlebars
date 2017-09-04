@@ -38,8 +38,11 @@
                             <i class="zmdi zmdi-refresh-sync"></i>
                         </li>
                         <!--fin-->
+                        <li class="btn-Notificacion" id="notificacion" title="Notificación">
+                            <i class="zmdi zmdi-notifications"></i>
+                        </li>
                         <li class="btn-Ayuda" id="ayuda" title="Ayuda">
-                            <i class="zmdi zmdi-help-outline"></i>
+                            <i class="zmdi zmdi-help"></i>
                         </li>
                         <li class="btn-exit" id="btn-exit" title="Cerrar sesión">
                             <i class="zmdi zmdi-power"></i>
@@ -205,13 +208,37 @@
                         {{/if}}
                         <li class="full-width divider-menu-h"></li>
                         <li class="full-width">
-                            <a href="/admin/inventario" class="full-width">
+                            <a href="#!" class="full-width btn-subMenu">
                                 <div class="navLateral-body-cl">
                                     <i class="zmdi zmdi-store"></i>
                                 </div>
                                 <div class="navLateral-body-cr hide-on-tablet">
                                     INVENTARIO</div>
+                                <span class="zmdi zmdi-chevron-left"></span>
                             </a>
+                            <ul class="full-width menu-principal sub-menu-options">
+                                {{#if user.verificar}}
+                                <li class="full-width divider-menu-h"></li>
+                                <li class="full-width">
+                                    <a href="/admin/inventario" class="full-width">
+                                        <div class="navLateral-body-cl">
+                                            <i class="zmdi zmdi-store"></i>
+                                        </div>
+                                        <div class="navLateral-body-cr hide-on-tablet">
+                                            ADMINISTRAR INVENTARIO</div>
+                                    </a>
+                                </li>
+                                {{/if}}
+                                <li class="full-width">
+                                    <a href="/admin/inventariocliente" class="full-width">
+                                        <div class="navLateral-body-cl">
+                                            <i class="zmdi zmdi-store"></i>
+                                        </div>
+                                        <div class="navLateral-body-cr hide-on-tablet">
+                                            CONSULTAR INVENTARIO</div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="full-width divider-menu-h"></li>
                         {{#if user.verificar}}

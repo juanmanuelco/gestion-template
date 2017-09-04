@@ -1,5 +1,4 @@
 <section class="full-width pageContent">
-		
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
 				<div class="mdl-grid">
@@ -8,6 +7,17 @@
 							<div class="full-width panel-tittle bg-primary text-center tittles">
 								Nuevo Administrador
 							</div>
+							{{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-danger">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+          {{/if}}
 							<div class="full-width panel-content">
 								<form method="post" action="/users/administracion">
 									<div class="mdl-grid">
@@ -27,26 +37,30 @@
 
 
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+
+						{{#if usuarios}}{{#each usuarios}}
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaAdmin">
 					<thead>
 						<tr>
 							<th class="mdl-data-table__cell--non-numeric">Nombre</th>
-							<th>Cédula</th>
+							<th>Rol</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="mdl-data-table__cell--non-numeric">Ronald Cedeño</td>
-							<td>13127188883</td>
-							<td><button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="zmdi zmdi-more"></i></button></td>
+							<td class="mdl-data-table__cell--non-numeric">{{this.username}}</td>
+							<td>{{this.typoUser}}</td>
+							<td>
+									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editUsuario" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
+									<button validation="deleteUsuario" event="click" id="borrarUsuario" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+						    </td>
 						</tr>
+						
 					</tbody>
 				</table>
+				{{/each}}{{/if}}
 			</div>
 			</div>
-
-
-
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 											<h4 class="text-condensedLight">Detalles de la Cuenta</h4>
 
@@ -100,7 +114,6 @@
 				</div>
 			</div>
 	</section>
-
 <script type="text/javascript">
     var titulo = document.getElementById("title_static");
     if (titulo) {

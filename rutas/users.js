@@ -4,7 +4,7 @@ var express = require('express'),
 	LocalStrategy = require('passport-local').Strategy,
 	E_DBF_USUARIO = require('../modelos/user'),
     bcrypt = require('bcryptjs');
-
+//carga el login 
 router.get('/login',function(req,res){
     res.render('login')
 })
@@ -15,19 +15,18 @@ router.get('/administracion', function(req, res){
 
 // registrar usuarios
 router.post('/administracion', function(req, res){
-	//var name = req.body.name;
-	//var email = req.body.email;
+	//exttrae los valores de los input de la parte de administracion
+	//y se los asigna a las variables
 	var username = req.body.username;
     var password = req.body.password;
 	var typoUser = req.body.typoUser;
+	//para saber si es administrador
 	if(typoUser=="Usuario Normal") {var verificar = '';}else{var verificar = 'administrador';};
-
-
-	//console.log(verificar);
+    //para que los campos este llenos y no vacios
 	req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('typoUser', 'Typo de usuario is required').notEmpty();
-
+   //si se dan errores
 	var errors = req.validationErrors();
 
 	if(errors){
@@ -35,34 +34,38 @@ router.post('/administracion', function(req, res){
 			errors:errors
 		});
 	} else {
-		
+		//si no se da errores se guardan en el esquema de la bd
 		var newUser = new E_DBF_USUARIO({
-			//name: name,
-			//email:email,
 			username: username,
             password: password,
 			typoUser: typoUser,
 			verificar: verificar
 		});
-
-		E_DBF_USUARIO.createUser(newUser, function(err, user){
-			if(err) throw err;
-			//console.log(user);
-		});
-
-		req.flash('success_msg', 'Ha sido registrado satisfactoriamente');
-
-		res.redirect('/admin/administracion');
+		//comprueba de que no exista otro ususario con el mismo nombre
+		E_DBF_USUARIO.findOne().where({username:req.body.username}).exec((err,resp)=>{
+			if(resp!=null){
+				//mensaje y redireccionamiento
+				req.flash('success_msg','El nombre de usuario ya esta registrado en el sistema intente con otro nombre')
+				res.redirect('/admin/administracion');
+			}else{
+				//crea al usuario 
+				E_DBF_USUARIO.createUser(newUser, function(err, user){
+					if(err) {throw err}
+					req.flash('success_msg', 'Ha sido registrado satisfactoriamente');
+					res.redirect('/admin/administracion');
+				});
+			}
+		})
 	}
 });
 
+//compara los input del login con los del esquema para ver si el usuario exite e ingresa
 passport.use(new LocalStrategy(
   function(username, password, done) {
     E_DBF_USUARIO.getUserByUsername(username, function(err, user){
    	if(err) throw err;
    	if(!user){
-		   return done(null, false, {message: 'usuario desconocido'});
-		   console.log(user);
+		   return done(null, false, {message: 'El nombre de usuario no esta registrado en el sistema'});
    	}
 
    	E_DBF_USUARIO.comparePassword(password, user.password, function(err, isMatch){
@@ -70,7 +73,7 @@ passport.use(new LocalStrategy(
    		if(isMatch){
    			return done(null, user);
    		} else {
-   			return done(null, false, {message: 'Contrasena incorrecta'});
+   			return done(null, false, {message: 'La contraseña està incorrecta'});
    		}
    	});
    });

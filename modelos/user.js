@@ -29,9 +29,10 @@ var E_DBF_USUARIO_OBJ  = mongoose.Schema({
 //Exporta el esquema para poder ser usado en cada ruta que sea  necesario____________________________________________________________________
 var E_DBF_USUARIO = module.exports = mongoose.model('E_DBF_USUARIO', E_DBF_USUARIO_OBJ );
 
+
 //Crea un nuevo usuario para que use el sistema_______________________________________________________________________________________________
-module.exports.createUser = function(newUser, callback){
-    //Establece el modo de encriptación
+module.exports.createUser = function(newUser, callback){	
+	//Establece el modo de encriptación
 	bcrypt.genSalt(10, function(err, salt) {
         //Encripta los datos
 	    bcrypt.hash(newUser.password, salt, function(err, hash) {
