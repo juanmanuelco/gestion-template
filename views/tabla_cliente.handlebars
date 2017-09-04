@@ -18,7 +18,7 @@
 					<a href="/admin/cliente" title="Registrar nuevo Cliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5;position:absolute; right: 5%;" >Nuevo Registro</a>
 				</div>
 			</form>
-			<div style="overflow-x:auto;">
+			<div style="overflow-x:auto; height:480px;">
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblCliente">
 					<thead>
 						    <tr>
@@ -39,9 +39,9 @@
 							<td>
 								<div>
 									<center>
-									<button title="Más Información" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="infoCliente" event="click"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
-									<button title="Modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editClient" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
-									</button>&nbsp;&nbsp;&nbsp;<button title="Borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="deleteClient" event="click" id="deleteClient" ><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+									<button title="Más Información" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="infoCliente(event,this)"><i style="color:#FF9800" class="zmdi zmdi-info"></i></button>&nbsp;&nbsp;&nbsp;
+									<button title="Modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="editClient(event,this)"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i>
+									</button>&nbsp;&nbsp;&nbsp;<button title="Borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="deleteClient(event,this)" id="deleteClient" ><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
 									</center>
 								</div>
 							</td>
@@ -56,10 +56,10 @@
 					</tbody>
 				</table>
 			</div>
+				<br>
 		</div>
 	</div>
 </section>
-
 <script src="../modular/scripts/validacion_form.js"></script>
 <script src="../modular/scripts/indentificaciones.js"></script>
 <script src="../modular/scripts/validacionPrecios.js"></script>

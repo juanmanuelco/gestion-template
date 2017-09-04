@@ -16,19 +16,19 @@
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Ruc/Cédula</label>
-												<input class="mdl-textfield__input" name="Ced_Cli" type="text" id="BarCode" solonum="true" validation="cedruc" event="keyup" maxlength="10" requerido>
-												<label class="mdl-textfield__label" for="BarCode"></label>
+												<input class="mdl-textfield__input" name="Ced_Cli" type="text" id="Ced_Cli" solonum="true" validation="cedruc" event="keyup" maxlength="14" requerido>
+												<label class="mdl-textfield__label" for="Ced_Cli"></label>
 												<span class="mdl-textfield__error">Ingrese sólo Números en Ruc/Cédula de Cliente</span>
 								    		</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<label class="text-condensedLight" style="font-size:20px;">Nombre</label>
-												<input class="mdl-textfield__input" name="Nomb_Cli" type="text" soloLetras="true"  id="NameClient" maxlength="100" requerido>
+												<label class="text-condensedLight" style="font-size:20px;">Nombres y Apellidos</label>
+												<input class="mdl-textfield__input" name="Nomb_Cli" type="text" soloLetras="true"  id="NameClient" maxlength="60" requerido>
 												<label class="mdl-textfield__label" for="NameClient"></label>
 												<span class="mdl-textfield__error">Ingrese sólo letras </span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Dirección</label>
-												<input class="mdl-textfield__input" name="Dir_Cli" type="text" id="addressClient1" requerido>
+												<input class="mdl-textfield__input" name="Dir_Cli" type="text" id="addressClient1" maxlength="40"  requerido>
 												<label class="mdl-textfield__label" for="addressClient1"></label>
 												<span class="mdl-textfield__error">Dirección no válida</span>
 											</div>
@@ -42,12 +42,12 @@
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 			 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Correo electrónico</label>
-												<input class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" event="keyup">
+												<input class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" maxlength="30" event="keyup">
 												<label class="mdl-textfield__label" for="Correo"></label>
 												<span class="mdl-textfield__error">Correo No válido</span>
 											</div>
+											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>
-											<div class="mdl-textfield mdl-js-textfield">
 												<select class="mdl-textfield__input" name="Tip_Cli">
 													<option value="Ocasional">Ocasional</option>
 													<option value="Premium">Premium</option>
@@ -55,7 +55,7 @@
 											</div>
 											
 											<div align="center">
-		                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" validation="saveCliente" event="click" >Guardar</button>
+		                                       <button id="btn-addCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;" onclick="saveCliente(event,this)" onsubmit="saveCliente(event,this)" >Guardar</button>
 		                                       <a href="/admin/tabla_cliente" id="btn-upClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5; float:left;" title="Mostrar Cliente Registrados">Ver Clientes Registrados</a>
 		                                   	</div>
 										</div>

@@ -1,9 +1,59 @@
-FuncionesCliente={}
+//se obtiene el input del campo de cedula
+var inputCed = document.getElementById("Ced_Cli");
+if (inputCed) { 
+	//se le agrega el evento blur con la funcion de verfificarCliente
+	inputCed.addEventListener("blur",VerificarCliente)
+};
+var textoAnterior={}
+//Se verifica si el cliente existe o no en la base de datos
+function VerificarCliente(e) {
+	//se obtiene la cedula
+	var cedula = this.value;
+	//si los caracteres ingresados en el input son 10,13 o 14 se ejecuta la condicion
+	if (cedula.length == 10 || cedula.length == 13 || cedula.length == 14) {
+		//obtenemos el div padre del input
+		var divPadre = this.parentNode
+		//si el div padre contiene la subclase "is-invalid cancelamos la funcion"
+		if (divPadre.classList.contains("is-invalid")) {return false;};
+		var span = divPadre.getElementsByTagName("span");
+		if (span && textoAnterior[this.id] == undefined) {
+			textoAnterior[this.id] = span[0].innerHTML;
+		};
+		var input = this;
+		$.post("/admin/getClienteByCedula",
+	    {
+	      cedula: cedula,
+	    },
+	    function(data,status){
+	    	if (status == "success") {
+	    		if (data.length >= 1) {
+	    			if (cedula.length == 10) {
+						span[0].innerHTML = "El cliente con esta cédula ya está registrado en la base de datos";
+					}
+					else{
+						if (cedula.length == 13 || cedula.length == 14) {
+							span[0].innerHTML = "El cliente con este ruc ya está registrado en la base de datos";
+						};
+					}
+	    			divPadre.classList.add("is-invalid")
+	    			input.addEventListener("focus", function(){
+						var span = this.parentNode.getElementsByTagName("span");
+						if (span && textoAnterior[this.id]) {
+							span[0].innerHTML=textoAnterior[this.id];
+							textoAnterior[this.id]=undefined;
+						};
+						this.parentNode.classList.remove("is-invalid");
+				 	})
+	    		}
+	    	}
+	    });
+	};
+}
 
 //funcion para agregar clientes
-FuncionesCliente["saveCliente"] = function (e){
+function saveCliente (e,button){
 	e.preventDefault();
-	var form = this.form
+	var form = button.form
 	if (!form) {return false}
 	var bool = ValidarDatosFormulario(form);
 	console.log(bool)
@@ -27,38 +77,64 @@ FuncionesCliente["saveCliente"] = function (e){
 	}
 }
 
-
-//funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
-//para editar los datos de un cliente
-
-
-
-FuncionesCliente["editClient"] = function () {
-	var divpadre = this.parentNode.parentNode
+function editClient (e,button) {
+	e.preventDefault();
+	var divpadre = button.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	// agregar en el form un action con la ruta del admin
 	var formhtml = '<form id="editForm" action="/admin/editClient" method="post" style="text-align: left;">'+
-	'<label style="text-align: left;">Ruc/Cédula: </label>'+
-	'<input name="Ced_Cli" class="mdl-textfield__input" type="number" value="'+datos[0].innerHTML+'" readonly="true"><br>'+
-	'<label>Nombres</label>'+
-	'<input name="Nomb_Cli" class="mdl-textfield__input" type="text" value="'+datos[1].innerHTML+'" requerido><br>'+
-	'<label>Dirección</label>'+
-	'<input name="Dir_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].innerHTML+'" requerido><br>'+
-	'<label>Número</label>'+
-	'<input name="Telf_Cli" class="mdl-textfield__input" type="text" value="'+datos[2].id+'"><br>'+
-	'<label>Correo Electrónico</label>'+
-	'<input name="Cor_Cli" class="mdl-textfield__input" type="text" value="'+datos[3].id+'"><br>'+
-	'<label>Tipo Cliente</label>'+
-	'<select name="Tip_Cli" class="mdl-textfield__input" value="'+datos[3].innerHTML+'">'+
-		'<option>Ocasional</option>'+
-		'<option>Premium</option>'+
-	'</select><br>'+
+	'<div class="mdl-grid">'+
+		'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Cédula</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Ced_Cli" name="Ced_Cli" validation="cedula" event="keyup" solonum="true"'+
+				' EnterNext="true" idNext="Nomb_Cli" value="'+datos[0].innerHTML+'" readonly="readonly" requerido>'+
+				'<label class="mdl-textfield__label" for="Ced_Cli" maxlength="14"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese Solo Números en Cédula</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Nombres y Apellidos</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Nomb_Cli" name="Nomb_Cli" EnterNext="true" idNext="Dir_Cli" soloLetras="true" maxlength="60" value="'+datos[1].innerHTML+'" requerido>'+
+				'<label class="mdl-textfield__label" for="Nomb_Cli" ></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Dirección</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Dir_Cli" name="Dir_Cli" EnterNext="true" idNext="Telf_Cli" maxlength="40" value="'+datos[2].innerHTML+'" requerido>'+
+				'<label class="mdl-textfield__label" for="Dir_Cli" ></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
+			'</div>'+
+		'</div>'+
+		'<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Teléfono</label>'+
+				'<input class="mdl-textfield__input" type="text" id="Telf_Cli" value="'+datos[2].id+'" name="Telf_Cli" solonum="true" EnterNext="true" idNext="Correo" maxlength="10">'+
+				'<label class="mdl-textfield__label" for="Telf_Cli"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
+			'</div>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<label class="text-condensedLight" style="font-size:20px;">Correo electrónico</label>'+
+				'<input value="'+datos[3].id+'"class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" maxlength="30" event="keyup">'+
+				'<label class="mdl-textfield__label" for="Correo"></label>'+
+				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Correo No válido</span>'+
+			'</div><br>'+
+			'<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>'+
+			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
+				'<select value="'+datos[3].innerHTML+'" class="mdl-textfield__input" name="Tip_Cli">'+
+					'<option value="Ocasional">Ocasional</option>'+
+					'<option value="Premium">Premium</option>'+
+				'</select>'+
+			'</div>'+
+		'</div>'+
+	'</div>'+
+	'<label id="labelFormModal" style="display:none;color:#d50000;position:absolute;font-size:16px;margin-top:3px;">Por favor asegurese que todos los datos del formulario son correctos </label>'+
 	'</form>'
 	swal({
 		  	title: 'Datos Cliente',
 		 	html: formhtml,
 		  	showCancelButton: true,
+		  	width: '700px',
 		  	confirmButtonText: 'Guardar',
 		  	closeOnConfirm: false
 		},
@@ -99,14 +175,15 @@ FuncionesCliente["editClient"] = function () {
 		  	}
 		});
 		setTimeout(function (a){
-			FuncionesCliente.init();
+			Funciones.init();
 		},200);
 }
 
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
 //para borrar los datos de un cliente
-FuncionesCliente["deleteClient"] = function() {
-	var divpadre = this.parentNode.parentNode
+function deleteClient(e,button) {
+	e.preventDefault();
+	var divpadre = button.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	var infoHTML = '<form id="deleteForm" action="/admin/deleteClient" method="post"><label>Cedula: '+datos[0].innerHTML+
@@ -150,73 +227,9 @@ FuncionesCliente["deleteClient"] = function() {
     });
 }
 
-
-//funcion inicializacion pensada para poder ser llamada en el caso de que se genere nuevos elementos html 
-//desde javascript
-FuncionesCliente["init"] = function (argument) {
-	// se a cambiado la forma de obtener los elementos del html
-	// en este caso se recorre por tipo de elemento ya que lo anterior no identificaba los buttons que estaban
-	// dentro de tablas como en el inentario
-	// se define la variable elements donde se guardaran todos los elementos
-	var elements=[]
-	// se define los elementos a buscar por medio del tagname
-	var inputs = document.getElementsByTagName("input");
-	var button = document.getElementsByTagName("button");
-	var divs = document.getElementsByTagName("div");
-	// con los for se recorren y se insertan en el arrat "elements"
-	for (var i = 0; i < inputs.length; i++) {elements.push(inputs[i])};
-	for (var i = 0; i < button.length; i++) {elements.push(button[i])};
-	for (var i = 0; i < divs.length; i++) {elements.push(divs[i])};
-	// con este for recorremos todos los elementos guardados en busca de la validacion y evento
-	for (var i = 0; i < elements.length; i++) {
-	var atributo = elements[i].getAttribute("validation") || false;
-
-		//Validacion de atributos solonum y solodecimal, por si se quiere usar estas 2 
-		//funciones mientras se usa otra como por ejemplo cedula
-		var solonum = elements[i].getAttribute("solonum") || false;
-		if (solonum) {
-			elements[i].addEventListener("keypress",FuncionesCliente["NumeroEntero"])
-			elements[i].addEventListener("keyup",FuncionesCliente["NumeroEntero"])
-		};
-		var solodecimal = elements[i].getAttribute("solodecimal") || false;
-		if (solodecimal) {
-			elements[i].addEventListener("keypress",FuncionesCliente["NumDecimal"])
-			elements[i].addEventListener("keyup",FuncionesCliente["NumDecimal"])
-		};
-		var soloLetras = elements[i].getAttribute("soloLetras") || false;
-		if (soloLetras) {
-			elements[i].addEventListener("keypress",FuncionesCliente["soloLetras"])
-			elements[i].addEventListener("keyup",FuncionesCliente["soloLetras"])
-		};
-		var EnterNext = elements[i].getAttribute("EnterNext") || false;
-		if (EnterNext) {elements[i].addEventListener("keyup",FuncionesCliente["EnterNext"])};
-
-		if ( atributo && FuncionesCliente[atributo] ){
-			var evento = elements[i].getAttribute("event") || false;
-			//modificacion del codigo para poder agregar más de 1 evento a las funciones
-			if (evento) {
-				var arrayEvent = evento.split(",")
-				if (arrayEvent.length > 1) {
-					for (var i = 0; i < arrayEvent.length; i++) {
-						elements[i].addEventListener(arrayEvent[i],FuncionesCliente[atributo]);
-					};
-				}
-				else{
-					elements[i].addEventListener(evento,FuncionesCliente[atributo]);
-				}
-			}
-			elements[i].addEventListener("change",FuncionesCliente[atributo]);
-			/*elements[i].addEventListener("paste", function (e) {
-				e.preventDefault();
-				return false;
-			});*/
-		}
-	}
-}
-
-
-FuncionesCliente["infoCliente"] = function (argument) {
-	var divpadre = this.parentNode.parentNode
+function infoCliente(e,button) {
+	e.preventDefault();
+	var divpadre = button.parentNode.parentNode
 	var divButton = divpadre.parentNode
 	var datos = divButton.parentNode.getElementsByTagName("td")
 	console.log(datos)
@@ -258,7 +271,3 @@ FuncionesCliente["infoCliente"] = function (argument) {
 	  	closeOnConfirm: true
 	});
 } 
-
-
-//inicializa la funcion que recorre el html en busca de los elementos con los atributos explicados
-FuncionesCliente.init();
