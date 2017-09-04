@@ -1,6 +1,9 @@
 function asignacion(identificador){
+    //Obtenemos la cedula del empleado
     var envio={'cedula':identificador.id},
+    /*Obtenemos la fecha y hora actual */
         fecha=new Date, horaInicial=``, horaFinal=``, minuto,hora,horaF=fecha.getHours()+1;
+    //Acomodamos la hora para que no este fuera de formato con las cajas de texto de tipo fecha y hora
     if(fecha.getHours()<10)
         hora='0'+fecha.getHours();
     else
@@ -26,9 +29,11 @@ function asignacion(identificador){
         nuevoMes='0'+fecha.getMonth();
     else
         nuevoMes=fecha.getMonth();
-
+    //Una vez acomodado ya podemos obtener una cadena presentable
     var cadenaFecha=`${fecha.getFullYear()}-${nuevoMes}-${nuevoDia}`;
+    //Obtenemos todos los clientes para ponerlos en un select
     var todosClientes=document.getElementById('todosClientes').innerHTML;
+    //Hacemos una petición de empleados por medio de la cédula
     $.ajax({
         type:"POST",
         url:"/admin/datos-empleados",
@@ -37,6 +42,7 @@ function asignacion(identificador){
         contentType:"application/json",
         data: JSON.stringify(envio)
     }).done(function(resp){
+        //Creamos un codigo html para enbeber 
         var formulario=`<div>
                         <h3>Designado a: <b id="lblCedEmpl">${resp.Nomb_Emp} </b></h3><br>
                         <div class="row">
@@ -78,6 +84,7 @@ function asignacion(identificador){
                         </div>                      
                     </div>
                    `;
+        //Mostramos un modal presnetando el html que habiamos creado anteriormente
         swal({
             title: `Servicio N°: ${Number(resp.Conta_Emp)+1}`,
             html: formulario,
@@ -88,6 +95,7 @@ function asignacion(identificador){
         }, function (isConfirm) {
             document.getElementById('lblCedClien').focus();
             if (isConfirm) {
+                //Si confirma obtiene los datos ingresados
                 var actividad=document.getElementById('lblDesc').value,
                     cliente=document.getElementById('lblCedClien').value,
                     horaInicializacion=document.getElementById('tmHrAsig').value,
@@ -96,6 +104,7 @@ function asignacion(identificador){
                     ha=Number(horaInicializacion.substr(0,2)),
                     hf=Number(horaFinalizacion.substr(0,2)),
                     error='';            
+                //Ahora realiza las validaciones por horario de trabajo o campos vacios
                 if(resp.Tur_Emp=='Matutino'){
                     if((ha<6 || ha>14) || (hf<6 || hf>14) )
                         error='Esta hora esta fuera del horario del empleado';                  
@@ -119,11 +128,13 @@ function asignacion(identificador){
                     contentType:"application/json",
                     data: JSON.stringify({'cedula':cliente})
                 }).done(function(cedulaCliente){
+                    //Verificamos que el cliente ingresado este registrado
                     if(cedulaCliente!=1)
                         error+=`- Este cliente no está registrado`;
                     if(error!='')
-                        swal('Que mal', error,'error' )
+                        swal('Error inesperado', error,'error' )
                     else{
+                        //Establecemos los parametros a guardar en la BAse de datos
                         envio={
                             'cedulaEmp':resp.Ced_Emp,
                             'fechaAsig':cadenaFecha,
@@ -142,10 +153,11 @@ function asignacion(identificador){
                             contentType:"application/json",
                             data: JSON.stringify(envio)
                         }).done(function(guard){
+                            //Eventos Si la actividad esta registrada correctamente o si hubo un error
                             if(guard=='mal')
-                                swal('Algo ha salido mal','Por favor intentelo de nuevo','error');
+                                swal('No se ha podido registrar la actividad','Por favor intentelo de nuevo','error');
                             else
-                                swal('Correcto', 'Registro guardado con éxito',  'success' )
+                                swal('Correcto', 'Actividad asignada con éxito',  'success' )
                             location.reload();        
                         })
                     }
@@ -155,6 +167,7 @@ function asignacion(identificador){
     });
 }
 function liberacion(identificador){
+    //Obtiene la cédula del empleado a liberar
     var envio={'cedulaEmp':identificador.id};
     swal({
         title: `Está seguro de liberar de sus actividades al empleado`,
@@ -173,6 +186,7 @@ function liberacion(identificador){
                 contentType:"application/json",
                 data: JSON.stringify(envio)
             }).done(function(resp){
+                //Si el empleado pudo liberarse de una actividad 
                 swal(
                     'Actividad finalizada con éxito',
                     'Empleado listo para otra actividad',
@@ -182,20 +196,9 @@ function liberacion(identificador){
             });           
         }
     })
-      /*
-    $.ajax({
-        type:"POST",
-        url:"/admin/datos-empleados",
-        dataType:"text",
-        async:false,
-        contentType:"application/json",
-        data: JSON.stringify(envio)
-    }).done(function(resp){
-
-    });
-    */
 }
 function getCedula(){
+    //Permite obtener la cédula necesaria
     var escogido=document.getElementById('selecCedula').value;
     document.getElementById('lblCedClien').value=escogido;
 }

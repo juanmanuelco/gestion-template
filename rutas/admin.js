@@ -163,9 +163,17 @@ router.get('/reportes-actividades',ensureAuthenticated,(req,res)=>{
 	})
 	
 })
-router.get('/tod-empleados',(req,res)=>{
+router.get('/tod-empleados',ensureAuthenticated,(req,res)=>{
 	E_DBF_EMPLEADO_OBJ.find().exec((err,resp)=>{
 		res.send(resp)
 	})
 })
+router.get('/correo-productos',(req,res)=>{
+	E_DBF_CLIENTE_OBJ.find().where({Tip_Cli:'Premium'}).exec(function(err,resp){
+		E_DBF_PRODUCTO_OBJ.find().where({'Exis_Prod':{$gt: 0} }).exec((e,pro)=>{
+			res.render('correo-productos',{clientes:resp,productos:pro})
+		});
+	})
+})
+
 module.exports = router;
