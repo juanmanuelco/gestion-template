@@ -207,39 +207,25 @@
                         </li>
                         {{/if}}
                         <li class="full-width divider-menu-h"></li>
+                        {{#if user.verificar}}
                         <li class="full-width">
-                            <a href="#!" class="full-width btn-subMenu">
+                            <a href="/admin/inventario" class="full-width">
                                 <div class="navLateral-body-cl">
                                     <i class="zmdi zmdi-store"></i>
                                 </div>
-                                <div class="navLateral-body-cr hide-on-tablet">
-                                    INVENTARIO</div>
-                                <span class="zmdi zmdi-chevron-left"></span>
+                                <div class="navLateral-body-cr hide-on-tablet">INVENTARIO</div>
                             </a>
-                            <ul class="full-width menu-principal sub-menu-options">
-                                {{#if user.verificar}}
-                                <li class="full-width divider-menu-h"></li>
-                                <li class="full-width">
-                                    <a href="/admin/inventario" class="full-width">
-                                        <div class="navLateral-body-cl">
-                                            <i class="zmdi zmdi-store"></i>
-                                        </div>
-                                        <div class="navLateral-body-cr hide-on-tablet">
-                                            ADMINISTRAR INVENTARIO</div>
-                                    </a>
-                                </li>
-                                {{/if}}
-                                <li class="full-width">
-                                    <a href="/admin/inventariocliente" class="full-width">
-                                        <div class="navLateral-body-cl">
-                                            <i class="zmdi zmdi-store"></i>
-                                        </div>
-                                        <div class="navLateral-body-cr hide-on-tablet">
-                                            CONSULTAR INVENTARIO</div>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+                        {{else}}
+                        <li class="full-width">
+                            <a href="/admin/inventariocliente" class="full-width">
+                                <div class="navLateral-body-cl">
+                                    <i class="zmdi zmdi-store"></i>
+                                </div>
+                                <div class="navLateral-body-cr hide-on-tablet">INVENTARIO</div>
+                            </a>
+                        </li>
+                        {{/if}}
                         <li class="full-width divider-menu-h"></li>
                         {{#if user.verificar}}
                         <li class="full-width">
