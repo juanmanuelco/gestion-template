@@ -27,6 +27,9 @@ router.post('/saveClient', ensureAuthenticated,cliente_controller.createClient)
 router.post('/editClient', ensureAuthenticated,cliente_controller.editClient)
 router.post('/deleteClient', ensureAuthenticated,cliente_controller.deleteClient)
 router.get('/tabla_cliente', ensureAuthenticated, cliente_controller.getAllClients);
+//carga las funciones del los botones 
+router.post('/deleteUsuario', ensureAuthenticated,E_DBF_USUARIO.deleteUsuario)
+router.post('/editUsuario', ensureAuthenticated,E_DBF_USUARIO.editUsuario)
 
 
 router.get('/ventas', ensureAuthenticated, function (req, res) {

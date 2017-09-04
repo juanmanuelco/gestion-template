@@ -63,3 +63,54 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	callback(null, isMatch);
 	});
 }
+//funcionn de editar usuarios
+module.exports.editUsuario=function(req,res){
+	//extrae los valores de los inputs del formulario de modificar
+    var username = req.body.username;
+    var typoUser = req.body.typoUser;
+    var pass = req.body.password;
+	if(typoUser=="Usuario Normal") {var verificar = '';}else{var verificar = 'administrador';};
+	//los guarda
+	var objeto = {
+		password: pass,
+		typoUser: typoUser,
+		verificar: verificar
+	}
+	//limpia la contrasena o la elimina para la nueva contrasena
+	if(pass && pass.trim()===""){delete objeto['password']}
+	var query = {'username':username}
+	//actualiza los datos
+	E_DBF_USUARIO.findOneAndUpdate(query,objeto, { new: false }, function (err, userUpdated) {
+		if (err) {
+			res.render('500', { error: 'Error al actualizar el cliente'})
+		} else {
+			console.log(userUpdated)
+			if (!userUpdated) {
+				res.render('404', {error: "No se ha podido actualizar el usuario (Error 404)"});
+			} else {
+				req.session['success'] = 'Usuario actualizado con exito';
+				res.redirect('administracion');
+			}
+		}
+	})
+}
+//funcion para eliminar los usuarios
+module.exports.deleteUsuario=function(req,res){
+	// es para sabir si recibe lago el body console.log(req.body)
+	//asi mismo extrae los valores
+	var username= req.body.username;
+	var query = { 'username': username };
+	//eimina al usuario dependiendo del username o el nombre de usuario
+    E_DBF_USUARIO.findOneAndRemove(query, function (err, userUpdated) {
+        if (err) {
+            res.render('500', { error: "Error al borrar el cliente" });
+        } else {
+            if (!userUpdated) {
+                res.render('500', {error: "No se ha podido borrar el cliente"});
+            } else {
+                req.session['success_client'] = 'Cliente eliminado con éxito';
+                res.redirect('administracion');
+            }
+        }
+	});
+}

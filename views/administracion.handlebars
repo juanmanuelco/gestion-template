@@ -38,7 +38,7 @@
 
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
 
-						{{#if usuarios}}{{#each usuarios}}
+				
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaAdmin">
 					<thead>
 						<tr>
@@ -47,18 +47,19 @@
 						</tr>
 					</thead>
 					<tbody>
+						{{#if usuarios}}{{#each usuarios}}
 						<tr>
 							<td class="mdl-data-table__cell--non-numeric">{{this.username}}</td>
 							<td>{{this.typoUser}}</td>
 							<td>
-									<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" validation="editUsuario" event="click"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
-									<button validation="deleteUsuario" event="click" id="borrarUsuario" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
+								<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="editarUsuario(event,this)"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
+								<button onclick="deleteUser(event,this)" id="borrarUsuario" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
 						    </td>
 						</tr>
 						
+				{{/each}}{{/if}}
 					</tbody>
 				</table>
-				{{/each}}{{/if}}
 			</div>
 			</div>
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
@@ -114,6 +115,10 @@
 				</div>
 			</div>
 	</section>
+	<script src="../modular/scripts/validacion_form.js"></script>
+	<script src="../modular/scripts/usuarios.js"></script>
+	<script src="../modular/scripts/validation.js"></script>
+	<link rel="stylesheet" href="../modular/estilos/empleados.css">
 <script type="text/javascript">
     var titulo = document.getElementById("title_static");
     if (titulo) {
