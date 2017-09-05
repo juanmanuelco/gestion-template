@@ -36,7 +36,7 @@ Funciones["cedruc"] = function (e) {
 	var cedula = this.value+""+ekey;
 	if (cedula == "") {this.parentNode.classList.remove("is-invalid"); return false;};
 	spansTextBefore[span] = span.innerHTML;
-	span.innerHTML="Cedula/Ruc no valida/o";
+	span.innerHTML="Cédula/Ruc no válida/o";
 	if (Timers[this.name]) {
 		clearTimeout(Timers[this.name]);
 	};
@@ -56,7 +56,7 @@ Funciones["cedula"] = function (e) {
 	var cedula = this.value+""+ekey;
 	if (cedula == "") {this.parentNode.classList.remove("is-invalid"); return false;};
 	spansTextBefore[span] = span.innerHTML;
-	span.innerHTML= "Cedula no válida";
+	span.innerHTML= "Cédula no válida";
 	if (Timers[this.name]) {
 	clearTimeout(Timers[this.name])
 	}
@@ -340,7 +340,7 @@ function validarnum(numero,span){
 Funciones["LibrarTarea"] = function(){
 	swal({
 		title: 'Desocupar Empleado',
-		text: "¿Estás Seguro de hacer esto?",
+		text: "¿Está Seguro de hacer esto?",
 		type: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',

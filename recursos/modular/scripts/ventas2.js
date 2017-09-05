@@ -7,8 +7,8 @@ var precio = document.getElementById('precio');
 var subtotal = 0, ultimototal = 0, suma = 0, existenciaProductoActual = 0
 var contadorProductos = 0
 var estadoBoton1 = "buscar", estadoBoton2 = "buscar"
-var numeroProd = 0
-
+var numeroProd = 0,
+IVA = document.getElementById('iva').value || 12;
 //var descuento = 5; //Valor que va a cambiar
 totalObtenido = 0, calculoDesc = 0, hayDescuento = false, hayCliente = false, nuevaCantidad = 0, cantidadFinal = 0,
 	tipoInsercion = 'Agregar', productoEncontrado = false, clienteEncontrado = false
@@ -160,7 +160,7 @@ function eliminarProducto(identificador) {// identificador 1, 2, 3, 4, etc
 function actualizarTabla() {
 	//totalObtenido = 0
 	contadorProductos = 0
-	total = 0, IVA = 12, calculoIVA = 0//Puede cambiar valor de IVA de 12
+	total = 0, calculoIVA = 0//Puede cambiar valor de IVA de 12
 	var descuento = 5
 	//	calculoDesc = 0;//En este caso esta establecido de 5%
 	tablaGernerada = ''
@@ -324,8 +324,8 @@ function printDiv() {
 	if (numeroProd == 0) {
 		mensaje += " Debe agregar al menos 1 producto para realizar la venta. "
 		faltanDatos = false
-	} if (document.getElementById("cedula").value == "") {
-		mensaje += " Especifique la cédula del cliente. "
+	} if (document.getElementById("cedula").value.trim() == "" || document.getElementById("cliente").value.trim() == "") {
+		mensaje += "No hay cliente seleccionado. "
 		faltanDatos = false
 	}
 	if (!faltanDatos) {
@@ -398,7 +398,7 @@ function printDiv() {
 
 function tablaImprimir() {
 	//totalObtenido = 0
-	total = 0, IVA = 12, calculoIVA = 0//Puede cambiar valor de IVA de 12
+	total = 0, calculoIVA = 0//Puede cambiar valor de IVA de 12
 	var descuento = 5
 	//	calculoDesc = 0;//En este caso esta establecido de 5%
 	tablaGernerada = ''

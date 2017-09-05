@@ -23,7 +23,7 @@ function ValidarDatosFormulario(formulario,formModal) {
 				 })
 				inputs[i].parentNode.classList.add("is-invalid");
 				formNoValido=true;
-				mensaje="Por favor asegúrese que no haya campos vacios";
+				mensaje="Por favor asegúrese que no haya campos vacíos";
 			}
 		};
 	};	

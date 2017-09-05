@@ -8,6 +8,7 @@ var express = require('express'),
 	E_DBF_EMPLEADO_OBJ=require('../modelos/empleados'),
 	E_DBF_USUARIO = require('../modelos/user'),
 	E_DBF_ACTIVIDADES_OBJ=require('../modelos/actividades'),
+	configuraciones = require('../controladores/configuraciones'),
 	venta_controller = require("../controladores/ventas"),//todas las funciones de venta	
 	router = express.Router(),
 	multer = require('multer');
@@ -84,7 +85,8 @@ router.get('/cliente', ensureAuthenticated, (req, res)=> {res.render('cliente');
 //router.get('/administracion', ensureAuthenticated, (req, res)=> {res.render('administracion');});
 
 //===================Configuracion===============================================//
-router.get('/configuracion', ensureAuthenticated, (req, res)=> {res.render('configuracion');});
+router.get('/configuracion', ensureAuthenticated, configuraciones.getConfig);
+router.post('/configuracion',  ensureAuthenticated, configuraciones.saveConfig);
 //===================Configuracion fin===============================================//
 //===================Empleados===============================================//
 

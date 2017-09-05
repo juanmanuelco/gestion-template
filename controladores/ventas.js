@@ -1,6 +1,7 @@
 var venta_model = require('../modelos/ventas');
 var cliente = require('../modelos/cliente');
 var productos = require('../modelos/productos');
+var config = require('../modelos/configuraciones');
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -21,13 +22,15 @@ function obtenerVistaVenta(req, res) {
 		if (err) {
 			console.log("error")
 		} else {
-			if (!total.length) {//Si no hay nada aun
-				CodVen_Vent = 1
-				res.render('ventas', { factura: CodVen_Vent })
-			} else {
-				CodVen_Vent = total.length + 1
-				res.render('ventas', { factura: CodVen_Vent })
-			}
+            config.find({},function (err,configuracion){
+                if (!total.length) {//Si no hay nada aun
+                    CodVen_Vent = 1
+                    res.render('ventas', { factura: CodVen_Vent ,config:configuracion})
+                } else {
+                    CodVen_Vent = total.length + 1
+                    res.render('ventas', { factura: CodVen_Vent,config:configuracion})
+                }
+            })
 		}
 	})
 

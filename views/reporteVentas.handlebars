@@ -11,7 +11,7 @@
                     <option value="line">Lineal</option>
                     <option value="bar">Barra</option>
                     <option value="pie">Pastel</option>
-                    <option value="polarArea">Área polar</optionz>
+                    <option value="polarArea">Área polar</option>
                 </select>
             </div>
             <div class="centrado" style="position: relative; height:430px; width:60%;margin-top:30px;" id="aCanvas">
@@ -147,4 +147,10 @@ function mostrarProductos(id) {
 
 	}
 
+</script>
+<script type="text/javascript">
+    var titulo = document.getElementById("title_static");
+    if (titulo) {
+        titulo.innerHTML = '<i class="zmdi zmdi-label"></i><span class="hide-on-tablet">&nbsp;&nbsp;REPORTES</span>'
+    };
 </script>
