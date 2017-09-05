@@ -37,24 +37,26 @@
 
 
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-
-				<div style="overflow-y:true;">
+<div style="overflow-x:auto; height:480px;">
 				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaAdmin">
 					<thead>
 						<tr>
 							<th class="mdl-data-table__cell--non-numeric">Nombre</th>
 							<th>Rol</th>
+							<th>Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
 						{{#if usuarios}}{{#each usuarios}}
 						<tr>
-							<td class="mdl-data-table__cell--non-numeric">{{this.username}}</td>
+							<td>{{this.username}}</td>
 							<td>{{this.typoUser}}</td>
 							<td>
+								<div>
 								<button title="modificar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" onclick="editarUsuario(event,this)"><i style="color:#3f51b5" class="zmdi zmdi-edit"></i></button>&nbsp;&nbsp;&nbsp;
 								<button onclick="deleteUser(event,this)" id="borrarUsuario" title="borrar" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i style="color:#B71C1C" class="zmdi zmdi-delete"></i></button>
-						    </td>
+						    	</div>
+							</td>
 						</tr>
 						
 				{{/each}}{{/if}}
@@ -69,7 +71,7 @@
 											 
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 										<label class="text-condensedLight" style="font-size:20px;">Nombre de Usuario</label>
-										<input type="text"  class="mdl-textfield__input" type="text" pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ]*(\.[0-9]+)?" name="username">
+										<input type="text"  class="mdl-textfield__input" type="text" pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ]*(\.[0-9]+)?" name="username" maxlength="25">
 										<label class="mdl-textfield__label" for="PassAdmin"></label>
 										<span class="mdl-textfield__error">Usuario No válido</span>
 						    		</div>

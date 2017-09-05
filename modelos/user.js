@@ -84,7 +84,7 @@ module.exports.editUsuario=function(req,res){
 		if (err) {
 			res.render('500', { error: 'Error al actualizar el cliente'})
 		} else {
-			console.log(userUpdated)
+			//console.log(userUpdated) para saber si recibe algo
 			if (!userUpdated) {
 				res.render('404', {error: "No se ha podido actualizar el usuario (Error 404)"});
 			} else {
