@@ -63,11 +63,7 @@
 			'</thead><tbody id="contenidoProductos">'
 
 		var idlistado = document.getElementById(id).value
-		//alert(idlistado)
-		//var BuscarProducto = document.getElementById('btnBuscarProducto')
-		//BuscarProducto.addEventListener('click', () => {
 		$.ajax({ type: "GET", url: "/admin/todas-ventas/", dataType: "json", contentType: "text/plain" }).done((datosProd) => {
-			//console.log(datosProd.ventas[0])
 			console.log(datosProd.ventas)
 			var todosproductos = 0
 			var id = idlistado;
@@ -81,8 +77,6 @@
 
 
 			for (var dato in todas) {//Recorre todas las ventas
-				//console.log(todas[dato].CodPro_Vent.idlistado)
-				//console.log(todas[dato].CodPro_Vent.productos)
 				var codigo = todas[dato].CodPro_Vent.idlistado
 
 				var contenido
@@ -92,9 +86,7 @@
 					total = todas[dato].Total_Vent
 				}
 			}
-			//console.log(codigo)
 			for (var dato in contenido) {
-				//console.log(contenido[dato])
 
 				totalPagar = parseFloat((parseFloat(contenido[dato].precio.replace(',','.')) * parseInt(contenido[dato].cantidad)))
 				tabla += '<tr><td>' + contenido[dato].codigo + '</td><td>' + contenido[dato].descripcion + '</td><td>' + contenido[dato].cantidad + '</td><td>$ '
@@ -104,16 +96,13 @@
 			}
 			var iva = parseFloat((parseFloat(subtotal) * 12) / 100)//Valor de iva puede cambiar
 			console.log(subtotal + " " + iva + " " + descuento + " " + total)
-			//tabla += '<tr><td><td/><td></td>'
+
 			tabla += '</tbody></table>'
 			tabla += '<br><label>Subtotal: $' +subtotal.toFixed(2)+' </label>'
 			tabla += '<br><label>IVA: $' +iva.toFixed(2)+' </label>'
 			tabla += '<br><label>Descuento: $' +descuento.toFixed(2)+' </label>'
 			tabla += '<br><label>Total: $' +total.toFixed(2)+' </label>'
 
-
-
-			//var html = '<table><tr><td>Esta es un tabla</td></tr></table>'
 			swal({
 				width:'900px',
 				title: 'Detalles de la Venta',
@@ -123,20 +112,6 @@
 				cancelButtonText: 'No',
 				closeOnConfirm: true
 			})
-
-
-
-
-			/*console.log(datosProd.ventas[0].CodPro_Vent.idlistado)
-			console.log(datosProd.ventas[0].CodPro_Vent.productos[0])
-			console.log(datosProd.ventas[0].CodPro_Vent.productos[1])
-			console.log(datosProd.ventas[0].CodPro_Vent.productos[2])*/
-			//alert((datosProd.ventas[0].CodPro_Vent).toString())
-			//for (var data in datosProd) {
-			//	if (idlistado == datosProd.ventas[0].CodPro_Vent.idlistado) {
-			//		alert("Existe")
-			//	}
-			//}
 
 		});
 

@@ -5,7 +5,6 @@ var codigo = document.getElementById('codigo');
 var cantidad = document.getElementById('cantidad');
 var precio = document.getElementById('precio');
 var subtotal = 0, ultimototal = 0, suma = 0, existenciaProductoActual = 0
-//var descuento = 5; //Valor que va a cambiar
 totalObtenido = 0, calculoDesc = 0, hayDescuento = false, hayCliente = false, nuevaCantidad = 0, cantidadFinal = 0,
 	tipoInsercion = 'Agregar', productoEncontrado = false, clienteEncontrado = false
 
