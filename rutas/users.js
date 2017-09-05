@@ -50,7 +50,7 @@ router.post('/administracion', function(req, res){
 			}else{
 				//crea al usuario 
 				E_DBF_USUARIO.createUser(newUser, function(err, user){
-					if(err) {throw err}
+					if(err) {throw err};
 					req.flash('success_msg', 'Ha sido registrado satisfactoriamente');
 					res.redirect('/admin/administracion');
 				});
