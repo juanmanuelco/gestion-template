@@ -14,12 +14,36 @@ module.exports.crearProduct=function(req, res){
     }}).single('image_producto');
     upload(req, res, function (err) {
         if(err){res.render('productos',{error:'Error al cargar la imagen (Error 500)'})}else{
+            var pc = req.body.PrecComp_Pro;
+            var pcArray = pc.split(",")
+            var pcFinal = pc
+            if(pcArray[1]){
+               if(pcArray[1].length==1){
+                    pcFinal = pcArray[0]+","+pcArray[1]+"0"
+                  }
+            }
+            else{
+                pcFinal=pcArray[0]+",00"
+            }
+            
+            var pv = req.body.PrecVen_Pro;
+            var pvArray = pv.split(",")
+            var pvFinal = pv
+            if(pvArray[1]){
+               if(pvArray[1].length==1){
+                    pvFinal = pvArray[0]+","+pvArray[1]+"0"
+                  }
+            }
+            else{
+                pvFinal=pvArray[0]+",00"
+            }
+            
             var nuevoP = new productos({
                 Cod_Prod: req.body.Cod_Prod,
                 Des_Prod: req.body.Des_Prod,
                 Exis_Prod: req.body.Exis_Prod,
-                PrecComp_Pro: req.body.PrecComp_Pro,
-                PrecVen_Pro: req.body.PrecVen_Pro,
+                PrecComp_Pro: pcFinal,
+                PrecVen_Pro: pvFinal,
                 Img_Prod:"../general/imagenes/productos/productos"+(req.body.Cod_Prod)+".png"
             })
             nuevoP.save(function (erro, resp) {
@@ -52,11 +76,33 @@ module.exports.editProduct=function(req, res){
     upload(req, res, function (err) {
         if(err){res.render('productos',{error:'Error al cargar la imagen (Error 500)'})}else{
             var codigoP = req.body.Cod_Prod;
+            var pc = req.body.PrecComp_Pro;
+            var pcArray = pc.split(",")
+            var pcFinal = pc
+            if(pcArray[1]){
+               if(pcArray[1].length==1){
+                    pcFinal = pcArray[0]+","+pcArray[1]+"0"
+                  }
+            }
+            else{
+                pcFinal=pcArray[0]+",00"
+            }
+            var pv = req.body.PrecVen_Pro;
+            var pvArray = pv.split(",")
+            var pvFinal = pv
+            if(pvArray[1]){
+               if(pvArray[1].length==1){
+                    pvFinal = pvArray[0]+","+pvArray[1]+"0"
+                  }
+            }
+            else{
+                pvFinal=pvArray[0]+",00"
+            }
             var objeto = {
                 Des_Prod: req.body.Des_Prod,
                 Exis_Prod: req.body.Exis_Prod,
-                PrecComp_Pro: req.body.PrecComp_Pro,
-                PrecVen_Pro: req.body.PrecVen_Pro,
+                PrecComp_Pro: pcFinal,
+                PrecVen_Pro: pvFinal,
                 Img_Prod:"../general/imagenes/productos/productos"+(req.body.Cod_Prod)+".png"
             }
             var query = { 'Cod_Prod': codigoP };

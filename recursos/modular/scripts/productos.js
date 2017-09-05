@@ -1,4 +1,3 @@
-FuncionesProducto = {}
 function alertaOferta(input, val) {
     var imagenAnterior = document.getElementById('img_destino').src;
     if ((val / 1024) > 300) {
@@ -20,9 +19,9 @@ function alertaOferta(input, val) {
     }
 }
 
-FuncionesProducto["saveProducto"] = function (e){
+function saveProducto(e,button){
     e.preventDefault();
-    var form = this.form
+    var form = button.form
     if (!form) {return false}
     var bool = ValidarDatosFormulario(form);
     if (bool){ 
@@ -41,7 +40,6 @@ FuncionesProducto["saveProducto"] = function (e){
         swal({
                 title: 'Formulario Válido',
                 type: 'success',
-                text:"Se guardarán los datos correctamente",
                 showCancelButton: true,
                 confirmButtonText: 'Ok',
                 closeOnConfirm: true
@@ -59,8 +57,9 @@ FuncionesProducto["saveProducto"] = function (e){
 }
 
 textoAnterior={}
-function validarUsuario (input) {
+function validarProducto (input) {
     var divPadre = input.parentNode
+    if  (input.value.trim()==''){return false;}
     if (divPadre.classList.contains("is-invalid")) {return false;};
     var span = divPadre.getElementsByTagName("span");
     if (span && textoAnterior[input.id] == undefined) {
@@ -73,7 +72,6 @@ function validarUsuario (input) {
     },
     function(data,status){
         if (status == "success") {
-            console.log(data)
             if (data.length >= 1) {
                 span[0].innerHTML = "El producto con este código ya está registrado en la base de datos";
                 divPadre.classList.add("is-invalid")
@@ -91,70 +89,68 @@ function validarUsuario (input) {
 }
 
 
+function deleteProduct (e,button) {
+    var divpadre = button.parentNode.parentNode;
+    var divButton = divpadre.parentNode
+    var datos = divButton.parentNode.getElementsByTagName("td")
+    var infoHTML = '<form id="deleteForm" action="/admin/eliminarProducto" method="post"><label>Código: '+datos[0].innerHTML+
+    '</label><br><label>Descripción: '+datos[1].innerHTML+'</label>';
+    infoHTML+='<input type="hidden" name="Cod_Prod" id="Cod_Prod" type="number" value="'+
+    datos[0].innerHTML+'" readonly="readonly"><input type="hidden" value="Eliminar" name="accion" id="accion"></form>';
+    $.post("/admin/getProducts",
+    {
+        Cod_Prod: datos[0].innerHTML,
+    },
+    function(data,status){
+        if (status == "success") {
+            if (data.length >= 1) {
+                if (data[0].Exis_Prod > 0){
+                    swal({
+                        title: 'No se puede eliminar este producto, por que aun está en stock',
+                        type: 'warning',
+                        confirmButtonText: 'Ok',
+                        closeOnConfirm: true
+                  })
+                }
+                else{
+                    swal({
+                        title: '¿Seguro que desea eliminar los datos de este Producto?',
+                        html: infoHTML,
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si'
 
-FuncionesProducto["deleteProduct"] = function () {
-
-        var divpadre = this.parentNode.parentNode;
-        var divButton = divpadre.parentNode
-        var datos = divButton.parentNode.getElementsByTagName("td")
-        var infoHTML = '<form id="deleteForm" action="/admin/eliminarProducto" method="post"><label>Código: '+datos[0].innerHTML+
-        '</label><br><label>Descripción: '+datos[1].innerHTML+'</label>';
-        infoHTML+='<input type="hidden" name="Cod_Prod" id="Cod_Prod" type="number" value="'+
-        datos[0].innerHTML+'" readonly="readonly"><input type="hidden" value="Eliminar" name="accion" id="accion"></form>';
-        $.post("/admin/getProducts",
-        {
-            Cod_Prod: datos[0].innerHTML,
-        },
-        function(data,status){
-            if (status == "success") {
-                if (data.length >= 1) {
-                    if (data[0].Exis_Prod > 0){
-                        swal({
-                            title: 'No se puede eliminar este producto, por que aun está en stock',
-                            type: 'warning',
-                            confirmButtonText: 'Ok',
-                            closeOnConfirm: true
-                      })
-                    }
-                    else{
-                        swal({
-                            title: '¿Seguro que desea eliminar los datos de este Producto?',
-                            html: infoHTML,
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Si'
-                    
-                      },
-                      function(isConfirm) {
-                            if (isConfirm) {
-                                var divs = document.getElementsByTagName("div")
-                                    var form;
-                                    for (var i = 0; i < divs.length; i++) {
-                                        if (divs[i].className=="sweet-content") {
-                                            if (divs[i].firstChild.id=="deleteForm") {
-                                                form=divs[i].firstChild;
-                                                break;
-                                            };
+                  },
+                  function(isConfirm) {
+                        if (isConfirm) {
+                            var divs = document.getElementsByTagName("div")
+                                var form;
+                                for (var i = 0; i < divs.length; i++) {
+                                    if (divs[i].className=="sweet-content") {
+                                        if (divs[i].firstChild.id=="deleteForm") {
+                                            form=divs[i].firstChild;
+                                            break;
                                         };
                                     };
-                                if (form) {
-                                    document.body.appendChild(form);
-                                    form.submit()
                                 };
-                            }
-                      });
-                    }
+                            if (form) {
+                                document.body.appendChild(form);
+                                form.submit()
+                            };
+                        }
+                  });
                 }
             }
-        });
-        
-         
-    }
+        }
+    });
+
+
+}
     
     
 // //modal editar producto
-FuncionesProducto["editProducto"] = function () {
-    var divpadre = this.parentNode.parentNode
+function editProducto (e,button) {
+    var divpadre = button.parentNode.parentNode
     var divButton = divpadre.parentNode
     var datos = divButton.parentNode.getElementsByTagName("td")
     var formhtml = '<form id="editForm" style="text-align: left;"  enctype="multipart/form-data" action="/admin/editarProducto?Cod_Prod='+datos[0].innerHTML+'" method="post">'+
@@ -186,13 +182,13 @@ FuncionesProducto["editProducto"] = function () {
         '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Descripción</label>'+
-                '<input class="mdl-textfield__input" type="text" id="Des_Prod" name="Des_Prod" EnterNext="true" idNext="Exis_Prod" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'" requerido>'+
+                '<input class="mdl-textfield__input" type="text" id="Des_Prod" name="Des_Prod" EnterNext="true" idNext="Exis_Prod" soloLetras="true" maxlength="100" value="'+datos[1].innerHTML+'" maxlength="60" requerido>'+
                 '<label class="mdl-textfield__label" for="Des_Prod" ></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Solo se permite caracteres de la a a la z con tildes y espacios</span>'+
             '</div>'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Existencia</label>'+
-                '<input class="mdl-textfield__input" type="text" id="Exis_Prod" value="'+datos[2].innerHTML+'" name="Exis_Prod" solonum="true" EnterNext="true" idNext="PrecComp_Pro" maxlength="10" requerido>'+
+                '<input class="mdl-textfield__input" type="text" id="Exis_Prod" value="'+datos[2].innerHTML+'" name="Exis_Prod" solonum="true" EnterNext="true" idNext="PrecComp_Pro" maxlength="5" comprobarExistencia requerido>'+
                 '<label class="mdl-textfield__label" for="Exis_Prod"></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+
@@ -200,13 +196,13 @@ FuncionesProducto["editProducto"] = function () {
         '<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">'+
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Precio de Compra</label>'+
-                '<input class="mdl-textfield__input" type="text" id="PrecComp_Pro" value="'+datos[3].innerHTML+'" name="PrecComp_Pro" solodecimal="true" EnterNext="true" idNext="PrecVen_Pro" maxlength="10" requerido>'+
+                '<input class="mdl-textfield__input" type="text" id="PrecComp_Pro" value="'+datos[3].innerHTML+'" name="PrecComp_Pro" solodecimal="true" EnterNext="true" idNext="PrecVen_Pro" maxlength="7" requerido>'+
                 '<label class="mdl-textfield__label" for="PrecComp_Pro"></label>'+
                 '<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+  
             '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
                 '<label class="text-condensedLight" style="font-size:20px;">Precio de Venta</label>'+
-                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="10" onblur="validarPrecioVenta()" requerido>'+
+                '<input class="mdl-textfield__input" type="text" id="PrecVen_Pro" value="'+datos[4].innerHTML+'" name="PrecVen_Pro" solodecimal="true" maxlength="7" requerido>'+
                 '<label class="mdl-textfield__label" for="PrecVen_Pro"></label>'+
                 '<span class="mdl-textfield__error" id="mensajePV" style="font-weight: bold;font-size:14px;">Ingrese solo números</span>'+
             '</div>'+  
@@ -259,16 +255,24 @@ FuncionesProducto["editProducto"] = function () {
 
     setTimeout(function (a){
             Funciones.init();
+            var inputs = document.getElementsByTagName("input")
+            for (var a = 0; a < inputs.length; a++){
+                if(inputs[a].getAttribute('comprobarExistencia')!=null){
+                    inputs[a].addEventListener("blur",function(){
+                        comprobarExistencia(this,true)
+                    },false)
+                }
+            }
         },200);
 }
 
 
-FuncionesProducto["infoProductos"] = function (argument) {
-    var divpadre = this.parentNode.parentNode
+function infoProductos (e,button) {
+    var divpadre = button.parentNode.parentNode
     var divButton = divpadre.parentNode
     var datos = divButton.parentNode.getElementsByTagName("td")
     var textHTML='<div id="poder" style="display: block; left: 80%; position: absolute; margin:0 auto">'+
-        '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
+    '<img style="" src="'+datos[0].id+'" height="102px" width="102px" id="img_destino">'+
     '</div>'+
     '<br>'+
     '<br>'+
@@ -295,70 +299,7 @@ FuncionesProducto["infoProductos"] = function (argument) {
       closeOnConfirm: true
     });
 } 
-    //funcion inicializacion pensada para poder ser llamada en el caso de que se genere nuevos elementos html 
-//desde javascript
-FuncionesProducto["init"] = function (argument) {
-    // se a cambiado la forma de obtener los elementos del html
-    // en este caso se recorre por tipo de elemento ya que lo anterior no identificaba los buttons que estaban
-    // dentro de tablas como en el inentario
-    // se define la variable elements donde se guardaran todos los elementos
-    var elements=[]
-    // se define los elementos a buscar por medio del tagname
-    var inputs = document.getElementsByTagName("input");
-    var button = document.getElementsByTagName("button");
-    var divs = document.getElementsByTagName("div");
-    // con los for se recorren y se insertan en el arrat "elements"
-    for (var i = 0; i < inputs.length; i++) {elements.push(inputs[i])};
-    for (var i = 0; i < button.length; i++) {elements.push(button[i])};
-    for (var i = 0; i < divs.length; i++) {elements.push(divs[i])};
-    // con este for recorremos todos los elementos guardados en busca de la validacion y evento
-    for (var i = 0; i < elements.length; i++) {
-    var atributo = elements[i].getAttribute("validation") || false;
 
-        //Validacion de atributos solonum y solodecimal, por si se quiere usar estas 2 
-        //funcionesProducto mientras se usa otra como por ejemplo cedula
-        var solonum = elements[i].getAttribute("solonum") || false;
-        if (solonum) {
-            elements[i].addEventListener("keypress",FuncionesProducto["NumeroEntero"])
-            elements[i].addEventListener("keyup",FuncionesProducto["NumeroEntero"])
-        };
-        var solodecimal = elements[i].getAttribute("solodecimal") || false;
-        if (solodecimal) {
-            elements[i].addEventListener("keypress",FuncionesProducto["NumDecimal"])
-            elements[i].addEventListener("keyup",FuncionesProducto["NumDecimal"])
-        };
-        var soloLetras = elements[i].getAttribute("soloLetras") || false;
-        if (soloLetras) {
-            elements[i].addEventListener("keypress",FuncionesProducto["soloLetras"])
-            elements[i].addEventListener("keyup",FuncionesProducto["soloLetras"])
-            elements[i].addEventListener("blur",FuncionesProducto["soloLetras"])
-        };
-        var EnterNext = elements[i].getAttribute("EnterNext") || false;
-        if (EnterNext) {elements[i].addEventListener("keyup",FuncionesProducto["EnterNext"])};
-
-        if ( atributo && FuncionesProducto[atributo] ){
-            var evento = elements[i].getAttribute("event") || false;
-            //modificacion del codigo para poder agregar más de 1 evento a las funcionesProducto
-            if (evento) {
-                var arrayEvent = evento.split(",")
-                if (arrayEvent.length > 1) {
-                    for (var i = 0; i < arrayEvent.length; i++) {
-                        elements[i].addEventListener(arrayEvent[i],FuncionesProducto[atributo]);
-                    };
-                }
-                else{
-                    elements[i].addEventListener(evento,FuncionesProducto[atributo]);
-                }
-            }
-            elements[i].addEventListener("change",FuncionesProducto[atributo]);
-            /*elements[i].addEventListener("paste", function (e) {
-                e.preventDefault();
-                return false;
-            });*/
-        }
-    }
-}
-FuncionesProducto.init();
 
 function validarPrecioVenta() {
     validacion = true
@@ -369,7 +310,6 @@ function validarPrecioVenta() {
     pc = pc.replace(",", ".")
     pc = parseFloat(pc)
     if (pv<pc) {validacion=false;}
-    
     if (!validacion) {
         var pv = document.getElementById("PrecVen_Pro")
         span = pv.parentNode.getElementsByTagName("span")
@@ -378,4 +318,26 @@ function validarPrecioVenta() {
         return false;
     };
     return true;
+}
+
+function comprobarExistencia(input,edicion){
+    var array = input.value.split(".")
+    var array2 = input.value.split(",")
+    if ((array.length>1 || array2.length>1) && (parseInt(array[0]) && parseInt(array2[0]))){
+        span = input.parentNode.getElementsByTagName("span")
+        if (span && span[0]) {span[0].innerHTML="No puede ingresar valores decimales en este campo"};
+        input.parentNode.classList.add("is-invalid");
+        return false;
+    }
+    var existencia = parseInt(input.value) || 0;
+    var minimo = 1
+    if(edicion){
+        minimo = 0;
+    }
+    if(existencia < minimo){
+        span = input.parentNode.getElementsByTagName("span")
+        if (span && span[0]) {span[0].innerHTML="La existencia no puede ser menor a "+minimo};
+        input.parentNode.classList.add("is-invalid");
+        return false;
+    }
 }
