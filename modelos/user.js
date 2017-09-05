@@ -68,31 +68,42 @@ module.exports.editUsuario=function(req,res){
 	//extrae los valores de los inputs del formulario de modificar
     var username = req.body.username;
     var typoUser = req.body.typoUser;
-    var pass = req.body.password;
+	var password = req.body.password;
 	if(typoUser=="Usuario Normal") {var verificar = '';}else{var verificar = 'administrador';};
-	//los guarda
-	var objeto = {
-		password: pass,
-		typoUser: typoUser,
-		verificar: verificar
-	}
-	//limpia la contrasena o la elimina para la nueva contrasena
-	if(pass && pass.trim()===""){delete objeto['password']}
-	var query = {'username':username}
-	//actualiza los datos
-	E_DBF_USUARIO.findOneAndUpdate(query,objeto, { new: false }, function (err, userUpdated) {
-		if (err) {
-			res.render('500', { error: 'Error al actualizar el cliente'})
-		} else {
-			//console.log(userUpdated) para saber si recibe algo
-			if (!userUpdated) {
-				res.render('404', {error: "No se ha podido actualizar el usuario (Error 404)"});
-			} else {
-				req.session['success'] = 'Usuario actualizado con exito';
-				res.redirect('administracion');
+	//encriptacion de la contraseña ya que el sistema funciona con la contraseña encriptada
+	bcrypt.genSalt(10,function(err,salt){
+		bcrypt.hash(password,salt,function(err,hash){
+			//contraseña encriptada
+			password=hash;
+			//console.log(password);
+			//los guarda
+			var objeto = {
+				password: password,
+				typoUser: typoUser,
+				verificar: verificar
 			}
-		}
+			//limpia la contrasena o la elimina para la nueva contrasena
+			if(password && password.trim()===""){delete (objeto['password'])}
+			//console.log(password);
+			var query = {'username':username}
+			//actualiza los datos
+			E_DBF_USUARIO.findOneAndUpdate(query,objeto, { new: false }, function (err, userUpdated) {
+				//console.log(userUpdated['password'])
+				if (err) {
+					res.render('500', { error: 'Error al actualizar el cliente'})
+				} else {
+					//console.log(userUpdated); //para saber si recibe algo
+					if (!userUpdated) {
+						res.render('404', {error: "No se ha podido actualizar el usuario (Error 404)"});
+					} else {
+						req.session['success'] = 'Usuario actualizado con exito';
+						res.redirect('administracion');
+					}
+				}
+			})
+		})
 	})
+	
 }
 //funcion para eliminar los usuarios
 module.exports.deleteUsuario=function(req,res){
