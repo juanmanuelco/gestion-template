@@ -1,0 +1,18 @@
+
+@media print {
+  #paraImprimir{
+    background-color: red;
+  }
+}
+
+@media screen {
+  #paraImprimir{
+    background-color: red;
+  }
+}
+
+
+
+
+
+

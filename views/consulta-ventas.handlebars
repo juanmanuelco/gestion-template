@@ -1,0 +1,152 @@
+<section class="full-width pageContent">
+	{{#if success_msg}}
+	<div class="alert alert-success">{{success_msg}}</div>{{/if}} {{#if error}}
+	<div class="alert alert-danger">{{error}}</div>{{/if}}
+	<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+		<label class="mdl-button mdl-js-button mdl-button--icon" for="searchPayment">
+											<i class="zmdi zmdi-search"></i>
+										</label>
+		<div class="mdl-textfield__expandable-holder">
+			<input class="mdl-textfield__input" type="text" id="searchPayment" validation="buscarTabla" event="keyup" TablaID="tablaProduct"
+			 datos="0,1" placeholder=" Buscar">
+			<label class="mdl-textfield__label"></label>
+		</div>
+		<a href="/admin/ventas" title="Registrar nuevo Cliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5;position:absolute; right: 5%;">Nuevo Registro</a>
+	</div>
+	<div class="full-width divider-menu-h"></div>
+	<div class="mdl-grid" align="center">
+		<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+			<div style="overflow-x:auto;height:510px;">
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaProduct">
+					<thead>
+						<tr>
+							<th>Código de la Factura</th>
+							<th>Fecha de Venta</th>
+							<th>Cédula Cliente</th>
+							<th>Cliente</th>
+							<th>Productos</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody id="contenidoTabla">
+						{{#if ventas}}{{#each ventas}}
+						<tr>
+							<td>{{this.CodVen_Vent}}</td>
+							<td>{{this.Fech_Vent}}</td>
+							<td>{{this.Ced_Vent}}</td>
+							<td>{{this.NomCli_Vent}}</td>
+							<td>
+								<div>
+									<center>
+										<button id="{{this.CodVen_Vent}}" name="" value="{{this.CodPro_Vent.idlistado }}" onclick="mostrarProductos({{this.CodVen_Vent}})"
+										 title="Ver Productos de la Venta" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+											<i style="color:#3F9735" class="zmdi zmdi-shopping-cart"></i>
+										</button>
+									</center>
+								</div>
+							</td>
+							<td>{{this.Total_Vent}}</td>
+						</tr>
+						{{/each}}{{/if}}
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	function mostrarProductos(id) {
+		var tabla = '<br><table width="50%" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaProduct">' +
+			'<thead><tr><th>Código del producto</th><th>Descripción</th><th>Cantidad</th><th>Precio</th><th>Valor a pagar</th></tr>' +
+			'</thead><tbody id="contenidoProductos">'
+
+		var idlistado = document.getElementById(id).value
+		//alert(idlistado)
+		//var BuscarProducto = document.getElementById('btnBuscarProducto')
+		//BuscarProducto.addEventListener('click', () => {
+		$.ajax({ type: "GET", url: "/admin/todas-ventas/", dataType: "json", contentType: "text/plain" }).done((datosProd) => {
+			//console.log(datosProd.ventas[0])
+			console.log(datosProd.ventas)
+			var todosproductos = 0
+			var id = idlistado;
+			var todas = datosProd.ventas
+			/////////////DATOS DE LA FACTURA/////////////////
+			var subtotal = 0, totalPsgar = 0
+
+			var total = 0
+			var descuento = 0
+			/////////////////////////////////////////
+
+
+			for (var dato in todas) {//Recorre todas las ventas
+				//console.log(todas[dato].CodPro_Vent.idlistado)
+				//console.log(todas[dato].CodPro_Vent.productos)
+				var codigo = todas[dato].CodPro_Vent.idlistado
+
+				var contenido
+				if (codigo == id) {
+					contenido = todas[dato].CodPro_Vent.productos
+					descuento = todas[dato].Desc_Vent
+					total = todas[dato].Total_Vent
+				}
+			}
+			//console.log(codigo)
+			for (var dato in contenido) {
+				//console.log(contenido[dato])
+
+				totalPagar = parseFloat((parseFloat(contenido[dato].precio.replace(',','.')) * parseInt(contenido[dato].cantidad)))
+				tabla += '<tr><td>' + contenido[dato].codigo + '</td><td>' + contenido[dato].descripcion + '</td><td>' + contenido[dato].cantidad + '</td><td>$ '
+					+ contenido[dato].precio + '</td><td>$ ' + totalPagar.toFixed(2) + '</td></tr>'
+				subtotal += totalPagar
+				console.log("Datos "+contenido[dato].precio+ " "+ contenido[dato].cantidad)
+			}
+			var iva = parseFloat((parseFloat(subtotal) * 12) / 100)//Valor de iva puede cambiar
+			console.log(subtotal + " " + iva + " " + descuento + " " + total)
+			//tabla += '<tr><td><td/><td></td>'
+			tabla += '</tbody></table>'
+			tabla += '<br><label>Subtotal: $' +subtotal.toFixed(2)+' </label>'
+			tabla += '<br><label>IVA: $' +iva.toFixed(2)+' </label>'
+			tabla += '<br><label>Descuento: $' +descuento.toFixed(2)+' </label>'
+			tabla += '<br><label>Total: $' +total.toFixed(2)+' </label>'
+
+
+
+			//var html = '<table><tr><td>Esta es un tabla</td></tr></table>'
+			swal({
+				width:'900px',
+				title: 'Detalles de la Venta',
+				html: tabla,
+				showCancelButton: false,
+				confirmButtonText: 'Salir',
+				cancelButtonText: 'No',
+				closeOnConfirm: true
+			})
+
+
+
+
+			/*console.log(datosProd.ventas[0].CodPro_Vent.idlistado)
+			console.log(datosProd.ventas[0].CodPro_Vent.productos[0])
+			console.log(datosProd.ventas[0].CodPro_Vent.productos[1])
+			console.log(datosProd.ventas[0].CodPro_Vent.productos[2])*/
+			//alert((datosProd.ventas[0].CodPro_Vent).toString())
+			//for (var data in datosProd) {
+			//	if (idlistado == datosProd.ventas[0].CodPro_Vent.idlistado) {
+			//		alert("Existe")
+			//	}
+			//}
+
+		});
+
+	}
+
+</script>
+
+<script src="../modular/scripts/validacion_form.js"></script>
+<script src="../modular/scripts/indentificaciones.js"></script>
+<script src="../modular/scripts/validacionPrecios.js"></script>
+<script src="../modular/scripts/validation.js"></script>
+<script src="../modular/scripts/productos.js"></script>>
+<link rel="stylesheet" href="../modular/estilos/empleados.css">

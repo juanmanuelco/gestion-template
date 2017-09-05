@@ -3,6 +3,7 @@ var express = require('express'),
 var venta_model = require("../modelos/ventas"),
 	E_DBF_PRODUCTO_OBJ = require('../modelos/productos'),
 	E_DBF_EMPLEADO_OBJ = require('../modelos/empleados'),
+	E_DBF_VENTAS_OBJ = require('../modelos/ventas'),
 	E_DBF_USUARIO = require('../modelos/user')
 	E_DBF_CLIENTE_OBJ=require('../modelos/cliente');
 
@@ -23,12 +24,15 @@ router.get('/',ensureAuthenticated, function(req,res){
 		E_DBF_EMPLEADO_OBJ.find().count().exec(function(e,empleados){
 			E_DBF_CLIENTE_OBJ.find().count().exec(function(e,clientes){
 				E_DBF_USUARIO.find().count().exec(function(e,usuarios){
-					res.render('index',{
-						Cant_productos:productos,
-						Cant_empleados:empleados,
-						Cant_clientes:clientes,
-						Cant_usuarios:usuarios
-					})
+                    E_DBF_VENTAS_OBJ.find().count().exec(function(e,ventas){
+                      res.render('index',{
+                            Cant_productos:productos,
+                            Cant_empleados:empleados,
+                            Cant_clientes:clientes,
+                            Cant_usuarios:usuarios,
+                            Cant_ventas:ventas
+                        })  
+                    })
 				});
 			});
 		})

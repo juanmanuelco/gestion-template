@@ -1,0 +1,150 @@
+<section class="full-width pageContent" id="reportePDF">
+    <script src="../modular/scripts/Chart.js"></script>
+    <div class="row">
+        <h1 style="text-align:Center">Reporte de Ventas</h1>
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-lg-10 col-md-10" style="height: 100%; overflow-y: scroll;" id="parImp">
+            <div class="form-group" id="selector">
+                <label for="selectForma">Vista</label>
+                <select name="" id="selectForma" class="form-control" onchange="javascript:obtenerVista()">
+                    <option value="doughnut">Dona</option>
+                    <option value="line">Lineal</option>
+                    <option value="bar">Barra</option>
+                    <option value="pie">Pastel</option>
+                    <option value="polarArea">Área polar</optionz>
+                </select>
+            </div>
+            <div class="centrado" style="position: relative; height:430px; width:60%;margin-top:30px;" id="aCanvas">
+                <canvas id="grafico"></canvas>
+
+            </div>
+            <br><br><br>
+            <!--<div class="table" style="margin-top:30px;position: relative">
+                <h2 style="text-align:center">Ventas</h2>
+
+                <table class="table" style="">
+                    <tr>
+                        <th title="Código de la Factura">Código de la Venta</th>
+                        <th title="Fecha de Venta">Fecha de Venta</th>
+                        <th title="Cédula Cliente">Cédula Cliente</th>
+                        <th title="Cliente">Cliente</th>
+                        <th title="Productos">Productos</th>
+                        <th title="Total">Total</th>
+                    </tr>
+                    {{#if ventas}} {{#each ventas}}
+                    <tr>
+                        <td>{{this.CodVen_Vent}}</td>
+                        <td>{{this.Fech_Vent}}</td>
+                        <td>{{this.Ced_Vent}}</td>
+                        <td>{{this.NomCli_Vent}}</td>
+                        <td>
+                            <div>
+                                <center>
+                                    <button id="{{this.CodVen_Vent}}" name="" value="{{this.CodPro_Vent.idlistado }}"  onclick="mostrarProductos({{this.CodVen_Vent}})"
+                                        title="Ver Productos de la Venta" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+											<i style="color:#3F9735" class="zmdi zmdi-shopping-cart"></i>
+										</button>
+                                </center>
+                            </div>
+                        </td>
+                        <td>{{this.Total_Vent}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr id="botonImpr">
+                        <td colspan="5"></td>
+                        <td><button class="btn btn-primary" onclick="PrintPDF()">Imprimir reporte</button> </td>
+                    </tr>
+                    <tr id="botonVolver" style="display:none">
+                        <td colspan="5"></td>
+                        <td><button class="btn btn-primary" onclick="javascript:location.reload()">Cerrar vista de impresión</button>                            </td>
+                    </tr>
+                    {{/if}}
+
+                </table>
+                <div style="height:30px"></div>
+            </div>-->
+
+        </div>
+        <div class="col-lg-1 col-md-1"></div>
+    </div>
+</section>
+<script src="../modular/scripts/reportesVentas.js"></script>
+<script>
+    window.addEventListener('load', () => {
+        mostrarGrafico('doughnut', 'grafico');
+    })
+    function obtenerVista() {
+        document.getElementById('aCanvas').innerHTML = '<canvas id="grafico" width="100" height="100"></canvas>   '
+        var modo = document.getElementById('selectForma').value;
+        mostrarGrafico(modo, 'grafico')
+    }
+    function PrintPDF() {
+        $('#reportePDF').removeClass("full-width");
+        $('#reportePDF').removeClass("pageContent");
+        $('#aCanvas').removeClass("centrado");
+        document.getElementById('selector').style.display = 'none'
+        document.getElementById('NavPrincipal').style.display = 'none';
+        document.getElementById('lateralGeneral').style.display = 'none'
+        document.getElementById('botonImpr').style.display = 'none'
+        window.print();
+        document.getElementById('botonVolver').style.display = 'block'
+    }
+
+
+function mostrarProductos(id) {
+		var tabla = '<br><table width="50%" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tablaProduct">' +
+			'<thead><tr><th>Código del producto</th><th>Descripción</th><th>Cantidad</th><th>Precio</th><th>Valor a pagar</th></tr>' +
+			'</thead><tbody id="contenidoProductos">'
+
+		var idlistado = document.getElementById(id).value
+		//alert(idlistado)
+		//var BuscarProducto = document.getElementById('btnBuscarProducto')
+		//BuscarProducto.addEventListener('click', () => {
+		$.ajax({ type: "GET", url: "/admin/todas-ventas/", dataType: "json", contentType: "text/plain" }).done((datosProd) => {
+			//console.log(datosProd.ventas[0])
+			console.log(datosProd.ventas)
+			var todosproductos = 0
+			var id = idlistado;
+			var todas = datosProd.ventas
+			/////////////DATOS DE LA FACTURA/////////////////
+			var subtotal = 0, totalPsgar = 0
+			var total = 0
+			var descuento = 0
+			/////////////////////////////////////////
+			for (var dato in todas) {//Recorre todas las ventas
+				var codigo = todas[dato].CodPro_Vent.idlistado
+
+				var contenido
+				if (codigo == id) {
+					contenido = todas[dato].CodPro_Vent.productos
+					descuento = todas[dato].Desc_Vent
+					total = todas[dato].Total_Vent
+				}
+			}
+			for (var dato in contenido) {
+				totalPagar = parseFloat((parseFloat(contenido[dato].precio) * parseFloat(contenido[dato].cantidad)))
+				tabla += '<tr><td>' + contenido[dato].codigo + '</td><td>' + contenido[dato].descripcion + '</td><td>' + contenido[dato].cantidad + '</td><td>$ '
+					+ contenido[dato].precio + '</td><td>$ ' + totalPagar + '</td></tr>'
+				subtotal += totalPagar
+			}
+			var iva = parseFloat((parseFloat(subtotal) * 12) / 100)//Valor de iva puede cambiar
+			console.log(subtotal + " " + iva + " " + descuento + " " + total)
+			tabla += '</tbody></table>'
+			tabla += '<br><label>Subtotal: $' +subtotal+' </label>'
+			tabla += '<br><label>IVA: $' +iva+' </label>'
+			tabla += '<br><label>Descuento: $' +descuento+' </label>'
+			tabla += '<br><label>Total: $' +total+' </label>'
+			swal({
+				width:'900px',
+				title: 'Detalles de la Venta',
+				html: tabla,
+				showCancelButton: false,
+				confirmButtonText: 'Salir',
+				cancelButtonText: 'No',
+				closeOnConfirm: true
+			})
+		});
+
+	}
+
+</script>

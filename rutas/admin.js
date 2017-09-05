@@ -31,31 +31,16 @@ router.get('/tabla_cliente', ensureAuthenticated, cliente_controller.getAllClien
 router.post('/deleteUsuario', ensureAuthenticated,E_DBF_USUARIO.deleteUsuario)
 router.post('/editUsuario', ensureAuthenticated,E_DBF_USUARIO.editUsuario)
 
+///Rutas Ventas
+router.get('/ventas', ensureAuthenticated, venta_controller.obtenerVistaVenta);
+router.get('/consulta-ventas', ensureAuthenticated, venta_controller.obtenerVistaConsultaVentas);
+router.get('/todas-ventas', venta_controller.consultarVentas);
+router.get('/buscar/:cedula', ensureAuthenticated, venta_controller.busquedaCliente);
+router.get('/buscarprod/:codigo', ensureAuthenticated, venta_controller.busquedaProducto);
+router.post('/ventas', venta_controller.registrarVenta);
+router.get('/reportes-ventas',ensureAuthenticated, venta_controller.vistaReporteVentas);
+//router.get('/buscar-prod-ventas/:idlistado', ensureAuthenticated, venta_controller.consultarProductosVentas);
 
-router.get('/ventas', ensureAuthenticated, function (req, res) {
-	//res.render('ventas');
-	res.render('ventas', { incrementar: "00001" })
-});
-
-router.post('/ventas', ensureAuthenticated, function (req, res) {
-	var params = req.body;
-	var nuevaVenta = new venta_model({
-		CodVen_Vent: params.codigo_venta,
-		Ced_Vent: params.cedula,
-		Fech_Vent: params.fecha,
-		CodPro_Vent: params.codigo_producto,
-		Desc_Vent: params.descuento
-	})
-	nuevaVenta.save(function (error, resp) {
-		if (error) {
-			res.render('500', { error: error })
-			console.log("Error");
-		} else {
-			res.render('ventas', { success_msg: 'Guardado' })
-			console.log("Guardado");
-		}
-	})
-})
 
 //===================Productos===============================================//
 

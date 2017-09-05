@@ -1,146 +1,146 @@
-<section class="full-width pageContent">
-	<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-		<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
-			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-					<div class="full-width panel mdl-shadow--2dp">
-						<div class="full-width panel-tittle bg-primary text-center tittles">
-							Ventas de Productos
-						</div>
-						<div class="full-width panel-content">
-							<!--<form action="/admin/ventas" method="post">-->
-							<form action=""></form>
-							<br>
-							<center>
-								<label class="text-condensedLight" style="font-size:17px;">Factura N°  :  {{datos.numero}}</label><br>
-								<label onload="obtenerFecha()" class="text-condensedLight" style="font-size:17px;" id="fecha"></label><br>
-							</center><br>
-							<div class="mdl-grid">
-								<!--<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--6-col-tablet mdl-cell--4-col-desktop">-->
-								<!-- ------------------------------------------------------------------------------------ --->
-								<div style="width:20%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<label class="text-condensedLight" style="font-size:17px;">Cédula del Cliente</label>
-									<input value="" name="cedula" class="mdl-textfield__input" type="text" id="cedula" solonum="true" maxlength="13" validation="cedruc" event="keyup" >
-									<label class="mdl-textfield__label" for="phoneAdmin"></label>
-									<span class="mdl-textfield__error">Cédula inválida</span>
-								</div>
-								<div style="width:13%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<button id="btnBuscarCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Buscar</button>
-								</div>
-								<div style="width:67%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<label class="text-condensedLight" style="font-size:17px;">Nombre del Cliente</label>
-									<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="emailAdmin">
-									<label class="mdl-textfield__label" for="emailAdmin"></label>
-									<span class="mdl-textfield__error">Correo Invalido</span>
-								</div>
-								<!-- ------------------------------------------------------------------------------------ --->
-								<div style="width:20%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<label class="text-condensedLight" style="font-size:17px;">Código del Producto</label>
-									<input value="" name="cedula"  class="mdl-textfield__input" type="text" id="codigo" solonum="true" maxlength="6">
-									<label class="mdl-textfield__label" for="phoneAdmin"></label>
-									<span class="mdl-textfield__error">Cédula inválida</span>
-								</div>
-								<div style="width:13%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<button id="btnBuscarProducto" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Buscar</button>
-								</div>
-								<div style="width:33%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<label class="text-condensedLight" style="font-size:17px;">Descripcion</label>
-									<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="descripcion">
-									<label class="mdl-textfield__label" for="emailAdmin"></label>
-									<span class="mdl-textfield__error">Correo Invalido</span>
-								</div>
-								<div style="width:17%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<label class="text-condensedLight" style="font-size:17px;">Precio</label>
-									<input value="{{cliente.nombre}}" readonly="true"  class="mdl-textfield__input" type="email" id="precio">
-									<label class="mdl-textfield__label" for="emailAdmin"></label>
-									<span class="mdl-textfield__error">Correo Invalido</span>
-								</div>
-								<div style="width:17%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<label class="text-condensedLight" style="font-size:17px;">Cantidad</label>
-									<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="text" id="cantidad" solonum="true" maxlength="3">
-									<label class="mdl-textfield__label" for="emailAdmin"></label>
-									<span class="mdl-textfield__error">No válido</span>
-								</div>
-								<!-- ------------------------------------------------------------------------------------ --->
-								<!--</div>-->
-								<!--<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<!--<input name="fecha" class="mdl-textfield__input" type="text" id="NameAdmin">-------------ocultar este
-										<label class="mdl-textfield__label" for="NameAdmin"></label>
-										<span class="mdl-textfield__error">Nombre invalido</span>
-									</div>
-									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+<section class="full-width pageContent" id="todo" style="display:block;">
+	<div id="vista" style="display:block;">
+		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+						<div class="full-width panel mdl-shadow--2dp">
+							<div class="full-width panel-tittle bg-primary text-center tittles">
+								Ventas de Productos
+							</div>
+							<div> 
+								<a href="/admin/consulta-ventas" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:left;">Ver Ventas Realizadas</a>
+							</div><br>
+							<div class="full-width panel-content">
+								<!--<form action="/admin/ventas" method="post">-->
+								<form action=""></form>
+								<br>
+								<center>
+									<label class="text-condensedLight" style="font-size:17px;">Factura N°  :  {{factura}}</label><br>
+									<label onload="obtenerFecha()" class="text-condensedLight" style="font-size:17px;" id="fecha"></label><br>
+								</center><br>
+								<div class="mdl-grid">
+									<!--<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--6-col-tablet mdl-cell--4-col-desktop">-->
+									<!-- ------------------------------------------------------------------------------------ --->
+									<div style="width:20%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 										<label class="text-condensedLight" style="font-size:17px;">Cédula del Cliente</label>
-										<input value="" name="cedula" class="mdl-textfield__input" type="text" id="phoneAdmin">
+										<input value="" name="cedula" class="mdl-textfield__input" type="text" id="cedula" solonum="true" maxlength="13" validation="cedruc"
+										 event="keyup">
 										<label class="mdl-textfield__label" for="phoneAdmin"></label>
-										<span class="mdl-textfield__error">Numero de telfono inavalido</span>
+										<span class="mdl-textfield__error">Cédula inválida</span>
 									</div>
-									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<button id="btn-delClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Buscar Cliente</button>
+									<div style="width:13%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<button id="btnBuscarCliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Buscar</button>
 									</div>
-
-									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<div style="width:67%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 										<label class="text-condensedLight" style="font-size:17px;">Nombre del Cliente</label>
-										<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="email" id="emailAdmin">
+										<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="cliente">
 										<label class="mdl-textfield__label" for="emailAdmin"></label>
 										<span class="mdl-textfield__error">Correo Invalido</span>
 									</div>
-									<br><br><br><br>
-									<div align="center">
-										<!--<input type="submit" value="Guardar" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">
-	                                            <button id="btn-updClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Modificar</button>
-	                                            <button id="btn-seaClient"  class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Buscar</button>
-	                                            <button id="btn-delClient" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">Eliminar</button>
-												--
+									<!-- ------------------------------------------------------------------------------------ --->
+									<div style="width:20%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<label class="text-condensedLight" style="font-size:17px;">Código del Producto</label>
+										<input value="" name="cedula" class="mdl-textfield__input" type="text" id="codigo" solonum="true" maxlength="6">
+										<label class="mdl-textfield__label" for="phoneAdmin"></label>
+										<span class="mdl-textfield__error">Cédula inválida</span>
 									</div>
-								</div>-->
+									<div style="width:13%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<button id="btnBuscarProducto" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;">Buscar</button>
+									</div>
+									<div style="width:33%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<label class="text-condensedLight" style="font-size:17px;">Descripcion</label>
+										<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="descripcion">
+										<label class="mdl-textfield__label" for="emailAdmin"></label>
+										<span class="mdl-textfield__error">Correo Invalido</span>
+									</div>
+									<div style="width:17%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<label class="text-condensedLight" style="font-size:17px;">Precio</label>
+										<input value="{{cliente.nombre}}" readonly="true" class="mdl-textfield__input" type="email" id="precio">
+										<label class="mdl-textfield__label" for="emailAdmin"></label>
+										<span class="mdl-textfield__error">Correo Invalido</span>
+									</div>
+									<div style="width:17%;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										<label class="text-condensedLight" style="font-size:17px;">Cantidad</label>
+										<input value="{{cliente.nombre}}" class="mdl-textfield__input" type="text" id="cantidad" solonum="true" maxlength="3">
+										<label class="mdl-textfield__label" for="emailAdmin"></label>
+										<span class="mdl-textfield__error">No válido</span>
+									</div>
+								</div>
+								<center>
+									<button id="btn-agregar" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F9735; width:300px; height:60px;"><i style="color: #3F9735;" class="zmdi zmdi-shopping-cart"></i> <b id="guardar-actualizar"> Agregar Producto</b></button>
+								</center>
+								</form>
 							</div>
-							<center>
-								<button id="btn-agregar" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F9735; width:300px; height:60px;"><i style="color: #3F9735;" class="zmdi zmdi-shopping-cart"></i> <b> Agregar Producto</b></button>
-							</center>
-							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="mdl-grid" id="divTabla">
-			<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-				<div style="overflow-x:auto;">
-					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblProductos">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Codigo de Producto</th>
-								<th>Descripción</th>
-								<th>Precio</th>
-								<th>Cantidad</th>
-								<th>Valor a Pagar</th>
-								<th>Quitar</th>
-							</tr>
-						</thead>
-						<tbody id="tablaProductos">
-							<!--Aqui iran las tablas generadas-->
-						</tbody>
-					</table>
+			<div class="mdl-grid" id="divTabla">
+				<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+					<div style="overflow-x:auto;">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive" id="tblProductos">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Código de Producto</th>
+									<th>Descripción</th>
+									<th>Precio</th>
+									<th>Cantidad</th>
+									<th>Valor a Pagar</th>
+									<th>Modificar / Quitar</th>
+								</tr>
+							</thead>
+							<tbody id="tablaProductos">
+								<!--Aqui iran las tablas generadas-->
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
-
-			<center>
-				<button id="btn-addClient" title="Registrar nuevo Cliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5;"
-				 validation="ocultarmostrar" ocultarID="divTabla" mostrarID="tabNewAdmin" event="click">Nuevo Registro</button>
-			</center>
 		</div>
+		<br><br>
 	</div>
-	<br><br>
+	<div id="paraImprimir" style="display:none;">
+		<img src="../modular/azul.png" width="100%" height="50px" alt=""><br>
+		<br><br>
+
+		<center>
+			<img src="../modular/letra.png" width="35%" height="60px" alt=""><br>
+			<h2 id="titulo" style="display:none;"></h2>
+			<h3 id="subtitulo">Factura N° {{factura}}</h3>
+			<div>
+				<label>Fecha de Venta: </label>
+				<label id="fechaimp"></label><br><br>
+			</div>
+		</center>
+		<div>
+			<label id="cedulaimp"></label><br>
+			<label id="clienteimp"></label><br>
+			<label id="descuentoimp"></label><br><br>
+		</div>
+		<img src="../modular/linea.png" width="100%" height="5px" alt=""><br>
+		<table border="1" style='background-image:"../modular/azul.png";' class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive"
+		 id="tblProductos">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Código de Producto</th>
+					<th>Descripción</th>
+					<th>Precio</th>
+					<th>Cantidad</th>
+					<th>Valor a Pagar</th>
+				</tr>
+			</thead>
+			<tbody id="tablaProductosImp">
+
+			</tbody>
+		</table><br>
+		<img src="../modular/linea.png" width="100%" height="5px" alt=""><br>
+
 </section>
-<script src="../modular/scripts/ventas.js"></script>
+
+<script src="../modular/scripts/ventas2.js"></script>
 <script src="../modular/scripts/validacion_form.js"></script>
 <script src="../modular/scripts/indentificaciones.js"></script>
 <script src="../modular/scripts/validation.js"></script>
-<script type="text/javascript">
-    var titulo = document.getElementById("title_static");
-    if (titulo) {
-        titulo.innerHTML = '<i class="zmdi zmdi-shopping-cart"></i><span class="hide-on-tablet">&nbsp;VENTAS</span>'
-    };
-</script>
