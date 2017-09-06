@@ -23,7 +23,7 @@
                                 <label for="Sel" >Seleccionar todos</label>
                             </div>
                             <div class="col-lg-4 col-md-4">
-                                <button class="btn btn-primary" type="submit">Enviar catálogos</button>
+                                <button disabled id="sendCat" class="btn btn-primary" type="submit">Enviar catálogos</button>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         {{#if clientes}} {{#each clientes}}
                         <tr>
                             <td>
-                                <input  id="C{{this.Ced_Cli}}" type="checkbox" name="clienteFind" value="{{this.Cor_Cli}}">
+                                <input  id="C{{this.Ced_Cli}}" type="checkbox" name="clienteFind" onchange="ocultarSend()" value="{{this.Cor_Cli}}">
                                 <label class="correoCli" for="C{{this.Ced_Cli}}">{{this.Cor_Cli}}</label>
                             </td>
                             <td>{{this.Ced_Cli}}</td>
@@ -80,15 +80,32 @@
   </div>
 <script>
     function quitar(){
+        document.getElementById('sendCat').setAttribute('disabled',true)
         var elementos=document.getElementsByName('clienteFind');
         for(var i=0;i<elementos.length;i++){
             elementos[i].checked=false;
         }
     }
     function seleccionar(){
+        document.getElementById('sendCat').removeAttribute('disabled')
         var elementos=document.getElementsByName('clienteFind');
         for(var i=0;i<elementos.length;i++){
             elementos[i].checked=true;
+        }
+    }
+    function ocultarSend(){
+        var elementos=document.getElementsByName('clienteFind');
+        var estado=false;
+        for(var i=0;i<elementos.length;i++){
+            if(elementos[i].checked==true){
+                estado=true;
+            };
+        }
+        if(estado){
+            document.getElementById('sendCat').removeAttribute('disabled')
+            
+        }else{
+            document.getElementById('sendCat').setAttribute('disabled',false)
         }
     }
     function validarMail(event) {
@@ -123,11 +140,6 @@
                 });
             }
         }  
+        quitar()
     }
-</script>
-<script type="text/javascript">
-    var titulo = document.getElementById("title_static");
-    if (titulo) {
-        titulo.innerHTML = '<i class="zmdi zmdi-email"></i><span class="hide-on-tablet">&nbsp;&nbsp;CATÁLOGO</span>'
-    };
 </script>

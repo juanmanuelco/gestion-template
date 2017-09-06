@@ -25,10 +25,10 @@ function asignacion(identificador){
     else
         nuevoDia=fecha.getDate();
 
-    if((fecha.getMonth()+1)<10)
-        nuevoMes='0'+fecha.getMonth();
+    if((fecha.getMonth()+1)<=9)
+        nuevoMes='0'+(fecha.getMonth()+1);
     else
-        nuevoMes=fecha.getMonth();
+        nuevoMes=fecha.getMonth()+1;
     //Una vez acomodado ya podemos obtener una cadena presentable
     var cadenaFecha=`${fecha.getFullYear()}-${nuevoMes}-${nuevoDia}`;
     //Obtenemos todos los clientes para ponerlos en un select
