@@ -45,7 +45,7 @@ router.post('/administracion', function(req, res){
 		E_DBF_USUARIO.findOne().where({username:req.body.username}).exec((err,resp)=>{
 			if(resp!=null){
 				//mensaje y redireccionamiento
-				req.flash('success_msg','El nombre de usuario ya esta registrado en el sistema intente con otro nombre')
+				req.flash('error_msg','El nombre de usuario ya está registrado en el sistema, intente con otro nombre')
 				res.redirect('/admin/administracion');
 			}else{
 				//crea al usuario 
@@ -65,7 +65,7 @@ passport.use(new LocalStrategy(
     E_DBF_USUARIO.getUserByUsername(username, function(err, user){
    	if(err) throw err;
    	if(!user){
-		   return done(null, false, {message: 'El nombre de usuario no esta registrado en el sistema'});
+		   return done(null, false, {message: 'El nombre de usuario no está registrado en el sistema'});
    	}
 
    	E_DBF_USUARIO.comparePassword(password, user.password, function(err, isMatch){
@@ -73,7 +73,7 @@ passport.use(new LocalStrategy(
    		if(isMatch){
    			return done(null, user);
    		} else {
-   			return done(null, false, {message: 'La contraseña està incorrecta'});
+   			return done(null, false, {message: 'La contraseña está incorrecta'});
    		}
    	});
    });
