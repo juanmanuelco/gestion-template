@@ -78,23 +78,19 @@
 			</div>
         </div>
 </section>
-
-<script src="../modular/scripts/validacion_form.js"></script>
-<script src="../modular/scripts/indentificaciones.js"></script>
-<script src="../modular/scripts/validacionPrecios.js"></script>
-<script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/productos.js"></script>
 <link rel="stylesheet" href="../modular/estilos/empleados.css">
 {{#if success_msg }}
 	<input id="inputsucces" type="hidden" value="{{success_msg}}">
     <script type="text/javascript">
-	    input = document.getElementById("inputsucces").value || "Acción realizada con éxito"
-	    swal({
-	  	title: input,
-	  	type: 'success',
-	  	confirmButtonText: 'Ok',
-	  	closeOnConfirm: true
-		})
+	    input = document.getElementById("inputsucces").value || "Accion realizada con éxito"
+	    msgModal(input,'success',null);
+    </script>
+{{else if  error_msg }}
+	<input id="inputError" type="hidden" value="{{error_msg}}">
+    <script type="text/javascript">
+	    input = document.getElementById("inputError").value || "Error inesperado"
+	    msgModal(input,'error',"retroceder");
     </script>
 {{/if}}
 <script type="text/javascript">

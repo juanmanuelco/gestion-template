@@ -121,9 +121,9 @@ function editClient (e,button) {
 			'</div><br>'+
 			'<label class="text-condensedLight" style="font-size:20px;">Tipo Cliente</label>'+
 			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
-				'<select value="'+datos[3].innerHTML+'" class="mdl-textfield__input" name="Tip_Cli">'+
-					'<option value="Ocasional">Ocasional</option>'+
-					'<option value="Premium">Premium</option>'+
+				'<select value="'+datos[3].innerHTML+'" class="mdl-textfield__input" name="Tip_Cli" id="Tip_Cli">'+
+                    '<option value="Ocasional">Ocasional</option>'+
+                    '<option value="Premium">Premium</option>'+
 				'</select>'+
 			'</div>'+
 		'</div>'+
@@ -175,8 +175,9 @@ function editClient (e,button) {
 		  	}
 		});
 		setTimeout(function (a){
+            document.getElementById("Tip_Cli").value=datos[3].innerHTML;
 			Funciones.init();
-		},300);
+		},200);
 }
 
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal

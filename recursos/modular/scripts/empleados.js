@@ -104,9 +104,9 @@ FuncionesEmpleados["editEmpleado"] = function () {
 			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
 				'<label class="text-condensedLight" id="Turno" style="font-size:20px;">Turno</label>'+
 				'<select class="mdl-textfield__input" id="Tur_Emp" name="Tur_Emp" value="'+datos[3].innerHTML+'">'+
-					'<option>Matutino</option>'+
-					'<option>Vespertino</option>'+
-					'<option>Nocturno</option>'+
+					'<option value="Matutino">Matutino</option>'+
+					'<option value="Vespertino">Vespertino</option>'+
+					'<option value="Nocturno">Nocturno</option>'+
 				'</select>'+
 			'</div>'+	
 		'</div>'+
@@ -155,7 +155,8 @@ FuncionesEmpleados["editEmpleado"] = function () {
 				}); 
 		  	}
 		})
-	setTimeout(function (a){
+	setTimeout(function (){
+            document.getElementById("Tur_Emp").value=datos[3].innerHTML;
 			Funciones.init();
 		},200);
 }
@@ -179,11 +180,10 @@ FuncionesEmpleados["saveEmpleado"] = function (e){
 			return false
 		}
 		swal({
-			  	title: 'Formulario Válido',
-			  	type: 'success',
-			  	text:"Se guardarán los datos correctamente",
+			  	title: '¿Seguro que desea registrar este nuevo empleado?',
 			  	showCancelButton: true,
-			  	confirmButtonText: 'Ok',
+			  	confirmButtonText: 'Si',
+                cancelButtonText:'No',
 			  	closeOnConfirm: true
 			},
 			function(isConfirm) {

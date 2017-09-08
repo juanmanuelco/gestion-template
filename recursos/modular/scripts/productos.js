@@ -38,10 +38,10 @@ function saveProducto(e,button){
             return false
         }
         swal({
-                title: 'Formulario Válido',
-                type: 'success',
+                title: '¿Seguro que desea registrar este nuevo producto?',
                 showCancelButton: true,
-                confirmButtonText: 'Ok',
+			  	confirmButtonText: 'Si',
+                cancelButtonText:'No',
                 closeOnConfirm: true
             },
             function(isConfirm) {

@@ -11,7 +11,8 @@
 						 datos="0,1,3,4" placeholder=" Buscar">
 						<label class="mdl-textfield__label"></label>
 					</div>
-					<a href="/admin/registro_empleado" title="Registrar nuevo Cliente" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5;position:absolute; right: 5%;" >Nuevo Registro</a>
+					<a href="/admin/registro_empleado" title="Registrar nuevo empleado" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5;position:absolute; right: 23%;" >Nuevo Registro</a>
+					<a href="/admin/asignar_empleados" title="Asignar nueva tarea" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="text-decoration:none; color: #3F51B5;position:absolute; right: 5%;" >Asignar Tareas</a>
 				</div>
 			</form>
 			<div style="overflow-x:auto;height:510px;">
@@ -58,43 +59,19 @@
 		</div>
 	</div>
 </section>
-<script src="../modular/scripts/validacion_form.js"></script>
-<script src="../modular/scripts/indentificaciones.js"></script>
-<script src="../modular/scripts/validacionPrecios.js"></script>
-<script src="../modular/scripts/validation.js"></script>
 <script src="../modular/scripts/empleados.js"></script>
 <link rel="stylesheet" href="../modular/estilos/empleados.css">
-<script type="text/javascript">
-	function Modal (title,type,accion) {
-		var close = true
-		if (accion) {close = false};
-		swal({
-	  	title: title,
-	  	type: type,
-	  	confirmButtonText: 'Ok',
-	  	closeOnConfirm: close
-		},
-		function(isConfirm) {
-			if (isConfirm) { 
-				if (accion == "retroceder") {
-					window.history.back();
-				}
-		  	}
-		}
-		)
-	}
-</script>
 {{#if success_msg }}
 	<input id="inputsucces" type="hidden" value="{{success_msg}}">
     <script type="text/javascript">
 	    input = document.getElementById("inputsucces").value || "Accion realizada con éxito"
-	    Modal(input,'success',null);
+	    msgModal(input,'success',null);
     </script>
-{{else if  error }}
-	<input id="inputError" type="hidden" value="{{error}}">
+{{else if  error_msg }}
+	<input id="inputError" type="hidden" value="{{error_msg}}">
     <script type="text/javascript">
 	    input = document.getElementById("inputError").value || "Error inesperado"
-	    Modal(input,'error',"retroceder");
+	    msgModal(input,'error',"retroceder");
     </script>
 {{/if}}
 <script type="text/javascript">
