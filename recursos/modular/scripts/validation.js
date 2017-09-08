@@ -45,6 +45,11 @@ Funciones["cedruc"] = function (e) {
 			a.parentNode.classList.add("is-invalid");
 		},200,this);
 	}
+	else{
+		Timers[this.name] = setTimeout(function (a){
+			a.parentNode.classList.remove("is-invalid");
+		},200,this);
+	}
 }
 
 
@@ -65,6 +70,11 @@ Funciones["cedula"] = function (e) {
 			a.parentNode.classList.add("is-invalid");
 		},1,this);
 	}
+	else{
+		Timers[this.name] = setTimeout(function (a){
+			a.parentNode.classList.remove("is-invalid");
+		},200,this);
+	}
 }
 
 
@@ -84,6 +94,11 @@ Funciones["ruc"] = function (e) {
 			a.parentNode.classList.add("is-invalid");
 		},200,this);
 	}
+	else{
+		Timers[this.name] = setTimeout(function (a){
+			a.parentNode.classList.remove("is-invalid");
+		},200,this);
+	}
 }
 
 //funcion cedula pensada para usarla con inputs y con los eventos keyup, keypress
@@ -99,7 +114,12 @@ Funciones["email"] = function(e){
 		Timers[this.name] = setTimeout(function (a){
 			a.parentNode.classList.add("is-invalid");
 		},200,this);
-	};
+	}
+	else{
+		Timers[this.name] = setTimeout(function (a){
+			a.parentNode.classList.remove("is-invalid");
+		},200,this);
+	}
 }
 
 //funcion inicializacion pensada para poder ser llamada en el caso de que se genere nuevos elementos html 
@@ -149,8 +169,8 @@ Funciones["init"] = function (argument) {
 			if (evento) {
 				var arrayEvent = evento.split(",")
 				if (arrayEvent.length > 1) {
-					for (var i = 0; i < arrayEvent.length; i++) {
-						elements[i].addEventListener(arrayEvent[i],Funciones[atributo]);
+					for (var a = 0; a < arrayEvent.length; a++) {
+						elements[i].addEventListener(arrayEvent[a],Funciones[atributo]);
 					};
 				}
 				else{
@@ -336,23 +356,6 @@ function validarnum(numero,span){
     return false
 }
 
-//función para liberar tarea
-Funciones["LibrarTarea"] = function(){
-	swal({
-		title: 'Desocupar Empleado',
-		text: "¿Está Seguro de hacer esto?",
-		type: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Estoy de acuerdo'
-	},
-	function(isConfirm) {
-		if (isConfirm) {
-		  location.reload(); 
-		}
-  	});
-}
 
 //Funcion para pasar al siguiente elemento dando enter
 Funciones["EnterNext"] = function (e) {

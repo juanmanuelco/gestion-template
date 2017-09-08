@@ -115,7 +115,7 @@ function editClient (e,button) {
 			'</div>'+
 			'<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'+
 				'<label class="text-condensedLight" style="font-size:20px;">Correo electrónico</label>'+
-				'<input value="'+datos[3].id+'"class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" maxlength="30" event="keyup">'+
+				'<input value="'+datos[3].id+'"class="mdl-textfield__input" name="Cor_Cli" type="text" id="Correo" validation="email" maxlength="30" event="keyup,blur">'+
 				'<label class="mdl-textfield__label" for="Correo"></label>'+
 				'<span class="mdl-textfield__error" style="font-weight: bold;font-size:14px;">Correo No válido</span>'+
 			'</div><br>'+
@@ -176,7 +176,7 @@ function editClient (e,button) {
 		});
 		setTimeout(function (a){
 			Funciones.init();
-		},200);
+		},300);
 }
 
 //funcion pensada como funcion para el modulo de clientes el cual muestra un formulario en un modal
